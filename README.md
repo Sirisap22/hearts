@@ -1,2 +1,2 @@
 ## Hearts Game in Progress
-### Make due to subject Object Oriented Programming.
+### Make due to Object Oriented Programming class.
