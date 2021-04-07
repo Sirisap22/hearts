@@ -3,6 +3,8 @@ package hearts;
 import java.util.ArrayList;
 
 public abstract class Hand {
+  protected int chosenPlaceCard = -1;
+  protected int[] chosenGiveCards = { -1, -1, -1 };
   protected int points;
   protected String name;
   protected ArrayList<Card> cardsInHand;
@@ -49,7 +51,30 @@ public abstract class Hand {
     this.cardsInPile = cardsInPile;
   }
 
+  public int getChosenPlaceCard() {
+    return this.chosenPlaceCard;
+  }
+
+  public void setChosenPlaceCard(int chosenPlaceCard) {
+    this.chosenPlaceCard = chosenPlaceCard;
+  }
+
+  public int[] getChosenGiveCards() {
+    return this.chosenGiveCards;
+  }
+
+  public void setChosenGiveCards(int[] chosenGiveCards) {
+    this.chosenGiveCards = chosenGiveCards;
+  }
+
   // hand action
+
+  public void restHand() {
+    setChosenPlaceCard(-1);
+    setChosenGiveCards(new int[] { -1, -1, -1 });
+    getCardsInHand().clear();
+    getCardsInPile().clear();
+  }
 
   public void addCardInHand(Card card) {
     cardsInHand.add(card);
@@ -78,6 +103,14 @@ public abstract class Hand {
 
   private boolean isQueenOfSpade(Card card) {
     return card.getSuit() == Suit.SPADES && card.getRank() == 12;
+  }
+
+  public void giveCards(Hand hand) {
+    for (int cardIndex : chosenGiveCards) {
+      Card chosenCard = cardsInHand.get(cardIndex);
+      hand.addCardInHand(chosenCard);
+      removeCardInHand(chosenCard);
+    }
   }
 
   public void sortCardsInHand() {

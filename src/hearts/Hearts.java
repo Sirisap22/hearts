@@ -1,18 +1,29 @@
 package hearts;
 
+import java.util.ArrayList;
+
 public class Hearts {
   private Table table;
   private Deck deck;
   private Hand[] hands;
   private int bigRound;
   private int smallRound;
-  private String turn;
+  private int turn;
+  private int whoseTurn;
 
   public Hearts(Hand[] hands) {
     setHands(hands);
   }
 
   // getters and setters.
+
+  public int getWhoseTurn() {
+    return whoseTurn;
+  }
+
+  public void setWhoseTurn(int whoseTurn) {
+    this.whoseTurn = whoseTurn;
+  }
 
   public Table getTable() {
     return this.table;
@@ -46,11 +57,11 @@ public class Hearts {
     this.smallRound = smallRound;
   }
 
-  public String getTurn() {
+  public int getTurn() {
     return this.turn;
   }
 
-  public void setTurn(String turn) {
+  public void setTurn(int turn) {
     this.turn = turn;
   }
 
@@ -65,6 +76,10 @@ public class Hearts {
   // Game methods
   public void startGame() {
     // TODO create new deck/ shuffle deck/ deal cards/
+    setBigRound(1);
+    setSmallRound(1);
+    setTurn(1);
+
     setDeck(new Deck());
     deck.shuffle();
     dealCards();
@@ -77,8 +92,6 @@ public class Hearts {
   }
 
   public void dealCards() {
-    Deck deck = getDeck();
-    Hand[] hands = getHands();
 
     int numberOfHand = hands.length;
     int handth = 0;
@@ -93,6 +106,61 @@ public class Hearts {
 
     }
 
+  }
+
+  public void placeCardToTable() {
+    Hand hand = hands[turn];
+    ArrayList<Card> cardsInHand = hand.getCardsInHand();
+    int chosenCard = hand.getChosenPlaceCard();
+    Card card = cardsInHand.get(chosenCard);
+
+    table.placeCardAt(card, turn);
+  }
+
+  public void nextTurn() {
+    turn += 1;
+    if (turn > 4) {
+      turn = 1;
+    }
+  }
+
+  public void endTurn() {
+    if (turn == 4)
+      return;
+    hands[turn].setChosenPlaceCard(-1);
+  }
+
+  public void nextSmallRound() {
+    if (smallRound == 13)
+      return;
+    smallRound += 1;
+  }
+
+  public void endSmallRound() {
+    // find who win
+    // get card from table to that hand
+    // set whose turn to the one who win
+  }
+
+  public void nextBigRound() {
+    // check if there is hand whose points is greater than 100 and have only one
+    // winner
+    // return
+
+    // shuffle deck
+    // deal cards
+    // giveCard
+    bigRound += 1;
+
+  }
+
+  public void endBigRound() {
+    // check if there is hand whose points is greater than 100 and have only one
+    // winner
+    // return
+
+    // reset deck
+    // reset hand
   }
 
   public void sortCardsInHands() {
