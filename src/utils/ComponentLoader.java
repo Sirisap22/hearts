@@ -10,7 +10,7 @@ public class ComponentLoader<T, U, S> {
   }
 
   public Pair<U, S> loadComponent(T target, String path) throws IOException {
-    FXMLLoader loader = new FXMLLoader(target.getClass().getResource("/components/Card.fxml"));
+    FXMLLoader loader = new FXMLLoader(target.getClass().getResource(path));
     U componentView = loader.load();
 
     @SuppressWarnings("unchecked")
