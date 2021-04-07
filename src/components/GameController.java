@@ -2,6 +2,8 @@ package components;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import hearts.*;
@@ -23,23 +25,18 @@ public class GameController implements Initializable {
   @FXML
   private Button startBtn;
 
+  HashMap<String, ImageView> cards;
+  HashMap<String, CardController> cardControllers;
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     // TODO Auto-generated method stub
     hbox.getStylesheets().add("components/Game.css");
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
 
-    try {
-      ImageView card = loader.load();
-      hbox.getChildren().add(card);
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      System.out.println("ERRORRRRR");
-    }
   }
 
   @FXML
-  private void onClickStart(ActionEvent event) {
+  private void onClickStart(ActionEvent event) throws Exception {
     Hand[] hands = { new Player("test1"), new Player("test2"), new Player("test3"), new Player("test4") };
 
     hearts = new Hearts(hands);
@@ -49,13 +46,21 @@ public class GameController implements Initializable {
     Hand hand = hearts.getHands()[0];
 
     for (Card card : hand.getCardsInHand()) {
-      Label label = new Label();
-      label.getStyleClass().add("card-label");
-      label.setText(card.toString());
-      label.setId(Integer.toString(card.hashCode()));
-      label.setWrapText(true);
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
+      ImageView cardImage = loader.load();
+      CardController cardController = (CardController) loader.getController();
+      cardController.setCard(card);
+      cardController.updateCardImage();
 
-      hbox.getChildren().add(label);
+      // Label label = new Label();
+      // label.getStyleClass().add("card-label");
+      // label.setText(card.toString());
+      // label.setId(Integer.toString(card.hashCode()));
+      // label.setWrapText(true);
+      cards.put(card.toString(), cardImage);
+      cardControllers.put(card.toString(), cardController);
+
+      hbox.getChildren().add(cardImage);
     }
   }
 

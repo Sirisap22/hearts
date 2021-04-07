@@ -33,8 +33,7 @@ public class Card implements Comparable<Card> {
 
   @Override
   public String toString() {
-    return String.format("%s[rank=%s, suit=%s]", getClass().getSimpleName(), rankToString(getRank()),
-        getSuit().toString());
+    return String.format("%s_%s", rankToString(getRank()), getSuit().toString());
   }
 
   @Override
