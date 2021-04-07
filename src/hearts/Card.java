@@ -6,8 +6,9 @@ public class Card implements Comparable<Card> {
   private Suit suit;
   private int rank;
 
-  private static final int MIN_RANK = 1;
-  private static final int MAX_RANK = 13;
+  // 14 is Ace, 13 is King, 12 is Queen, 11 is Jack.
+  private static final int MIN_RANK = 2;
+  private static final int MAX_RANK = 14;
 
   public Card(int rank, Suit suit) {
     setSuit(suit);
@@ -32,7 +33,8 @@ public class Card implements Comparable<Card> {
 
   @Override
   public String toString() {
-    return String.format("%s[rank=%d, suit=%s]", getClass().getSimpleName(), getRank(), getSuit().toString());
+    return String.format("%s[rank=%s, suit=%s]", getClass().getSimpleName(), rankToString(getRank()),
+        getSuit().toString());
   }
 
   @Override
@@ -64,16 +66,40 @@ public class Card implements Comparable<Card> {
     return Suit.values();
   }
 
+  public static String rankToString(int rank) {
+    if (rank <= 10)
+      return Integer.toString(rank);
+
+    switch (rank) {
+    case 11:
+      return "J";
+    case 12:
+      return "Q";
+    case 13:
+      return "K";
+    case 14:
+      return "A";
+    default:
+      return null;
+    }
+  }
+
   @Override
   public int compareTo(Card card) {
-    int thisCardRank = getRank() == 1 ? 14 : getRank();
-    int thatCardRank = card.getRank() == 1 ? 14 : getRank();
-    if (thisCardRank < thatCardRank)
-      return -1;
-    else if (thisCardRank > thatCardRank)
-      return 1;
-    else
-      return 0;
+    Suit thisCardSuit = getSuit();
+    Suit thatCardSuit = card.getSuit();
+    if (thisCardSuit == thatCardSuit) {
+      int thisCardRank = getRank();
+      int thatCardRank = card.getRank();
+      if (thisCardRank < thatCardRank)
+        return -1;
+      else if (thisCardRank > thatCardRank)
+        return 1;
+      else
+        return 0;
+    }
+
+    return Suit.compare(thisCardSuit, thatCardSuit);
   }
 
   public static void main(String[] args) {
