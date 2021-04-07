@@ -1,8 +1,6 @@
 package components;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -11,11 +9,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.util.Pair;
+import utils.ComponentLoader;
 
 public class GameController implements Initializable {
   private Hearts hearts;
@@ -25,14 +23,12 @@ public class GameController implements Initializable {
   @FXML
   private Button startBtn;
 
-  HashMap<String, ImageView> cards;
-  HashMap<String, CardController> cardControllers;
+  HashMap<String, ImageView> cards = new HashMap<String, ImageView>();
+  HashMap<String, CardController> cardControllers = new HashMap<String, CardController>();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    // TODO Auto-generated method stub
     hbox.getStylesheets().add("components/Game.css");
-
   }
 
   @FXML
@@ -46,12 +42,12 @@ public class GameController implements Initializable {
     Hand hand = hearts.getHands()[0];
 
     for (Card card : hand.getCardsInHand()) {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/Card.fxml"));
-      ImageView cardImage = loader.load();
-      CardController cardController = (CardController) loader.getController();
+      Pair<ImageView, CardController> cardComponent = new ComponentLoader<GameController, ImageView, CardController>()
+          .loadComponent(this, "/components/Card.fxml");
+      ImageView cardImage = cardComponent.getKey();
+      CardController cardController = cardComponent.getValue();
       cardController.setCard(card);
       cardController.updateCardImage();
-
       // Label label = new Label();
       // label.getStyleClass().add("card-label");
       // label.setText(card.toString());

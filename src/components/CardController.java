@@ -1,7 +1,5 @@
 package components;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
