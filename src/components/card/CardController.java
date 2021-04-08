@@ -1,4 +1,4 @@
-package components;
+package components.card;
 
 import java.net.URL;
 import java.util.ResourceBundle;

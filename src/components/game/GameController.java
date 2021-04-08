@@ -1,9 +1,10 @@
-package components;
+package components.game;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import components.card.CardController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +44,7 @@ public class GameController implements Initializable {
 
     for (Card card : hand.getCardsInHand()) {
       Pair<ImageView, CardController> cardComponent = new ComponentLoader<GameController, ImageView, CardController>()
-          .loadComponent(this, "/components/Card.fxml");
+          .loadComponent(this, "/components/card/Card.fxml");
       ImageView cardImage = cardComponent.getKey();
       CardController cardController = cardComponent.getValue();
       cardController.setCard(card);
