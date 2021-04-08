@@ -34,4 +34,18 @@ public class Table {
     return winner;
   }
 
+  // By BillyBacker
+  // Use to check if there are a card with the interested suit.
+  public boolean suitIsOnTable(String suit){
+    for(int hand = 0; hand < cardSlots.length; hand++) {
+      try{ // check if card is available
+        Card check = cardSlots[handStack.get(hand)];
+      }
+      catch(Exception e){ // if not, it's mean there is not other card to think of. So just end the loop.
+        break;
+      }
+      return cardSlots[handStack.get(hand)].getSuit().toString().equals(suit);
+    }
+    return false;
+  }
 }
