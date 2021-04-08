@@ -86,6 +86,11 @@ public abstract class Hand {
     cardsInHand.removeIf(card -> card.equals(removeCard));
   }
 
+  // winner
+  // card[] = table.popAllCard()
+  // for card in card[]
+  // addCarInPile(card)
+
   public void addCardInPile(Card card) {
     checkAndAddPoints(card);
     cardsInPile.add(card);
@@ -107,7 +112,10 @@ public abstract class Hand {
     return card.getSuit() == Suit.SPADES && card.getRank() == 12;
   }
 
-  public void giveCards(Hand hand) {
+  // chosenGiveCards {}
+  // hands[0].giveCard(hands[1])
+
+  public void giveCard(Hand hand) {
     for (int cardIndex : chosenGiveCards) {
       Card chosenCard = cardsInHand.get(cardIndex);
       hand.addCardInHand(chosenCard);

@@ -39,7 +39,7 @@ public class CardController implements Initializable {
   public void updateCardImage() {
 
     if (isFacingDown()) {
-      cardImage.setImage(new Image("public/test_card.png"));
+      cardImage.setImage(new Image("public/back_card.png"));
       return;
     }
 

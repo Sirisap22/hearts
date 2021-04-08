@@ -8,7 +8,6 @@ public class Player extends Hand {
 
   @Override
   public void makeAction() {
-    // TODO Auto-generated method stub
 
   }
 

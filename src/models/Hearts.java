@@ -138,7 +138,7 @@ public class Hearts {
 
     if (turn == 4)
       endSmallRound();
-    hands[turn].setChosenPlaceCard(-1);
+    hands[whoseTurn].setChosenPlaceCard(-1);
   }
 
   public void nextTurn() {
@@ -188,6 +188,10 @@ public class Hearts {
       scores[i] += hands[i].getPoints();
     }
   }
+
+  // TODO find 2 of clubs function
+  // find who have 2 of clubs
+  // set whoseTurn = that person
 
   public void nextBigRound() {
     bigRound += 1;
