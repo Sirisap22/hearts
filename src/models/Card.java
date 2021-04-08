@@ -1,4 +1,4 @@
-package hearts;
+package models;
 
 import java.util.Objects;
 

@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import hearts.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Pair;
+import models.*;
 import utils.ComponentLoader;
 
 public class GameController implements Initializable {
@@ -37,7 +37,7 @@ public class GameController implements Initializable {
 
     hearts = new Hearts(hands);
 
-    hearts.startGame();
+    hearts.resetGame();
 
     Hand hand = hearts.getHands()[0];
 

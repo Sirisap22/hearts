@@ -1,4 +1,4 @@
-package hearts;
+package models;
 
 public class Player extends Hand {
 

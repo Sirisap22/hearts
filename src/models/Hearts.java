@@ -1,4 +1,4 @@
-package hearts;
+package models;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,7 @@ public class Hearts {
   private Table table;
   private Deck deck;
   private Hand[] hands;
+  private int[] scores;
   private int bigRound;
   private int smallRound;
   private int turn;
@@ -16,6 +17,14 @@ public class Hearts {
   }
 
   // getters and setters.
+
+  public int[] getScores() {
+    return scores;
+  }
+
+  public void setScores(int[] scores) {
+    this.scores = scores;
+  }
 
   public int getWhoseTurn() {
     return whoseTurn;
@@ -74,11 +83,13 @@ public class Hearts {
   }
 
   // Game methods
-  public void startGame() {
+  public void resetGame() {
     // TODO create new deck/ shuffle deck/ deal cards/
     setBigRound(1);
     setSmallRound(1);
     setTurn(1);
+
+    resetPoints();
 
     setDeck(new Deck());
     deck.shuffle();
@@ -89,6 +100,12 @@ public class Hearts {
     // startGiveCardsPhase();
     // startBigRound();
 
+  }
+
+  private void resetPoints() {
+    for (Hand hand : hands) {
+      hand.setPoints(0);
+    }
   }
 
   public void dealCards() {
@@ -117,50 +134,102 @@ public class Hearts {
     table.placeCardAt(card, turn);
   }
 
-  public void nextTurn() {
-    turn += 1;
-    if (turn > 4) {
-      turn = 1;
-    }
-  }
-
   public void endTurn() {
+
     if (turn == 4)
-      return;
+      endSmallRound();
     hands[turn].setChosenPlaceCard(-1);
   }
 
-  public void nextSmallRound() {
-    if (smallRound == 13)
-      return;
-    smallRound += 1;
+  public void nextTurn() {
+    turn += 1;
+    // check turn
+    whoseTurn += 1;
+    if (whoseTurn >= hands.length)
+      whoseTurn = 0;
   }
 
   public void endSmallRound() {
-    // find who win
-    // get card from table to that hand
-    // set whose turn to the one who win
+    setTurn(1);
+    if (smallRound == 13) {
+      endBigRound();
+    }
+
+  }
+
+  public void nextSmallRound() {
+    // find who win on table
+    // and set that person to whose turn
+    smallRound += 1;
+
+    int tableWinner = findWhoWinOnTable();
+    whoseTurn = tableWinner;
+  }
+
+  private int findWhoWinOnTable() {
+    return table.findWinner();
+  }
+
+  public Hand endBigRound() {
+    setSmallRound(1);
+    Hand winner = checkEndGameConditionAndFindWinner();
+
+    // add points to keep track scores for each hand
+    addScores();
+
+    deck.refresh();
+    refreshAllHands();
+
+    return winner;
+  }
+
+  private void addScores() {
+    for (int i = 0; i < hands.length; i++) {
+      scores[i] += hands[i].getPoints();
+    }
   }
 
   public void nextBigRound() {
-    // check if there is hand whose points is greater than 100 and have only one
-    // winner
-    // return
-
-    // shuffle deck
-    // deal cards
-    // giveCard
     bigRound += 1;
 
+    deck.shuffle();
+    dealCards();
+    sortCardsInHands();
   }
 
-  public void endBigRound() {
-    // check if there is hand whose points is greater than 100 and have only one
-    // winner
-    // return
+  private Hand checkEndGameConditionAndFindWinner() {
+    Hand winner = null;
+    int winnerScore = Integer.MAX_VALUE;
+    boolean isMoreOrEqualTo100 = false;
+    for (int i = 0; i < scores.length; i++) {
+      int score = scores[i];
+      if (score < winnerScore) {
+        winner = hands[i];
+        winnerScore = score;
+      }
+      if (score >= 100)
+        isMoreOrEqualTo100 = true;
+    }
 
-    // reset deck
-    // reset hand
+    // check if winner is duplicate
+    int count = 0;
+    for (int score : scores) {
+      if (score == winnerScore)
+        count++;
+    }
+
+    boolean isMoreThanOneWinner = count > 1;
+
+    if (isMoreOrEqualTo100 && !isMoreThanOneWinner)
+      return winner;
+
+    return null;
+  }
+
+  private void refreshAllHands() {
+    for (Hand hand : hands) {
+      hand.refreshHand();
+    }
   }
 
   public void sortCardsInHands() {
@@ -182,7 +251,7 @@ public class Hearts {
     Hand[] hands = { new Player("test1"), new Player("test2"), new Player("test3"), new Player("test4") };
     Hearts hearts = new Hearts(hands);
 
-    hearts.startGame();
+    hearts.resetGame();
 
     hearts.printHands();
 

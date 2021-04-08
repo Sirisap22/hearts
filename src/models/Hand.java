@@ -1,4 +1,4 @@
-package hearts;
+package models;
 
 import java.util.ArrayList;
 
@@ -69,11 +69,13 @@ public abstract class Hand {
 
   // hand action
 
-  public void restHand() {
+  public void refreshHand() {
     setChosenPlaceCard(-1);
     setChosenGiveCards(new int[] { -1, -1, -1 });
     getCardsInHand().clear();
     getCardsInPile().clear();
+
+    setPoints(0);
   }
 
   public void addCardInHand(Card card) {
