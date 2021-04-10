@@ -50,7 +50,9 @@ public class Table {
     }
     return false;
   }
-
+  public Card[] getCardSlot(){
+    return cardSlots;
+  }
   public boolean cardIsOnTable(Card card){
     for(int hand = 0; hand < cardSlots.length; hand++) {
       try{ // check if card is available
@@ -64,5 +66,94 @@ public class Table {
       }
     }
     return false;
+  }
+
+  public int getMaxRank(){
+    int max = -1;
+    for(int hand = 0; hand < cardSlots.length; hand++) {
+      try{ // check if card is available
+        Card check = cardSlots[handStack.get(hand)];
+      }
+      catch(IndexOutOfBoundsException e){ // if not, it's mean there is not other card to think of. So just end the loop.
+        break;
+      }
+      if(cardSlots[handStack.get(hand)].getRank() > max && cardSlots[handStack.get(hand)].getSuit().equals(cardSlots[handStack.get(0)].getSuit())){
+        max = cardSlots[handStack.get(hand)].getRank();
+      }
+    }
+    return max;
+  }
+
+  public int getminRank(){
+    int min = 15;
+    for(int hand = 0; hand < cardSlots.length; hand++) {
+      try{ // check if card is available
+        Card check = cardSlots[handStack.get(hand)];
+      }
+      catch(IndexOutOfBoundsException e){ // if not, it's mean there is not other card to think of. So just end the loop.
+        break;
+      }
+      if(cardSlots[handStack.get(hand)].getRank() < min && cardSlots[handStack.get(hand)].getSuit().equals(cardSlots[handStack.get(0)].getSuit())){
+        min = cardSlots[handStack.get(hand)].getRank();
+      }
+    }
+    return min;
+  }
+
+  public int getPlayedNumber(){
+    int number = 0;
+    for(int hand = 0; hand < cardSlots.length; hand++) {
+      try{ // check if card is available
+        Card check = cardSlots[handStack.get(hand)];
+      }
+      catch(IndexOutOfBoundsException e){ // if not, it's mean there is not other card to think of. So just end the loop.
+        break;
+      }
+      number += 1;
+    }
+    return number;
+  }
+
+  public boolean playable(Card card){
+    if(getPlayedNumber() == 0){
+      return true;
+    }
+    return card.getSuit().equals(cardSlots[handStack.get(0)].getSuit());
+  }
+
+  public Suit getFirstSuit(){
+    if(getPlayedNumber() == 0){
+      return null;
+    }
+    return this.cardSlots[handStack.get(0)].getSuit();
+  }
+
+  public boolean isBroken(){
+    boolean hasHeart = false;
+    for(int hand = 0; hand < cardSlots.length; hand++) {
+      try{ // check if card is available
+        Card check = cardSlots[handStack.get(hand)];
+      }
+      catch(IndexOutOfBoundsException e){ // if not, it's mean there is not other card to think of. So just end the loop.
+        break;
+      }
+      if(cardSlots[handStack.get(hand)].getSuit().equals(Suit.HEARTS)){
+        hasHeart = true;
+      }
+    }
+    if(getPlayedNumber() != 0){
+      return !cardSlots[handStack.get(0)].getSuit().equals(Suit.HEARTS) && hasHeart;
+    }
+    return false;
+  }
+
+  public int getHeartNumber(){
+    int output = 0;
+    for(int i = 0; i < getPlayedNumber(); i++){
+      if(cardSlots[handStack.get(i)].getSuit() == Suit.HEARTS){
+        output++;
+      }
+    }
+    return output;
   }
 }
