@@ -40,8 +40,8 @@ public class reinforce {
                        First = 0;
                     }
                     Card card = bot[First].choosenCard(table);
+                    System.out.print(table.getPlayedNumber() + ". " + bot[First].getName() + " played " + card.toString() + " Break : " + !bot[First].hasSuit(table.getFirstSuit()) + "\t");
                     table.placeCardAt(card, First);
-                    System.out.print(bot[First].getName() + " played " + card.toString() + " Break : " + !bot[First].hasSuit(table.getFirstSuit()) + "\t");
                     bot[First].removeCardInHand(card);
                     for(int k = 0; k < 4; k++){
                         try{
@@ -57,12 +57,12 @@ public class reinforce {
                 }
                 int winner = table.findWinner();
                 First = winner;
-                for(int j = 0; j < 4; j++){
-                    Card card = table.getCardSlot()[j];
+                Suit firstCardSuit = table.getFirstSuit();
+                int winnerScore = bot[winner].getPoints();
+                for(Card card : table.popAllCards()){
                     bot[winner].addCardInPile(card);
                 }
-                System.out.println(bot[winner].getName() + " has to keep the card and has " + bot[winner].getPoints() + " first suit : " + table.getFirstSuit().toString());
-                table.popAllCards();
+                System.out.println(bot[winner].getName() + " has to keep the card and got " + (bot[winner].getPoints() - winnerScore) + " point, first suit : " + firstCardSuit + ", Is broken : " + table.isBroken() + "\n");
             }
             System.out.println("End the round\n---------------------------------------------------------\nreport:\n");
             for(int j = 0; j < 4; j++){
@@ -86,7 +86,7 @@ public class reinforce {
         return res.clone();
     }
     public static int whoFirst(Bot[] bot){
-        Card S2 = new Card(2, Suit.SPADES);
+        Card S2 = new Card(2, Suit.CLUBS);
         if(bot[0].has(S2)) return 0;
         if(bot[1].has(S2)) return 1;
         if(bot[2].has(S2)) return 2;
@@ -95,7 +95,7 @@ public class reinforce {
     }
     public static boolean anyOneDone(Bot[] bot){
         for(Bot b : bot){
-            if(b.getOverallScore() >= 100){
+            if(b.getOverallScore() >= 10){
                 return true;
             }
         }

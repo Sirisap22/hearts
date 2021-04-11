@@ -36,6 +36,8 @@ public class Table {
 
   // By BillyBacker
   // Use to check if there are a card with the interested suit. For bot.
+  private boolean heartIsBroken = false;
+  private boolean SQIsOut = false;
   public boolean suitIsOnTable(String suit){
     for(int hand = 0; hand < cardSlots.length; hand++) {
       try{ // check if card is available
@@ -107,7 +109,7 @@ public class Table {
         Card check = cardSlots[handStack.get(hand)];
       }
       catch(IndexOutOfBoundsException e){ // if not, it's mean there is not other card to think of. So just end the loop.
-        break;
+        continue;
       }
       number += 1;
     }
@@ -128,8 +130,9 @@ public class Table {
     return this.cardSlots[handStack.get(0)].getSuit();
   }
 
-  public boolean isBroken(){
+  public void Update(){
     boolean hasHeart = false;
+    boolean SQ = false;
     for(int hand = 0; hand < cardSlots.length; hand++) {
       try{ // check if card is available
         Card check = cardSlots[handStack.get(hand)];
@@ -140,11 +143,16 @@ public class Table {
       if(cardSlots[handStack.get(hand)].getSuit().equals(Suit.HEARTS)){
         hasHeart = true;
       }
+      else if(cardSlots[handStack.get(hand)].equals(new Card(12, Suit.SPADES))){
+        SQ = true;
+      }
     }
     if(getPlayedNumber() != 0){
-      return !cardSlots[handStack.get(0)].getSuit().equals(Suit.HEARTS) && hasHeart;
+      this.heartIsBroken = this.heartIsBroken || (!cardSlots[handStack.get(0)].getSuit().equals(Suit.HEARTS)) && hasHeart;
+      //System.out.println("Table : Is broken : " + this.isBroken());
     }
-    return false;
+    this.SQIsOut = this.SQIsOut || SQ;
+    //System.out.println("Table : SQOut : " + this.SQIsOut());
   }
 
   public int getHeartNumber(){
@@ -156,4 +164,13 @@ public class Table {
     }
     return output;
   }
+
+  public boolean isBroken(){
+    return this.heartIsBroken;
+  }
+  public boolean SQIsOut(){
+    return this.heartIsBroken;
+  }
 }
+
+
