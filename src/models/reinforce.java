@@ -11,7 +11,10 @@ public class reinforce {
 
         Table table = new Table();
         Deck deck = new Deck();
+        int bigRound = 1;
         while(!anyOneDone(bot)){
+            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            System.out.println("Round : " + bigRound);
             System.out.println("Dealing...");
             deck.shuffle();
             for(int j = 0; j < 13; j++){
@@ -34,6 +37,44 @@ public class reinforce {
             int First = whoFirst(bot);
             System.out.println(bot[First].getName() + " play first");
             System.out.println("Dealing done. starting round");
+            if(bigRound % 4 != 0){
+                bot[0].chooseCardToGive();
+                bot[1].chooseCardToGive();
+                bot[2].chooseCardToGive();
+                bot[3].chooseCardToGive();
+                System.out.print("Choose card to ");
+                if(bigRound % 4 == 1){
+                    System.out.println("left player");
+                    bot[0].giveCard(bot[1]);
+                    bot[1].giveCard(bot[2]);
+                    bot[2].giveCard(bot[3]);
+                    bot[3].giveCard(bot[0]);
+                }
+                if(bigRound % 4 == 2){
+                    System.out.println("right player");
+                    bot[0].giveCard(bot[3]);
+                    bot[3].giveCard(bot[2]);
+                    bot[2].giveCard(bot[1]);
+                    bot[1].giveCard(bot[0]);
+                }
+                if(bigRound % 4 == 3){
+                    System.out.println("opposite player");
+                    bot[0].giveCard(bot[2]);
+                    bot[1].giveCard(bot[3]);
+                    bot[2].giveCard(bot[0]);
+                    bot[3].giveCard(bot[1]);
+                }
+                for(int i = 0; i < 3; i++){
+                    bot[i].sortCardsInHand();
+                }
+                System.out.println("-------------------------------------\n card list:");
+                for(int i = 0; i < 4; i++){
+                    System.out.println("\n"+bot[i].getName());
+                    for(Card card : bot[i].getCardsInHand()){
+                        System.out.println(card.toString());
+                    }
+                }
+            }
             for(int i = 0; i < 13; i++){
                 for(int j = 0; j < 4; j++){
                     if(First >= 4){
@@ -55,6 +96,7 @@ public class reinforce {
                     First++;
                     
                 }
+                table.Update();
                 int winner = table.findWinner();
                 First = winner;
                 Suit firstCardSuit = table.getFirstSuit();
@@ -72,7 +114,9 @@ public class reinforce {
                 System.out.println("\t\t\t\t\t\t" + bot[j].getName() + " get " + bot[j].getOverallScore());
             }
             deck.refresh();
+            table.reset();
             System.out.println("---------------------------------------------------------");
+            bigRound++;
         }
     }
     public static int[][] randWeight(){
@@ -95,7 +139,7 @@ public class reinforce {
     }
     public static boolean anyOneDone(Bot[] bot){
         for(Bot b : bot){
-            if(b.getOverallScore() >= 10){
+            if(b.getOverallScore() >= 100){
                 return true;
             }
         }

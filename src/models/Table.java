@@ -169,7 +169,11 @@ public class Table {
     return this.heartIsBroken;
   }
   public boolean SQIsOut(){
-    return this.heartIsBroken;
+    return this.SQIsOut;
+  }
+  public void reset(){
+    this.heartIsBroken = false;
+    this.SQIsOut = false;
   }
 }
 

@@ -58,6 +58,9 @@ public class Bot extends Hand {
         }
         if(!table.cardIsOnTable(this.SQ) && !table.suitIsOnTable("hearts")){
           cardScore[cardIndex] += card.getRank();
+          if(card.getSuit().equals(Suit.HEARTS)){
+            cardScore[cardIndex] += card.getRank();
+          }
         }
       }
     }
@@ -194,10 +197,50 @@ public class Bot extends Hand {
     }
     return false;
   }
-  @Override
-  public void giveCard(Hand hand){
+
+  public void chooseCardToGive(){
      // choose which card to give
+     int []res = new int[3];
+     int []cardScore = new int[super.getCardsInHand().size()];
+     Card []cardbuffer = new Card[3];
+     for(int cardIndex = 0; cardIndex < super.getCardsInHand().size(); cardIndex++){
+      Card card = super.getCardsInHand().get(cardIndex);
+      cardScore[cardIndex] = card.getRank();
+      if(card.equals(this.SK) || card.equals(this.SA)){
+        cardScore[cardIndex] += 100;
+      }
+      else if(card.getSuit().equals(Suit.HEARTS)){
+        cardScore[cardIndex] += card.getRank();
+      }
+      else if(card.equals(this.SQ)){
+        cardScore[cardIndex] -= 10;
+      }
+    }
+    System.out.println(this.name + " :");
+    for(int i = 0; i < 3; i++){ // give 3 card
+      int maxScore = 0;
+      int pos = -1;
+      for(int cardIndex = 0; cardIndex < super.getCardsInHand().size(); cardIndex++){
+        if(cardScore[cardIndex] > maxScore){
+          maxScore = cardScore[cardIndex];
+          pos = cardIndex;
+        }
+      }
+      res[i] = pos;
+      cardbuffer[i] = super.getCardsInHand().get(pos);
+      System.out.println(cardbuffer[i].toString());
+      super.removeCardInHand(cardbuffer[i]);
+    }
+    for(int i = 0; i < 3; i++){
+      this.addCardInHand(cardbuffer[i]);
+    }
+    this.sortCardsInHand();
+    super.setChosenGiveCards(res);
+    // for(int i = 0; i < 3; i++){
+    //   System.out.println(super.getCardsInHand().get(super.getChosenGiveCards()[i]));
+    // }
   }
+
   public void refreshRound() {
     super.refreshHand();
     this.heartInHand = 0;
