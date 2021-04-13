@@ -1,3 +1,14 @@
+
 .card-label {
   -fx-background-color: red;
+}
+.background{
+    -fx-background-image : url(../../public/bg.jpg);
+}
+.Btnstart{
+    -fx-background-radius : 10;   
+    -fx-background-color:#8B8B8B;
+}
+.Btnstart:hover{
+    -fx-background-color:#E2E2E2;
 }

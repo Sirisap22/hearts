@@ -1,0 +1,8 @@
+.bg{
+  -fx-background-radius:30;
+  -fx-background-color:#CDCDCD;
+}
+.btnHome{
+   -fx-background-radius:15;
+   -fx-background-color:#C92A42;
+}

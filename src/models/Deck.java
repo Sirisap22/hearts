@@ -13,7 +13,7 @@ public class Deck implements Iterable<Card> {
 
     refresh();
   }
-
+  
   public void refresh() {
     Suit[] suits = Card.getSuits();
     int minRank = Card.getMinRank();
