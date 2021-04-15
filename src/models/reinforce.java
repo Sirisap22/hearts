@@ -2,7 +2,6 @@ package models;
 import java.util.Random;
 public class reinforce {
     public static void main(String[] args) {
-        int[][] bestGene = new int[21][15];
         Bot[] bot = new Bot[4];
         bot[0] = new Bot("A");
         bot[1] = new Bot("B");
@@ -12,20 +11,28 @@ public class reinforce {
         Table table = new Table();
         Deck deck = new Deck();
         int bigRound = 1;
+
+        //let bots join the table
+        bot[0].joinTable(table);
+        bot[1].joinTable(table);
+        bot[2].joinTable(table);
+        bot[3].joinTable(table);
+
         while(!anyOneDone(bot)){
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             System.out.println("Round : " + bigRound);
             System.out.println("Dealing...");
             deck.shuffle();
+            //dealing card
             for(int j = 0; j < 13; j++){
-                bot[0].addCardInHand(deck.popCard());
-                bot[1].addCardInHand(deck.popCard());
-                bot[2].addCardInHand(deck.popCard());
-                bot[3].addCardInHand(deck.popCard());
+                for(int i = 0; i < 4; i++){
+                    bot[i].addCardInHand(deck.popCard());
+                }
             }
             for(int i = 0; i < 4; i++){
                 bot[i].sortCardsInHand();
             }
+            //listing card for debug
             System.out.println("-------------------------------------\n card list:");
             for(int i = 0; i < 4; i++){
                 System.out.println("\n"+bot[i].getName());
@@ -37,11 +44,11 @@ public class reinforce {
             int First = whoFirst(bot);
             System.out.println(bot[First].getName() + " play first");
             System.out.println("Dealing done. starting round");
+            //decide to give the card (left >> right >> opposite >> no giving >> left)
             if(bigRound % 4 != 0){
-                bot[0].chooseCardToGive();
-                bot[1].chooseCardToGive();
-                bot[2].chooseCardToGive();
-                bot[3].chooseCardToGive();
+                for(int i = 0; i < 4; i++){
+                    bot[i].chooseCardToGive();
+                }
                 System.out.print("Choose card to ");
                 if(bigRound % 4 == 1){
                     System.out.println("left player");
@@ -68,6 +75,7 @@ public class reinforce {
                     bot[i].sortCardsInHand();
                 }
                 System.out.println("-------------------------------------\n card list:");
+                //Listing card after giving card for debug
                 for(int i = 0; i < 4; i++){
                     System.out.println("\n"+bot[i].getName());
                     for(Card card : bot[i].getCardsInHand()){
@@ -75,6 +83,7 @@ public class reinforce {
                     }
                 }
             }
+            //start small round
             for(int i = 0; i < 13; i++){
                 for(int j = 0; j < 4; j++){
                     if(First >= 4){
@@ -106,6 +115,7 @@ public class reinforce {
                 }
                 System.out.println(bot[winner].getName() + " has to keep the card and got " + (bot[winner].getPoints() - winnerScore) + " point, first suit : " + firstCardSuit + ", Is broken : " + table.isBroken() + "\n");
             }
+            //end of small round and processing point
             System.out.println("End the round\n---------------------------------------------------------\nreport:\n");
             for(int j = 0; j < 4; j++){
                 System.out.println(bot[j].getName() + " get " + bot[j].getPoints());
@@ -113,21 +123,12 @@ public class reinforce {
                 bot[j].refreshHand();
                 System.out.println("\t\t\t\t\t\t" + bot[j].getName() + " get " + bot[j].getOverallScore());
             }
+            //refresh deck and table
             deck.refresh();
             table.reset();
             System.out.println("---------------------------------------------------------");
             bigRound++;
         }
-    }
-    public static int[][] randWeight(){
-        Random rand = new Random();
-        int[][] res = new int[15][21];
-        for(int i = 0; i < 21; i++){
-            for(int j = 0; j < 15; j++){
-                res[j][i] = rand.nextInt(20);
-            }
-        }
-        return res.clone();
     }
     public static int whoFirst(Bot[] bot){
         Card S2 = new Card(2, Suit.CLUBS);
