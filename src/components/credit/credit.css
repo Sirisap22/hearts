@@ -1,0 +1,15 @@
+.bg{
+    -fx-background-color:#CDCDCD;
+    -fx-background-radius:0 30 30 0;
+}
+.bg-creator{
+     -fx-background-color:#E2E2E2;
+    -fx-background-radius:30;
+}
+.vbox{
+    -fx-background-color:#C92A42;
+    -fx-background-radius:30;
+}
+.pane{
+    -fx-background-color:#202125;
+}

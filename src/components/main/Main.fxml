@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="700.0" prefWidth="1400.0" styleClass="bg" stylesheets="@main.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.main.MainController">
+   <children>
+      <BorderPane fx:id="borderPane" layoutX="839.0" layoutY="237.0" nodeOrientation="LEFT_TO_RIGHT" styleClass="borderPane" stylesheets="@main.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <center>
+            <VBox alignment="CENTER" prefHeight="680.0" prefWidth="100.0" styleClass="borderCenter" stylesheets="@main.css" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="Home" mnemonicParsing="false" onMouseEntered="#HomeEnter" onMouseExited="#HomeExit" onMousePressed="#HomePress" onMouseReleased="#HomeRelease" prefHeight="70.0" prefWidth="200.0" styleClass="btn-vbox" stylesheets="@main.css" text="Home" textFill="WHITE">
+                     <font>
+                        <Font name="LilyUPC" size="39.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../public/menu/home_30px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="rules" layoutX="10.0" layoutY="315.0" mnemonicParsing="false" onMouseEntered="#ruleEnter" onMouseExited="#ruleExit" onMousePressed="#rulePress" onMouseReleased="#ruleRelese" prefHeight="70.0" prefWidth="200.0" styleClass="btn-vbox" stylesheets="@main.css" text="Rules" textFill="WHITE">
+                     <font>
+                        <Font name="LilyUPC" size="39.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../public/menu/rules_24px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="credit" layoutX="10.0" layoutY="385.0" mnemonicParsing="false" onMouseEntered="#creditEnter" onMouseExited="#creditExit" onMousePressed="#creditPress" onMouseReleased="#creditRelese" prefHeight="70.0" prefWidth="200.0" styleClass="btn-vbox" stylesheets="@main.css" text="Credit" textFill="WHITE">
+                     <font>
+                        <Font name="LilyUPC" size="39.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../public/menu/crowd_filled_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="another" layoutX="10.0" layoutY="350.0" mnemonicParsing="false" onMouseEntered="#anotherEnter" onMouseExited="#anotherExit" onMousePressed="#anotherPress" onMouseReleased="#anotherRelese" prefHeight="70.0" prefWidth="200.0" styleClass="btn-vbox" stylesheets="@main.css" text="Another" textFill="WHITE">
+                     <font>
+                        <Font name="LilyUPC" size="39.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../public/menu/menu_30px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="quit" layoutX="10.0" layoutY="420.0" mnemonicParsing="false" onMouseEntered="#quitEnter" onMouseExited="#quitExit" onMousePressed="#quitPress" onMouseReleased="#quitRelese" prefHeight="70.0" prefWidth="200.0" styleClass="btn-vbox" stylesheets="@main.css" text="Quit" textFill="WHITE">
+                     <font>
+                        <Font name="LilyUPC" size="39.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../public/menu/shutdown_26px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <effect>
+                  <DropShadow radius="21.4325" width="66.73" />
+               </effect>
+            </VBox>
+         </center>
+         <left>
+            <Pane prefHeight="680.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <StackPane fx:id="scenePane" prefHeight="680.0" prefWidth="900.0">
+               <children>
+                  <ImageView fitHeight="658.0" fitWidth="879.0" pickOnBounds="true" smooth="false">
+                     <image>
+                        <Image url="@../../public/menu/3.gif" />
+                     </image>
+                  </ImageView>
+                  <Pane prefHeight="654.0" prefWidth="891.0">
+                     <children>
+                        <Button fx:id="playBtn" layoutX="394.0" layoutY="592.0" mnemonicParsing="false" onAction="#playGame" prefHeight="40.0" prefWidth="120.0" styleClass="playbtn" stylesheets="@main.css" text="Play" textFill="#fedbc5">
+                           <font>
+                              <Font name="Book Antiqua Bold" size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+               </children>
+            </StackPane>
+         </right>
+      </BorderPane>
+   </children>
+</AnchorPane>
