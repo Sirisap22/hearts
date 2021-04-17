@@ -190,6 +190,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dealCard(ActionEvent event) {
+        // test
         int j = 0;
         int y = 0;
         for (int i = 0; i < 13; i++) {
