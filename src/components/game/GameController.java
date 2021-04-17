@@ -32,25 +32,21 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import models.Deck;
-import models.Hand;
-import models.Hearts;
-import models.Player;
 import utils.ComponentLoader;
 
 public class GameController implements Initializable {
-    private Hearts hearts;
     // private ArrayList<ImageView> deck = new ArrayList<>(52);
     private ComponentLoader<GameController> loader = new ComponentLoader<>();
     private HashMap<String, Pair<ImageView, CardController>> cards = new HashMap<>();
-    private ArrayList<Pair<ImageView, CardController>> card = new ArrayList<Pair<ImageView, CardController>>();
+    private ImageView[] card = new ImageView[52];
     // private ArrayList<ImageView> player1 =new ArrayList<>(13);
     // private ArrayList<ImageView> player2 =new ArrayList<>(13);
     // private ArrayList<ImageView> player3 =new ArrayList<>(13);
     // private ArrayList<ImageView> player4 =new ArrayList<>(13);
-    private ArrayList<Pair<ImageView, CardController>> player1 = new ArrayList<Pair<ImageView, CardController>>();
-    private ArrayList<Pair<ImageView, CardController>> player2 = new ArrayList<Pair<ImageView, CardController>>();
-    private ArrayList<Pair<ImageView, CardController>> player3 = new ArrayList<Pair<ImageView, CardController>>();
-    private ArrayList<Pair<ImageView, CardController>> player4 = new ArrayList<Pair<ImageView, CardController>>();
+    private ImageView[] player1 = new ImageView[13];
+    private ImageView[] player2 = new ImageView[13];
+    private ImageView[] player3 = new ImageView[13];
+    private ImageView[] player4 = new ImageView[13];
 
     private double windowWidth = 1400;
     private double windowHeight = 700;
@@ -124,13 +120,10 @@ public class GameController implements Initializable {
 
     @FXML
     private void onStart() {
-        Hand[] handsInit = { new Player("test1"), new Player("test2"), new Player("test3"), new Player("test4") };
+        Deck temp = new Deck();
+        temp.refresh();
+        System.out.println("hello of on start");
 
-        hearts = new Hearts(handsInit);
-
-        hearts.resetGame();
-
-        Deck temp = hearts.getDeck();
         // create all cards
         try {
             int t = 0;
@@ -141,7 +134,6 @@ public class GameController implements Initializable {
                 // System.out.println("hello of on start1");
                 CardController tempCon = cardComponent.getValue();
                 tempCon.setCard(card);
-                tempCon.setFacingDown(false);
                 // System.out.println("hello of on start2");
                 tempCon.updateCardImage();
                 // System.out.println("hello of on start3");
@@ -157,9 +149,9 @@ public class GameController implements Initializable {
                 // System.out.println("hello of on start8");
                 this.cards.put(card.toString(), cardComponent);
                 // System.out.println("hello of on start9");
-                this.card.add(this.cards.get(card.toString()));
+                this.card[t] = this.cards.get(card.toString()).getKey();
                 // System.out.println("hello of on start10");
-                t += 1;
+                t++;
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -168,12 +160,7 @@ public class GameController implements Initializable {
 
         swap.setVisible(false);
 
-        ArrayList<ImageView> imgs = new ArrayList<ImageView>();
-        for (var c : card) {
-            imgs.add(c.getKey());
-        }
-
-        root.getChildren().addAll(imgs);
+        root.getChildren().addAll(Arrays.asList(card));
     }
 
     @FXML
@@ -197,21 +184,21 @@ public class GameController implements Initializable {
             // rg[j].setRotate(90);
             // }
             PathTransition path1 = new PathTransition(Duration.millis(500),
-                    new Line(posCenterX, posCenterY, posXPlayer1, posyPlayer1), card.get(j).getKey());
-            card.get(j).getKey().getKeysetX(posXPlayer1);
-            card.get(j).setY(posyPlayer1);
-            player1[y] = card.get(j);
+                    new Line(posCenterX, posCenterY, posXPlayer1, posyPlayer1), card[j]);
+            card[j].setX(posXPlayer1);
+            card[j].setY(posyPlayer1);
+            player1[y] = card[j];
             j++;
             path1.play();
             posXPlayer1 += 20;
             if (j % 2 != 0) {
-                card.get(j).getKey().setRotate(90);
+                card[j].setRotate(90);
             }
             PathTransition path2 = new PathTransition(Duration.millis(500),
-                    new Line(posCenterX, posCenterY, posXPlayer2, posyPlayer2), card.get(j));
-            card.get(j).setX(posXPlayer2);
-            card.get(j).setY(posyPlayer2);
-            player2[y] = card.get(j);
+                    new Line(posCenterX, posCenterY, posXPlayer2, posyPlayer2), card[j]);
+            card[j].setX(posXPlayer2);
+            card[j].setY(posyPlayer2);
+            player2[y] = card[j];
             j++;
             posyPlayer2 += 10;
             path2.play();
@@ -219,36 +206,33 @@ public class GameController implements Initializable {
             // rg[j].setRotate(90);
             // }
             PathTransition path3 = new PathTransition(Duration.millis(500),
-                    new Line(posCenterX, posCenterY, posXPlayer3, posyPlayer3), card.get(j));
-            card.get(j).setX(posXPlayer3);
-            card.get(j).setY(posyPlayer3);
-            player3[y] = card.get(j);
+                    new Line(posCenterX, posCenterY, posXPlayer3, posyPlayer3), card[j]);
+            card[j].setX(posXPlayer3);
+            card[j].setY(posyPlayer3);
+            player3[y] = card[j];
             j++;
             posXPlayer3 += 20;
             path3.play();
             if (j % 2 != 0) {
-                card.get(j).setRotate(90);
+                card[j].setRotate(90);
             }
             PathTransition path4 = new PathTransition(Duration.millis(500),
-                    new Line(posCenterX, posCenterY, posXPlayer4, posyPlayer4), card.get(j));
-            card.get(j).setX(posXPlayer4);
-            card.get(j).setY(posyPlayer4);
-            player4[y++] = card.get(j);
+                    new Line(posCenterX, posCenterY, posXPlayer4, posyPlayer4), card[j]);
+            card[j].setX(posXPlayer4);
+            card[j].setY(posyPlayer4);
+            player4[y++] = card[j];
             j++;
             posyPlayer4 += 10;
             path4.play();
 
         }
-        hearts.dealCards();
-        hearts.printHands();
-        // hearts.dealCard
         btnDeal.setVisible(false);
         swapCard();
     }
 
     private void swapCard() {
 
-        Pair<ImageView, CardController> exchangeCard = new ImageView[3];
+        ImageView[] exchangeCard = new ImageView[3];
         for (int i = 0; i < player1.length; i++) {
             player1[i].setOnMouseClicked(e -> {
                 ImageView temp = (ImageView) e.getSource();
