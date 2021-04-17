@@ -1,0 +1,8 @@
+.background{
+    -fx-background-color:#01B075;
+    -fx-background-radius:20;
+}
+.alert{
+    -fx-background-color:#7AD5B6;
+    -fx-background-radius:20;
+}

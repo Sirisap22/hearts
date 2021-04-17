@@ -93,9 +93,9 @@ public class Hearts {
 
     setDeck(new Deck());
     deck.shuffle();
-    dealCards();
+    // dealCards();
 
-    sortCardsInHands();
+    // sortCardsInHands();
 
     // startGiveCardsPhase();
     // startBigRound();

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" styleClass="background" stylesheets="@cssTable.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.table.TableController">
+   <effect>
+      <DropShadow blurType="GAUSSIAN" height="49.6" offsetX="3.0" offsetY="3.0" radius="24.3" spread="0.35" width="49.6">
+         <color>
+            <Color green="0.044736843556165695" blue="0.005964912474155426" />
+         </color>
+      </DropShadow>
+   </effect>
+   <children>
+      <Pane layoutX="158.0" layoutY="381.0" prefHeight="117.0" prefWidth="584.0" styleClass="alert" stylesheets="@cssTable.css">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <Label layoutX="108.0" layoutY="37.0" prefHeight="44.0" prefWidth="368.0" text="I don't know what to do">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="33.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
