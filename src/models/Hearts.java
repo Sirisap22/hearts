@@ -91,6 +91,7 @@ public class Hearts {
 
     resetPoints();
 
+    setTable(new Table());
     setDeck(new Deck());
     deck.shuffle();
     // dealCards();
@@ -132,6 +133,16 @@ public class Hearts {
     Card card = cardsInHand.get(chosenCard);
 
     table.placeCardAt(card, turn);
+  }
+
+  public int whoFirst() {
+    Card S2 = new Card(2, Suit.CLUBS);
+    for (int i = 0; i < 4; i++) {
+      if (hands[i].has(S2))
+        return i;
+    }
+    // never reach
+    return -1;
   }
 
   public void endTurn() {

@@ -142,4 +142,14 @@ public abstract class Hand {
     }
   }
 
+  protected boolean has(Card cardin) {
+    for (int cardIndex = 0; cardIndex < cardsInHand.size(); cardIndex++) {
+      Card card = cardsInHand.get(cardIndex);
+      if (cardin.equals(card)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

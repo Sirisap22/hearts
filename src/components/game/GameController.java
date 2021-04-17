@@ -31,6 +31,7 @@ import javafx.animation.PathTransition;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import models.Bot;
 import models.Deck;
 import models.Hand;
 import models.Hearts;
@@ -76,59 +77,19 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Deck temp = new Deck();
-        // temp.refresh();
-
-        // // create all cards
-        // try {
-        // int t = 0;
-        // for (var card : temp) {
-        // Pair<ImageView, CardController> cardComponent = loader.loadComponent(this,
-        // "components/card/Card.fxml");
-        // CardController tempCon = cardComponent.getValue();
-        // tempCon.setCard(card);
-        // tempCon.updateCardImage();
-        // ImageView tempView = cardComponent.getKey();
-        // tempView.setX(posCenterX);
-        // tempView.setY(posCenterY);
-        // tempView.setFitHeight(cardHeight);
-        // tempView.setFitWidth(cardWidth);
-        // this.cards.put(card.toString(), cardComponent);
-        // this.card[t] = cardComponent.getKey();
-        // t++;
-        // }
-        // } catch (Exception e) {
-
-        // }
-
-        // swap.setVisible(false);
-        // // for (int i = 0; i < card.length; i++) {
-        // // card[i] = new ImageView(posCenterX, posCenterY, cardWidth, cardHeight);
-        // // card[i].setFill(Color.BISQUE);
-        // // card[i].setStroke(Color.BLACK);
-
-        // // }
-
-        // // for(int i=0;i<deck.size();i++){
-        // // ImageView reg=deck.get(i);
-        // // reg=new ImageView(500, 200, 50, 100);
-        // // reg.setWidth(50);
-        // // reg.setHeight(100);
-        // // reg.setFill(Color.BLUE);
-        // // }
-        // // root.getChildren().addAll(deck);
-
-        // root.getChildren().addAll(Arrays.asList(card));
-
-    }
-
-    @FXML
-    private void onStart() {
-        Hand[] handsInit = { new Player("test1"), new Player("test2"), new Player("test3"), new Player("test4") };
+        Hand[] handsInit = { new Player("test1"), new Bot("bot1"), new Bot("bot2"), new Bot("bot3") };
 
         hearts = new Hearts(handsInit);
 
         hearts.resetGame();
+
+        // let bots join the table
+        Hand[] hands = hearts.getHands();
+        for (int i = 0; i < hands.length; i++) {
+            if (hands[i] instanceof Bot) {
+                ((Bot) hands[i]).joinTable(hearts.getTable());
+            }
+        }
 
         Deck temp = hearts.getDeck();
         // create all cards
@@ -174,25 +135,24 @@ public class GameController implements Initializable {
         }
 
         root.getChildren().addAll(imgs);
+
     }
 
     @FXML
     private void exit(ActionEvent event) throws IOException {
-        Platform.exit();
-        System.exit(0);
-        // Parent root =
-        // FXMLLoader.load(getClass().getResource("/components/main/Main.fxml"));
-        // Scene gameScene = new Scene(root);
-        // gameScene.setFill(Color.TRANSPARENT);
-        // Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        // window.setScene(gameScene);
+        // Platform.exit();
+        // System.exit(0);
+        Parent root = FXMLLoader.load(getClass().getResource("/components/main/Main.fxml"));
+        Scene gameScene = new Scene(root);
+        gameScene.setFill(Color.TRANSPARENT);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(gameScene);
     }
 
     @FXML
     private void dealCard(ActionEvent event) {
         // test
         int j = 0;
-        int y = 0;
         for (int i = 0; i < 13; i++) {
             // if(j%2!=0){
             // rg[j].setRotate(90);
@@ -242,6 +202,16 @@ public class GameController implements Initializable {
         }
         hearts.dealCards();
         hearts.printHands();
+        int first = hearts.whoFirst();
+        Hand[] hands = hearts.getHands();
+
+        if (hands[first] instanceof Bot) {
+            int cc = ((Bot) hands[first]).choose();
+            System.out.println("bot choose " + cc);
+            System.out.println(hands[first].getCardsInHand().get(cc).toString());
+
+        }
+
         // hearts.dealCard
         btnDeal.setVisible(false);
         swapCard();

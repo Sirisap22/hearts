@@ -11,48 +11,17 @@ public class Bot extends Hand {
   protected Card C2 = new Card(2, Suit.CLUBS);
   protected int heartLeft = 13;
   protected int heartInHand = 0;
-  protected int overAllScore = 0;
+  protected Table table;
 
   public Bot(String name) {
     super(name);
   }
 
-  public void addOverAllScore(int amount) {
-    this.overAllScore += amount;
+  public void joinTable(Table table) {
+    this.table = table;
   }
 
-  public int getOverallScore() {
-    return this.overAllScore;
-  }
-
-  protected ArrayList<Integer> playableCard(Table table) {
-    ArrayList<Integer> output = new ArrayList<>();
-    for (int cardIndex = 0; cardIndex < super.getCardsInHand().size(); cardIndex++) {
-      Card card = super.getCardsInHand().get(cardIndex);
-      if (table.playable(card)) {
-        output.add(cardIndex);
-      }
-    }
-    if (table.getPlayedNumber() == 0) {
-      for (int cardIndex = 0; cardIndex < super.getCardsInHand().size(); cardIndex++) {
-        output.add(cardIndex);
-      }
-    }
-    return output;
-  }
-
-  protected boolean has(Card cardin) {
-    for (int cardIndex = 0; cardIndex < super.getCardsInHand().size(); cardIndex++) {
-      Card card = super.getCardsInHand().get(cardIndex);
-      if (cardin.equals(card)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  public int choose(Table table) {
-    // choose which card to play
+  public int choose() {
     int[] cardScore = new int[super.getCardsInHand().size()];
     // if there is no card can play
     if (playableCard(table).size() == 0) {
@@ -191,20 +160,7 @@ public class Bot extends Hand {
     return maxIndex[0];
   }
 
-  // for debug
-  public Card choosenCard(Table table) {
-    return getCardsInHand().get(choose(table));
-  }
-
-  public boolean hasSuit(Suit s) {
-    for (Card card : super.getCardsInHand()) {
-      if (card.getSuit().equals(s)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
+  // for using in game
   public void chooseCardToGive() {
     // choose which card to give
     int[] res = new int[3];
@@ -246,10 +202,35 @@ public class Bot extends Hand {
     // }
   }
 
+  public void chooseCardToPlace() {
+    this.chosenPlaceCard = choose();
+  }
+
+  // for debug
+  public Card choosenCard() {
+    return getCardsInHand().get(choose());
+  }
+
   public void refreshRound() {
     super.refreshHand();
     this.heartInHand = 0;
     this.heartLeft = 0;
+  }
+
+  protected ArrayList<Integer> playableCard(Table table) {
+    ArrayList<Integer> output = new ArrayList<>();
+    for (int cardIndex = 0; cardIndex < super.getCardsInHand().size(); cardIndex++) {
+      Card card = super.getCardsInHand().get(cardIndex);
+      if (table.playable(card)) {
+        output.add(cardIndex);
+      }
+    }
+    if (table.getPlayedNumber() == 0) {
+      for (int cardIndex = 0; cardIndex < super.getCardsInHand().size(); cardIndex++) {
+        output.add(cardIndex);
+      }
+    }
+    return output;
   }
 
   @Override
