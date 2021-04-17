@@ -198,9 +198,9 @@ public class GameController implements Initializable {
             // }
             PathTransition path1 = new PathTransition(Duration.millis(500),
                     new Line(posCenterX, posCenterY, posXPlayer1, posyPlayer1), card.get(j).getKey());
-            card.get(j).getKey().getKeysetX(posXPlayer1);
-            card.get(j).setY(posyPlayer1);
-            player1[y] = card.get(j);
+            card.get(j).getKey().setX(posXPlayer1);
+            card.get(j).getKey().setY(posyPlayer1);
+            player1.add(card.get(j));
             j++;
             path1.play();
             posXPlayer1 += 20;
@@ -208,10 +208,10 @@ public class GameController implements Initializable {
                 card.get(j).getKey().setRotate(90);
             }
             PathTransition path2 = new PathTransition(Duration.millis(500),
-                    new Line(posCenterX, posCenterY, posXPlayer2, posyPlayer2), card.get(j));
-            card.get(j).setX(posXPlayer2);
-            card.get(j).setY(posyPlayer2);
-            player2[y] = card.get(j);
+                    new Line(posCenterX, posCenterY, posXPlayer2, posyPlayer2), card.get(j).getKey());
+            card.get(j).getKey().setX(posXPlayer2);
+            card.get(j).getKey().setY(posyPlayer2);
+            player2.add(card.get(j));
             j++;
             posyPlayer2 += 10;
             path2.play();
@@ -219,21 +219,21 @@ public class GameController implements Initializable {
             // rg[j].setRotate(90);
             // }
             PathTransition path3 = new PathTransition(Duration.millis(500),
-                    new Line(posCenterX, posCenterY, posXPlayer3, posyPlayer3), card.get(j));
-            card.get(j).setX(posXPlayer3);
-            card.get(j).setY(posyPlayer3);
-            player3[y] = card.get(j);
+                    new Line(posCenterX, posCenterY, posXPlayer3, posyPlayer3), card.get(j).getKey());
+            card.get(j).getKey().setX(posXPlayer3);
+            card.get(j).getKey().setY(posyPlayer3);
+            player3.add(card.get(j));
             j++;
             posXPlayer3 += 20;
             path3.play();
             if (j % 2 != 0) {
-                card.get(j).setRotate(90);
+                card.get(j).getKey().setRotate(90);
             }
             PathTransition path4 = new PathTransition(Duration.millis(500),
-                    new Line(posCenterX, posCenterY, posXPlayer4, posyPlayer4), card.get(j));
-            card.get(j).setX(posXPlayer4);
-            card.get(j).setY(posyPlayer4);
-            player4[y++] = card.get(j);
+                    new Line(posCenterX, posCenterY, posXPlayer4, posyPlayer4), card.get(j).getKey());
+            card.get(j).getKey().setX(posXPlayer4);
+            card.get(j).getKey().setY(posyPlayer4);
+            player4.add(card.get(j));
             j++;
             posyPlayer4 += 10;
             path4.play();
@@ -248,9 +248,9 @@ public class GameController implements Initializable {
 
     private void swapCard() {
 
-        Pair<ImageView, CardController> exchangeCard = new ImageView[3];
-        for (int i = 0; i < player1.length; i++) {
-            player1[i].setOnMouseClicked(e -> {
+        ArrayList<Pair<ImageView, CardController>> exchangeCard = new ArrayList<>();
+        for (int i = 0; i < player1.size(); i++) {
+            player1.get(i).getKey().setOnMouseClicked(e -> {
                 ImageView temp = (ImageView) e.getSource();
                 // temp.setFill(Color.BLACK);
                 if (temp.getY() == 590) {
@@ -269,32 +269,32 @@ public class GameController implements Initializable {
         }
         swap.setVisible(true);
         swap.setOnAction(e -> {
-            ImageView temp;
-            double placeX1 = player1[0].getX();
-            double placeY1 = player1[0].getY();
-            double placeX2 = player2[0].getX();
-            double placeY2 = player2[0].getY();
+            Pair<ImageView, CardController> temp;
+            double placeX1 = player1.get(0).getKey().getX();
+            double placeY1 = player1.get(0).getKey().getY();
+            double placeX2 = player2.get(0).getKey().getX();
+            double placeY2 = player2.get(0).getKey().getY();
 
             PathTransition swapCard1 = new PathTransition(Duration.millis(500),
-                    new Line(placeX1, placeY1, placeX2, placeY2), player1[0]);
-            player1[0].setX(placeX2);
-            player1[0].setY(placeY2);
-            player1[0].setRotate(90);
-            // player1[0].setFill(Color.RED);
+                    new Line(placeX1, placeY1, placeX2, placeY2), player1.get(0).getKey());
+            player1.get(0).getKey().setX(placeX2);
+            player1.get(0).getKey().setY(placeY2);
+            player1.get(0).getKey().setRotate(90);
+            // player1.get(0).getKey().setFill(Color.RED);
             swapCard1.play();
 
             PathTransition swapCard2 = new PathTransition(Duration.millis(500),
-                    new Line(placeX2, placeY2, placeX1, placeY1), player2[0]);
-            player2[0].setX(placeX1);
-            player2[0].setY(placeY1);
-            player2[0].setRotate(0);
-            // player2[0].setFill(Color.BLUE);
+                    new Line(placeX2, placeY2, placeX1, placeY1), player2.get(0).getKey());
+            player2.get(0).getKey().setX(placeX1);
+            player2.get(0).getKey().setY(placeY1);
+            player2.get(0).getKey().setRotate(0);
+            // player2.get(0).getKey().setFill(Color.BLUE);
             swapCard2.play();
 
             // switch card in player hand
-            temp = player1[0];
-            player1[0] = player2[0];
-            player2[0] = temp;
+            temp = player1.get(0);
+            player1.set(0, player2.get(0));
+            player2.set(0, temp);
             swap.setVisible(false);
             begin();
         });
@@ -302,8 +302,8 @@ public class GameController implements Initializable {
     }
 
     private void begin() {
-        for (int i = 0; i < player1.length; i++) {
-            player1[i].setOnMouseClicked(e -> {
+        for (int i = 0; i < player1.size(); i++) {
+            player1.get(i).getKey().setOnMouseClicked(e -> {
                 ImageView temp = (ImageView) e.getSource();
                 PathTransition dropCard = new PathTransition(Duration.millis(500),
                         new Line(temp.getX(), temp.getY(), posCenterX + 80, posCenterY + 150), temp);
