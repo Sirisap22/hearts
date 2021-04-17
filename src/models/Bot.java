@@ -17,7 +17,6 @@ public class Bot extends Hand {
   public void joinTable(Table table){
     this.table = table;
   }
-  //for using in game
   private int choose(){
     int []cardScore = new int[super.getCardsInHand().size()];
     //if there is no card can play
@@ -158,6 +157,7 @@ public class Bot extends Hand {
     //System.out.println(this.name + " : Score = " + maxIndex[1]);
     return maxIndex[0];
   }
+  //for using in game
   public void chooseCardToGive(){
      // choose which card to give
      int []res = new int[3];
@@ -204,7 +204,7 @@ public class Bot extends Hand {
     this.chosenPlaceCard = choose();
   }
   //for debug
-  public Card choosenCard(Table table){
+  public Card choosenCard(){
     return getCardsInHand().get(choose());
   }
   public void refreshRound() {

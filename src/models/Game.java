@@ -74,7 +74,7 @@ public class Game {
                     }
                     Card card = new Card(3, Suit.SPADES);
                     if(player[First] instanceof Bot){
-                        card = ((Bot)player[First]).choosenCard(table);
+                        card = ((Bot)player[First]).choosenCard();
                     }
                     else{
                         //If not a bot. Choose card to play here.
