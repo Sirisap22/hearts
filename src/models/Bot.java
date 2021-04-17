@@ -10,7 +10,6 @@ public class Bot extends Hand {
   protected Card C2 = new Card(2, Suit.CLUBS);
   protected int heartLeft = 13;
   protected int heartInHand = 0;
-  protected int overAllScore = 0;
   protected Table table;
   public Bot(String name) {
     super(name);
@@ -208,24 +207,10 @@ public class Bot extends Hand {
   public Card choosenCard(Table table){
     return getCardsInHand().get(choose());
   }
-  public boolean hasSuit(Suit s){
-    for(Card card : super.getCardsInHand()){
-      if(card.getSuit().equals(s)){
-        return true;
-      }
-    }
-    return false;
-  }
   public void refreshRound() {
     super.refreshHand();
     this.heartInHand = 0;
     this.heartLeft = 0;
-  }
-  public void addOverAllScore(int amount){
-    this.overAllScore += amount;
-  }
-  public int getOverallScore(){
-    return this.overAllScore;
   }
   protected ArrayList<Integer> playableCard(Table table){
     ArrayList<Integer> output = new ArrayList<>();
@@ -241,15 +226,6 @@ public class Bot extends Hand {
       }
     }
     return output;
-  }
-  protected boolean has(Card cardin){
-    for(int cardIndex = 0; cardIndex <  super.getCardsInHand().size(); cardIndex++){
-      Card card = super.getCardsInHand().get(cardIndex);
-      if(cardin.equals(card)){
-        return true;
-      }
-    }
-    return false;
   }
   @Override
   public void makeAction() {

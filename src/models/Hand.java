@@ -142,4 +142,30 @@ public abstract class Hand {
     }
   }
 
+  //By billybacker
+  protected int overAllScore = 0;
+
+  public void addOverAllScore(int amount){
+    this.overAllScore += amount;
+  }
+  public int getOverallScore(){
+    return this.overAllScore;
+  }
+  protected boolean has(Card cardin){
+    for(int cardIndex = 0; cardIndex <  cardsInHand.size(); cardIndex++){
+      Card card = cardsInHand.get(cardIndex);
+      if(cardin.equals(card)){
+        return true;
+      }
+    }
+    return false;
+  }
+  public boolean hasSuit(Suit s){
+    for(Card card : cardsInHand){
+      if(card.getSuit().equals(s)){
+        return true;
+      }
+    }
+    return false;
+  }
 }
