@@ -1,2 +1,6 @@
 .vscode
 lib
+/JavaProject6/nbproject/private/
+/JavaProject6/build/
+/LoanFx/nbproject/private/
+/LoanFx/build/

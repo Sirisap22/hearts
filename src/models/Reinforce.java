@@ -1,7 +1,7 @@
 package models;
 
 import java.util.Random;
-
+/*
 public class Reinforce {
   public static void main(String[] args) {
     int[][] bestGene = new int[21][15];
@@ -157,3 +157,4 @@ public class Reinforce {
     return false;
   }
 }
+*/

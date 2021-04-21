@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package components.game;
 
 import java.io.IOException;
@@ -13,6 +9,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import components.card.CardController;
+import java.io.File;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +25,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.animation.PathTransition;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -39,6 +40,7 @@ import models.Player;
 import utils.ComponentLoader;
 
 public class GameController implements Initializable {
+
     private Hearts hearts;
     // private ArrayList<ImageView> deck = new ArrayList<>(52);
     private ComponentLoader<GameController> loader = new ComponentLoader<>();
@@ -52,6 +54,19 @@ public class GameController implements Initializable {
     private ArrayList<Pair<ImageView, CardController>> player2 = new ArrayList<Pair<ImageView, CardController>>();
     private ArrayList<Pair<ImageView, CardController>> player3 = new ArrayList<Pair<ImageView, CardController>>();
     private ArrayList<Pair<ImageView, CardController>> player4 = new ArrayList<Pair<ImageView, CardController>>();
+    
+    //player choose cards
+    private ArrayList<Pair<ImageView, CardController>> p1Choose = new ArrayList<Pair<ImageView, CardController>>();
+    private ArrayList<Integer> p1ChooseIndex = new ArrayList<>();
+
+    private ArrayList<Pair<ImageView, CardController>> p2Choose = new ArrayList<Pair<ImageView, CardController>>();
+    private ArrayList<Integer> p2ChooseIndex = new ArrayList<>();
+
+    private ArrayList<Pair<ImageView, CardController>> p3Choose = new ArrayList<Pair<ImageView, CardController>>();
+    private ArrayList<Integer> p3ChooseIndex = new ArrayList<>();
+
+    private ArrayList<Pair<ImageView, CardController>> p4Choose = new ArrayList<Pair<ImageView, CardController>>();
+    private ArrayList<Integer> p4ChooseIndex = new ArrayList<>();
 
     private double windowWidth = 1400;
     private double windowHeight = 700;
@@ -63,10 +78,10 @@ public class GameController implements Initializable {
     private double posyPlayer1 = 600;
     private double posXPlayer2 = 300;
     private double posyPlayer2 = 300;
-    private double posXPlayer3 = 600;
+    private double posXPlayer3 = 840;
     private double posyPlayer3 = 70;
     private double posXPlayer4 = 1100;
-    private double posyPlayer4 = 300;
+    private double posyPlayer4 = 420;
 
     @FXML
     private Pane root = new Pane();
@@ -77,7 +92,11 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Hand[] handsInit = { new Player("test1"), new Bot("bot1"), new Bot("bot2"), new Bot("bot3") };
+//        String path ="C:\\Users\\LENOVO LEGION\\Downloads\\12313.mp3";
+//        Media media = new Media(new File(path).toURI().toString());
+//        MediaPlayer player = new MediaPlayer(media);
+//        player.play();
+        Hand[] handsInit = {new Player("test1"), new Bot("bot1"), new Bot("bot2"), new Bot("bot3")};
 
         hearts = new Hearts(handsInit);
 
@@ -140,13 +159,13 @@ public class GameController implements Initializable {
 
     @FXML
     private void exit(ActionEvent event) throws IOException {
-        // Platform.exit();
-        // System.exit(0);
-        Parent root = FXMLLoader.load(getClass().getResource("/components/main/Main.fxml"));
-        Scene gameScene = new Scene(root);
-        gameScene.setFill(Color.TRANSPARENT);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(gameScene);
+        Platform.exit();
+        System.exit(0);
+//        Parent root = FXMLLoader.load(getClass().getResource("/components/main/Main.fxml"));
+//        Scene gameScene = new Scene(root);
+//        gameScene.setFill(Color.TRANSPARENT);
+//        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        window.setScene(gameScene);
     }
 
     @FXML
@@ -154,6 +173,7 @@ public class GameController implements Initializable {
         // test
         int j = 0;
         for (int i = 0; i < 13; i++) {
+            //Player1
             // if(j%2!=0){
             // rg[j].setRotate(90);
             // }
@@ -165,6 +185,8 @@ public class GameController implements Initializable {
             j++;
             path1.play();
             posXPlayer1 += 20;
+
+            //player 2
             if (j % 2 != 0) {
                 card.get(j).getKey().setRotate(90);
             }
@@ -176,6 +198,8 @@ public class GameController implements Initializable {
             j++;
             posyPlayer2 += 10;
             path2.play();
+
+            //player3
             // if(j%2!=0){
             // rg[j].setRotate(90);
             // }
@@ -185,10 +209,12 @@ public class GameController implements Initializable {
             card.get(j).getKey().setY(posyPlayer3);
             player3.add(card.get(j));
             j++;
-            posXPlayer3 += 20;
+            posXPlayer3 -= 20;
             path3.play();
+
+            //player4
             if (j % 2 != 0) {
-                card.get(j).getKey().setRotate(90);
+                card.get(j).getKey().setRotate(-90);
             }
             PathTransition path4 = new PathTransition(Duration.millis(500),
                     new Line(posCenterX, posCenterY, posXPlayer4, posyPlayer4), card.get(j).getKey());
@@ -196,7 +222,7 @@ public class GameController implements Initializable {
             card.get(j).getKey().setY(posyPlayer4);
             player4.add(card.get(j));
             j++;
-            posyPlayer4 += 10;
+            posyPlayer4 -= 10;
             path4.play();
 
         }
@@ -214,72 +240,292 @@ public class GameController implements Initializable {
 
         // hearts.dealCard
         btnDeal.setVisible(false);
-        swapCard();
+        pickCard();
     }
 
-    private void swapCard() {
+    private void pickCard() {
 
-        ArrayList<Pair<ImageView, CardController>> exchangeCard = new ArrayList<>();
         for (int i = 0; i < player1.size(); i++) {
-            player1.get(i).getKey().setOnMouseClicked(e -> {
-                ImageView temp = (ImageView) e.getSource();
-                // temp.setFill(Color.BLACK);
-                if (temp.getY() == 590) {
-                    PathTransition slideDown = new PathTransition(Duration.millis(100),
-                            new Line(temp.getX(), temp.getY(), temp.getX(), temp.getY() + 10), temp);
-                    temp.setY(temp.getY() + 10);
-                    slideDown.play();
-                } else {
-                    PathTransition slideUp = new PathTransition(Duration.millis(100),
-                            new Line(temp.getX(), temp.getY(), temp.getX(), temp.getY() - 10), temp);
-                    temp.setY(temp.getY() - 10);
-                    slideUp.play();
+            player1.get(i).getKey().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent e) {
+                    ImageView temp = (ImageView) e.getSource();
+//                System.out.println(temp==player1.get(0).getKey());
+                    if (temp.getY() == 590) {
+                        PathTransition slideDown = new PathTransition(Duration.millis(100),
+                                new Line(temp.getX(), temp.getY(), temp.getX(), temp.getY() + 10), temp);
+                        temp.setY(temp.getY() + 10);
+                        slideDown.play();
+                        for (int i = 0; i < p1Choose.size(); i++) {
+                            if(temp==p1Choose.get(i).getKey()){
+                                System.out.println(p1Choose);
+                                p1Choose.remove(i);
+                                p1ChooseIndex.remove(i);
+                                System.out.println(p1ChooseIndex);
+                            }
+                        }
+
+                    } else {
+                        PathTransition slideUp = new PathTransition(Duration.millis(100),
+                                new Line(temp.getX(), temp.getY(), temp.getX(), temp.getY() - 10), temp);
+                        temp.setY(temp.getY() - 10);
+                        slideUp.play();
+                        for(int i=0;i<player1.size();i++){
+                            if(temp==player1.get(i).getKey()){
+                                p1Choose.add(player1.get(i));
+                                p1ChooseIndex.add(i);
+                                System.out.println(p1Choose);
+                                System.out.println(p1ChooseIndex);
+                            }
+                        }
+//                        if (temp == player1.get(0).getKey()) {
+//                            p1Choose.add(player1.get(0));
+//                            p1ChooseIndex.add(0);
+//                        } else if (temp == player1.get(1).getKey()) {
+//                            p1Choose.add(player1.get(1));
+//                            p1ChooseIndex.add(1);
+//                        } else if (temp == player1.get(2).getKey()) {
+//                            p1Choose.add(player1.get(2));
+//                            p1ChooseIndex.add(2);
+//                        } else if (temp == player1.get(3).getKey()) {
+//                            p1Choose.add(player1.get(3));
+//                            p1ChooseIndex.add(3);
+//                        } else if (temp == player1.get(4).getKey()) {
+//                            p1Choose.add(player1.get(4));
+//                            p1ChooseIndex.add(4);
+//                        } else if (temp == player1.get(5).getKey()) {
+//                            p1Choose.add(player1.get(5));
+//                            p1ChooseIndex.add(5);
+//                        } else if (temp == player1.get(6).getKey()) {
+//                            p1Choose.add(player1.get(6));
+//                            p1ChooseIndex.add(6);
+//                        } else if (temp == player1.get(7).getKey()) {
+//                            p1Choose.add(player1.get(7));
+//                            p1ChooseIndex.add(7);
+//                        } else if (temp == player1.get(8).getKey()) {
+//                            p1Choose.add(player1.get(8));
+//                            p1ChooseIndex.add(8);
+//                        } else if (temp == player1.get(9).getKey()) {
+//                            p1Choose.add(player1.get(9));
+//                            p1ChooseIndex.add(9);
+//                        } else if (temp == player1.get(10).getKey()) {
+//                            p1Choose.add(player1.get(10));
+//                            p1ChooseIndex.add(10);
+//                        } else if (temp == player1.get(11).getKey()) {
+//                            p1Choose.add(player1.get(11));
+//                            p1ChooseIndex.add(11);
+//                        } else if (temp == player1.get(12).getKey()) {
+//                            p1Choose.add(player1.get(12));
+//                            p1ChooseIndex.add(12);
+//                        }
+                    }
                 }
-                // System.out.println(e.getSource());
             });
         }
+        //set choosen cards
+//        p1Choose.add(player1.get(0));
+//        p1Choose.add(player1.get(1));
+//        p1Choose.add(player1.get(2));
+
+        p2Choose.add(player2.get(0));
+        p2ChooseIndex.add(0);
+        p2Choose.add(player2.get(1));
+        p2ChooseIndex.add(1);
+        p2Choose.add(player2.get(2));
+        p2ChooseIndex.add(2);
+
+        p3Choose.add(player3.get(0));
+        p3ChooseIndex.add(0);
+        p3Choose.add(player3.get(1));
+        p3ChooseIndex.add(1);
+        p3Choose.add(player3.get(2));
+        p3ChooseIndex.add(2);
+
+        p4Choose.add(player4.get(0));
+        p4ChooseIndex.add(0);
+        p4Choose.add(player4.get(1));
+        p4ChooseIndex.add(1);
+        p4Choose.add(player4.get(2));
+        p4ChooseIndex.add(2);
+
         swap.setVisible(true);
-        swap.setOnAction(e -> {
-            Pair<ImageView, CardController> temp;
-            double placeX1 = player1.get(0).getKey().getX();
-            double placeY1 = player1.get(0).getKey().getY();
-            double placeX2 = player2.get(0).getKey().getX();
-            double placeY2 = player2.get(0).getKey().getY();
-
-            PathTransition swapCard1 = new PathTransition(Duration.millis(500),
-                    new Line(placeX1, placeY1, placeX2, placeY2), player1.get(0).getKey());
-            player1.get(0).getKey().setX(placeX2);
-            player1.get(0).getKey().setY(placeY2);
-            player1.get(0).getKey().setRotate(90);
-            // player1.get(0).getKey().setFill(Color.RED);
-            swapCard1.play();
-
-            PathTransition swapCard2 = new PathTransition(Duration.millis(500),
-                    new Line(placeX2, placeY2, placeX1, placeY1), player2.get(0).getKey());
-            player2.get(0).getKey().setX(placeX1);
-            player2.get(0).getKey().setY(placeY1);
-            player2.get(0).getKey().setRotate(0);
-            // player2.get(0).getKey().setFill(Color.BLUE);
-            swapCard2.play();
-
-            // switch card in player hand
-            temp = player1.get(0);
-            player1.set(0, player2.get(0));
-            player2.set(0, temp);
-            swap.setVisible(false);
-            begin();
-        });
-
     }
 
-    private void begin() {
+    @FXML
+    public void leftSwap() {
+        p1Choose.get(0).getKey().setY(p1Choose.get(0).getKey().getY() + 10);
+        p1Choose.get(1).getKey().setY(p1Choose.get(1).getKey().getY() + 10);
+        p1Choose.get(2).getKey().setY(p1Choose.get(2).getKey().getY() + 10);
+
+        //place of cards
+        double P1Card1X = p1Choose.get(0).getKey().getX();
+        double P1Card1Y = p1Choose.get(0).getKey().getY();
+        double P1Card2X = p1Choose.get(1).getKey().getX();
+        double P1Card2Y = p1Choose.get(1).getKey().getY();
+        double P1Card3X = p1Choose.get(2).getKey().getX();
+        double P1Card3Y = p1Choose.get(2).getKey().getY();
+
+        double P2Card1X = p2Choose.get(0).getKey().getX();
+        double P2Card1Y = p2Choose.get(0).getKey().getY();
+        double P2Card2X = p2Choose.get(1).getKey().getX();
+        double P2Card2Y = p2Choose.get(1).getKey().getY();
+        double P2Card3X = p2Choose.get(2).getKey().getX();
+        double P2Card3Y = p2Choose.get(2).getKey().getY();
+
+        double P3Card1X = p3Choose.get(0).getKey().getX();
+        double P3Card1Y = p3Choose.get(0).getKey().getY();
+        double P3Card2X = p3Choose.get(1).getKey().getX();
+        double P3Card2Y = p3Choose.get(1).getKey().getY();
+        double P3Card3X = p3Choose.get(2).getKey().getX();
+        double P3Card3Y = p3Choose.get(2).getKey().getY();
+
+        double P4Card1X = p4Choose.get(0).getKey().getX();
+        double P4Card1Y = p4Choose.get(0).getKey().getY();
+        double P4Card2X = p4Choose.get(1).getKey().getX();
+        double P4Card2Y = p4Choose.get(1).getKey().getY();
+        double P4Card3X = p4Choose.get(2).getKey().getX();
+        double P4Card3Y = p4Choose.get(2).getKey().getY();
+
+        //Transition
+        PathTransition path1card1 = new PathTransition(Duration.millis(500), new Line(P1Card1X, P1Card1Y, P2Card1X, P2Card1Y), p1Choose.get(0).getKey());
+        p1Choose.get(0).getKey().setX(P2Card1X);
+        p1Choose.get(0).getKey().setY(P2Card1Y);
+        p1Choose.get(0).getKey().setRotate(90);
+        PathTransition path1card2 = new PathTransition(Duration.millis(500), new Line(P1Card2X, P1Card2Y, P2Card2X, P2Card2Y), p1Choose.get(1).getKey());
+        p1Choose.get(1).getKey().setX(P2Card2X);
+        p1Choose.get(1).getKey().setY(P2Card2Y);
+        p1Choose.get(1).getKey().setRotate(90);
+        PathTransition path1card3 = new PathTransition(Duration.millis(500), new Line(P1Card3X, P1Card3Y, P2Card3X, P2Card3Y), p1Choose.get(2).getKey());
+        p1Choose.get(2).getKey().setX(P2Card3X);
+        p1Choose.get(2).getKey().setY(P2Card3Y);
+        p1Choose.get(2).getKey().setRotate(90);
+
+        PathTransition path2card1 = new PathTransition(Duration.millis(500), new Line(P2Card1X, P2Card1Y, P3Card1X, P3Card1Y), p2Choose.get(0).getKey());
+        p2Choose.get(0).getKey().setX(P3Card1X);
+        p2Choose.get(0).getKey().setY(P3Card1Y);
+        p2Choose.get(0).getKey().setRotate(0);
+        PathTransition path2card2 = new PathTransition(Duration.millis(500), new Line(P2Card2X, P2Card2Y, P3Card2X, P3Card2Y), p2Choose.get(1).getKey());
+        p2Choose.get(1).getKey().setX(P3Card2X);
+        p2Choose.get(1).getKey().setY(P3Card2Y);
+        p2Choose.get(1).getKey().setRotate(0);
+        PathTransition path2card3 = new PathTransition(Duration.millis(500), new Line(P2Card3X, P2Card3Y, P3Card3X, P3Card3Y), p2Choose.get(2).getKey());
+        p2Choose.get(2).getKey().setX(P3Card3X);
+        p2Choose.get(2).getKey().setY(P3Card3Y);
+        p2Choose.get(2).getKey().setRotate(0);
+
+        PathTransition path3card1 = new PathTransition(Duration.millis(500), new Line(P3Card1X, P3Card1Y, P4Card1X, P4Card1Y), p3Choose.get(0).getKey());
+        p3Choose.get(0).getKey().setX(P4Card1X);
+        p3Choose.get(0).getKey().setY(P4Card1Y);
+        p3Choose.get(0).getKey().setRotate(-90);
+        PathTransition path3card2 = new PathTransition(Duration.millis(500), new Line(P3Card2X, P3Card2Y, P4Card2X, P4Card2Y), p3Choose.get(1).getKey());
+        p3Choose.get(1).getKey().setX(P4Card2X);
+        p3Choose.get(1).getKey().setY(P4Card2Y);
+        p3Choose.get(1).getKey().setRotate(-90);
+        PathTransition path3card3 = new PathTransition(Duration.millis(500), new Line(P3Card3X, P3Card3Y, P4Card3X, P4Card3Y), p3Choose.get(2).getKey());
+        p3Choose.get(2).getKey().setX(P4Card3X);
+        p3Choose.get(2).getKey().setY(P4Card3Y);
+        p3Choose.get(2).getKey().setRotate(-90);
+
+        PathTransition path4card1 = new PathTransition(Duration.millis(500), new Line(P4Card1X, P4Card1Y, P1Card1X, P1Card1Y), p4Choose.get(0).getKey());
+        p4Choose.get(0).getKey().setX(P1Card1X);
+        p4Choose.get(0).getKey().setY(P1Card1Y);
+        p4Choose.get(0).getKey().setRotate(0);
+        PathTransition path4card2 = new PathTransition(Duration.millis(500), new Line(P4Card2X, P4Card2Y, P1Card2X, P1Card2Y), p4Choose.get(1).getKey());
+        p4Choose.get(1).getKey().setX(P1Card2X);
+        p4Choose.get(1).getKey().setY(P1Card2Y);
+        p4Choose.get(1).getKey().setRotate(0);
+        PathTransition path4card3 = new PathTransition(Duration.millis(500), new Line(P4Card3X, P4Card3Y, P1Card3X, P1Card3Y), p4Choose.get(2).getKey());
+        p4Choose.get(2).getKey().setX(P1Card3X);
+        p4Choose.get(2).getKey().setY(P1Card3Y);
+        p4Choose.get(2).getKey().setRotate(0);
+
+        //change card
+        player1.set(p1ChooseIndex.get(0), p4Choose.get(0));
+        player1.set(p1ChooseIndex.get(1), p4Choose.get(1));
+        player1.set(p1ChooseIndex.get(2), p4Choose.get(2));
+        player2.set(p2ChooseIndex.get(0), p1Choose.get(0));
+        player2.set(p2ChooseIndex.get(1), p1Choose.get(1));
+        player2.set(p2ChooseIndex.get(2), p1Choose.get(2));
+        player3.set(p3ChooseIndex.get(0), p2Choose.get(0));
+        player3.set(p3ChooseIndex.get(1), p2Choose.get(1));
+        player3.set(p3ChooseIndex.get(2), p2Choose.get(2));
+        player4.set(p4ChooseIndex.get(0), p3Choose.get(0));
+        player4.set(p4ChooseIndex.get(1), p3Choose.get(1));
+        player4.set(p4ChooseIndex.get(2), p3Choose.get(2));
+
+        //animation
+        path1card1.play();
+        path1card2.play();
+        path1card3.play();
+        path2card1.play();
+        path2card2.play();
+        path2card3.play();
+        path3card1.play();
+        path3card2.play();
+        path3card3.play();
+        path4card1.play();
+        path4card2.play();
+        path4card3.play();
+        
+        //remove choose card 
+        
+        swap.setVisible(false);
+//        refreshCard();
+        begin();
+    }
+
+    public void begin() {
         for (int i = 0; i < player1.size(); i++) {
             player1.get(i).getKey().setOnMouseClicked(e -> {
                 ImageView temp = (ImageView) e.getSource();
                 PathTransition dropCard = new PathTransition(Duration.millis(500),
-                        new Line(temp.getX(), temp.getY(), posCenterX + 80, posCenterY + 150), temp);
+                        new Line(temp.getX(), temp.getY(), posCenterX + 50, posCenterY + 160), temp);
                 dropCard.play();
             });
         }
+        for (int i = 0; i < player2.size(); i++) {
+            player2.get(i).getKey().setOnMouseClicked(e -> {
+                ImageView temp = (ImageView) e.getSource();
+                PathTransition dropCard = new PathTransition(Duration.millis(500),
+                        new Line(temp.getX(), temp.getY(), posCenterX , posCenterY + 100), temp);
+                temp.setRotate(0);
+                dropCard.play();
+            });
+        }
+        for (int i = 0; i < player3.size(); i++) {
+            player3.get(i).getKey().setOnMouseClicked(e -> {
+                ImageView temp = (ImageView) e.getSource();
+                PathTransition dropCard = new PathTransition(Duration.millis(500),
+                        new Line(temp.getX(), temp.getY(), posCenterX +50, posCenterY +40), temp);
+                dropCard.play();
+            });
+        }
+        for (int i = 0; i < player4.size(); i++) {
+            player4.get(i).getKey().setOnMouseClicked(e -> {
+                ImageView temp = (ImageView) e.getSource();
+                PathTransition dropCard = new PathTransition(Duration.millis(500),
+                        new Line(temp.getX(), temp.getY(), posCenterX +100, posCenterY + 100), temp);
+                temp.setRotate(0);
+                dropCard.play();
+            });
+        }
+    }
+    
+    public void refreshCard(){
+//        System.out.println(posXPlayer1);
+//        System.out.println(posyPlayer1);
+        posXPlayer1=600;
+        posyPlayer1=600;
+        
+//        player1.get(0).getKey().setX(300);
+        for(int i=0;i<player1.size();i++){
+           player1.get(i).getKey().setX(posXPlayer1);
+           player1.get(i).getKey().setY(posyPlayer1);
+           posXPlayer1+=20;
+        }
+    } 
+    
+    public void placeCardToTable(int whoseTurn,int indexOfCard){
+        
     }
 }
