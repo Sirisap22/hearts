@@ -78,14 +78,20 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="114.0" prefWidth="356.0">
                                  <children>
-                                    <ImageView fitHeight="49.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../public/menu/flow_chart_32px.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </ImageView>
+                                    <VBox alignment="CENTER" prefHeight="114.0" prefWidth="106.0">
+                                       <children>
+                                          <ImageView fitHeight="49.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../public/menu/flow_chart_32px.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="18.0" prefWidth="94.0" text="Game algorithm" textFill="#9a8d8d">
+                                             <font>
+                                                <Font name="Bodoni MT Condensed" size="17.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
                                     <Pane prefHeight="114.0" prefWidth="110.0" />
                                     <VBox alignment="CENTER" prefHeight="114.0" prefWidth="182.0">
                                        <children>
@@ -96,7 +102,7 @@
                                                       <Image url="@../../public/menu/crt.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="38.0" prefWidth="130.0" text="Name Lastname" textFill="#9a8d8d">
+                                                <Label prefHeight="38.0" prefWidth="130.0" text="Sirisap Siripattanakul" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -113,7 +119,7 @@
                                                       <Image url="@../../public/menu/gmail_30px.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="34.0" prefWidth="130.0" text="600000@gmail.com" textFill="#9a8d8d">
+                                                <Label prefHeight="34.0" prefWidth="130.0" text="63010978@kmitl.ac.th" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -127,7 +133,7 @@
                                                       <Image url="@../../public/menu/facebook.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="38.0" prefWidth="130.0" text="Name Lastname" textFill="#9a8d8d">
+                                                <Label prefHeight="38.0" prefWidth="130.0" text="Sirisap Siripattanakul​" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -153,14 +159,20 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="114.0" prefWidth="356.0">
                                  <children>
-                                    <ImageView fitHeight="49.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../public/menu/bot_filled_50px.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </ImageView>
+                                    <VBox alignment="CENTER" prefHeight="114.0" prefWidth="106.0">
+                                       <children>
+                                          <ImageView fitHeight="49.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../public/menu/bot_filled_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="18.0" prefWidth="94.0" text="Bot algorithm" textFill="#9a8d8d">
+                                             <font>
+                                                <Font name="Bodoni MT Condensed" size="17.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
                                     <Pane prefHeight="114.0" prefWidth="110.0" />
                                     <VBox alignment="CENTER" prefHeight="114.0" prefWidth="182.0">
                                        <children>
@@ -171,7 +183,7 @@
                                                       <Image url="@../../public/menu/crt.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="38.0" prefWidth="130.0" text="Name Lastname" textFill="#9a8d8d">
+                                                <Label prefHeight="38.0" prefWidth="130.0" text="Weelapat Um-arsa" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -188,7 +200,7 @@
                                                       <Image url="@../../public/menu/gmail_30px.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="34.0" prefWidth="130.0" text="600000@gmail.com" textFill="#9a8d8d">
+                                                <Label prefHeight="34.0" prefWidth="130.0" text="63010895@kmitl.ac.th" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -202,7 +214,7 @@
                                                       <Image url="@../../public/menu/facebook.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="38.0" prefWidth="130.0" text="Name Lastname" textFill="#9a8d8d">
+                                                <Label prefHeight="38.0" prefWidth="130.0" text="วีรภัทร อุ่มอาษา" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -228,14 +240,20 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="114.0" prefWidth="356.0">
                                  <children>
-                                    <ImageView fitHeight="49.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../public/menu/test_50px.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </ImageView>
+                                    <VBox alignment="CENTER" prefHeight="114.0" prefWidth="106.0">
+                                       <children>
+                                          <ImageView fitHeight="49.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../public/menu/test_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="18.0" prefWidth="94.0" text="Tester " textFill="#9a8d8d">
+                                             <font>
+                                                <Font name="Bodoni MT Condensed" size="17.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
                                     <Pane prefHeight="114.0" prefWidth="110.0" />
                                     <VBox alignment="CENTER" prefHeight="114.0" prefWidth="182.0">
                                        <children>
@@ -246,9 +264,9 @@
                                                       <Image url="@../../public/menu/crt.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="38.0" prefWidth="130.0" text="Name Lastname" textFill="#9a8d8d">
+                                                <Label prefHeight="34.0" prefWidth="134.0" text="Supakiart Thanyapragob " textFill="#9a8d8d">
                                                    <HBox.margin>
-                                                      <Insets left="5.0" />
+                                                      <Insets />
                                                    </HBox.margin>
                                                 </Label>
                                              </children>
@@ -263,7 +281,7 @@
                                                       <Image url="@../../public/menu/gmail_30px.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="34.0" prefWidth="130.0" text="600000@gmail.com" textFill="#9a8d8d">
+                                                <Label prefHeight="34.0" prefWidth="130.0" text="63010930@kmitl.ac.th " textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -277,7 +295,7 @@
                                                       <Image url="@../../public/menu/facebook.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="38.0" prefWidth="130.0" text="Name Lastname" textFill="#9a8d8d">
+                                                <Label prefHeight="38.0" prefWidth="130.0" text="Pleum Supakiart" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -303,14 +321,20 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="114.0" prefWidth="356.0">
                                  <children>
-                                    <ImageView fitHeight="49.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../public/menu/web_design_32px.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </ImageView>
+                                    <VBox alignment="CENTER" prefHeight="114.0" prefWidth="106.0">
+                                       <children>
+                                          <ImageView fitHeight="49.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../public/menu/web_design_32px.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="18.0" prefWidth="94.0" text="User interface" textFill="#9a8d8d">
+                                             <font>
+                                                <Font name="Bodoni MT Condensed" size="17.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
                                     <Pane prefHeight="114.0" prefWidth="110.0" />
                                     <VBox alignment="CENTER" prefHeight="114.0" prefWidth="182.0">
                                        <children>
@@ -321,7 +345,7 @@
                                                       <Image url="@../../public/menu/crt.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="38.0" prefWidth="130.0" text="Name Lastname" textFill="#9a8d8d">
+                                                <Label prefHeight="38.0" prefWidth="130.0" text="Abdulhakim Mamu" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -338,7 +362,7 @@
                                                       <Image url="@../../public/menu/gmail_30px.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="34.0" prefWidth="130.0" text="600000@gmail.com" textFill="#9a8d8d">
+                                                <Label prefHeight="34.0" prefWidth="130.0" text="63011414@kmitl.ac.th" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -352,7 +376,7 @@
                                                       <Image url="@../../public/menu/facebook.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="38.0" prefWidth="130.0" text="Name Lastname" textFill="#9a8d8d">
+                                                <Label prefHeight="38.0" prefWidth="130.0" text="Abdulhakim Mamu" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -378,14 +402,20 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="114.0" prefWidth="356.0">
                                  <children>
-                                    <ImageView fitHeight="49.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../public/menu/web_design_32px.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </ImageView>
+                                    <VBox alignment="CENTER" prefHeight="114.0" prefWidth="106.0">
+                                       <children>
+                                          <ImageView fitHeight="49.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../public/menu/web_design_32px.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="18.0" prefWidth="94.0" text="User interface" textFill="#9a8d8d">
+                                             <font>
+                                                <Font name="Bodoni MT Condensed" size="17.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
                                     <Pane prefHeight="114.0" prefWidth="110.0" />
                                     <VBox alignment="CENTER" prefHeight="114.0" prefWidth="182.0">
                                        <children>
@@ -396,7 +426,7 @@
                                                       <Image url="@../../public/menu/crt.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="38.0" prefWidth="130.0" text="Name Lastname" textFill="#9a8d8d">
+                                                <Label prefHeight="38.0" prefWidth="130.0" text="Abdulhakim Maha" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -413,7 +443,7 @@
                                                       <Image url="@../../public/menu/gmail_30px.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="34.0" prefWidth="130.0" text="600000@gmail.com" textFill="#9a8d8d">
+                                                <Label prefHeight="34.0" prefWidth="130.0" text="63011075@kmitl.ac.th" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -427,7 +457,7 @@
                                                       <Image url="@../../public/menu/facebook.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Label prefHeight="38.0" prefWidth="130.0" text="Name Lastname" textFill="#9a8d8d">
+                                                <Label prefHeight="38.0" prefWidth="130.0" text="Abdulhakim Maha" textFill="#9a8d8d">
                                                    <HBox.margin>
                                                       <Insets left="5.0" />
                                                    </HBox.margin>
@@ -459,25 +489,5 @@
             </StackPane>
          </children>
       </AnchorPane>
-      <ImageView fx:id="heart" fitHeight="80.0" fitWidth="57.0" layoutX="103.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../public/menu/hearts_64px.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="apple" fitHeight="36.0" fitWidth="39.0" layoutX="283.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../public/menu/mac_os_26px.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="people" fitHeight="36.0" fitWidth="36.0" layoutX="177.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../public/menu/user_filled_50px.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="stop" fitHeight="49.0" fitWidth="49.0" layoutX="289.0" layoutY="351.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../public/menu/minus_48px.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

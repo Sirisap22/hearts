@@ -6,7 +6,7 @@
     -fx-background-radius:30;
 }
 .borderCenter{
-    -fx-background-color:#C92A42;
+    -fx-background-color:linear-gradient(to bottom,#EE4540, #C72C41, #801336, #510A32 ,#2D142C);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 20, 0.4, 0.5, 0.5);
 }
 .btn-vbox{
@@ -26,4 +26,9 @@
 }
 .playbtn:hover{
     -fx-background-color:#F66E63;
+}
+.stackPane{
+    -fx-background-color:linear-gradient(to bottom,#EE4540, #C72C41, #801336, #510A32 ,#2D142C);
+    -fx-background-radius:0 30 30 0;
+    
 }

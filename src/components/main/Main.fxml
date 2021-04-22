@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -18,6 +19,14 @@
          <center>
             <VBox alignment="CENTER" prefHeight="680.0" prefWidth="100.0" styleClass="borderCenter" stylesheets="@main.css" BorderPane.alignment="CENTER">
                <children>
+                  <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../public/menu/cards_30px.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="30.0" left="10.0" />
+                     </VBox.margin>
+                  </ImageView>
                   <Button fx:id="Home" mnemonicParsing="false" onMouseEntered="#HomeEnter" onMouseExited="#HomeExit" onMousePressed="#HomePress" onMouseReleased="#HomeRelease" prefHeight="70.0" prefWidth="200.0" styleClass="btn-vbox" stylesheets="@main.css" text="Home" textFill="WHITE">
                      <font>
                         <Font name="LilyUPC" size="39.0" />
@@ -54,19 +63,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="another" layoutX="10.0" layoutY="350.0" mnemonicParsing="false" onMouseEntered="#anotherEnter" onMouseExited="#anotherExit" onMousePressed="#anotherPress" onMouseReleased="#anotherRelese" prefHeight="70.0" prefWidth="200.0" styleClass="btn-vbox" stylesheets="@main.css" text="Another" textFill="WHITE">
-                     <font>
-                        <Font name="LilyUPC" size="39.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../public/menu/menu_30px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="quit" layoutX="10.0" layoutY="420.0" mnemonicParsing="false" onMouseEntered="#quitEnter" onMouseExited="#quitExit" onMousePressed="#quitPress" onMouseReleased="#quitRelese" prefHeight="70.0" prefWidth="200.0" styleClass="btn-vbox" stylesheets="@main.css" text="Quit" textFill="WHITE">
+                  <Button fx:id="quit" layoutX="10.0" layoutY="420.0" mnemonicParsing="false" onMouseEntered="#quitEnter" onMouseExited="#quitExit" onMousePressed="#quitPress" onMouseReleased="#quitRelese" prefHeight="70.0" prefWidth="200.0" styleClass="btn-vbox" stylesheets="@main.css" text=" Quit" textFill="WHITE">
                      <font>
                         <Font name="LilyUPC" size="39.0" />
                      </font>
@@ -75,6 +72,9 @@
                            <image>
                               <Image url="@../../public/menu/shutdown_26px.png" />
                            </image>
+                           <viewport>
+                              <Rectangle2D minX="-5.0" />
+                           </viewport>
                         </ImageView>
                      </graphic>
                      <VBox.margin>
@@ -83,7 +83,7 @@
                   </Button>
                </children>
                <effect>
-                  <DropShadow radius="21.4325" width="66.73" />
+                  <DropShadow height="43.87" radius="27.15" width="66.73" />
                </effect>
             </VBox>
          </center>
@@ -91,7 +91,7 @@
             <Pane prefHeight="680.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
          </left>
          <right>
-            <StackPane fx:id="scenePane" prefHeight="680.0" prefWidth="900.0">
+            <StackPane fx:id="scenePane" prefHeight="680.0" prefWidth="900.0" styleClass="stackPane" stylesheets="@main.css">
                <children>
                   <ImageView fitHeight="658.0" fitWidth="879.0" pickOnBounds="true" smooth="false">
                      <image>

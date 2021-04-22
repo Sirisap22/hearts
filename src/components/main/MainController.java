@@ -24,7 +24,6 @@ public class MainController implements Initializable {
 
     private Pane rulesScene = new Pane();
     private Pane creditScene = new Pane();
-    private Pane anotherScene = new Pane();
     private Pane game = new Pane();
     private double setX = 0;
     private double setY = 0;
@@ -67,16 +66,6 @@ public class MainController implements Initializable {
             }
             borderPane.setRight(creditScene);
         });
-        another.setOnAction(e -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/another/Another.fxml"));
-
-            try {
-                anotherScene = loader.load();
-            } catch (IOException ex) {
-                Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            borderPane.setRight(anotherScene);
-        });
         Home.setOnAction(e -> {
             borderPane.setRight(scenePane);
         });
@@ -105,12 +94,12 @@ public class MainController implements Initializable {
 
     @FXML
     private void HomePress(MouseEvent event) {
-        Home.setStyle("-fx-background-color:#C92A42");
+        Home.setStyle("-fx-background-color:transparent");
     }
 
     @FXML
     private void HomeExit(MouseEvent event) {
-        Home.setStyle("-fx-background-color:#C92A42");
+        Home.setStyle("-fx-background-color:transparent");
     }
 
     @FXML
@@ -130,7 +119,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void ruleExit(MouseEvent event) {
-        rules.setStyle("-fx-background-color:#C92A42");
+        rules.setStyle("-fx-background-color:transparent");
     }
 
     @FXML
@@ -140,7 +129,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void rulePress(MouseEvent event) {
-        rules.setStyle("-fx-background-color:#C92A42");
+        rules.setStyle("-fx-background-color:transparent");
     }
 
     @FXML
@@ -150,7 +139,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void creditExit(MouseEvent event) {
-        credit.setStyle("-fx-background-color:#C92A42");
+        credit.setStyle("-fx-background-color:transparent");
     }
 
     @FXML
@@ -160,29 +149,10 @@ public class MainController implements Initializable {
 
     @FXML
     private void creditPress(MouseEvent event) {
-        credit.setStyle("-fx-background-color:#C92A42");
+        credit.setStyle("-fx-background-color:transparent");
     }
 
-    @FXML
-    private void anotherRelese(MouseEvent event) {
-        another.setStyle("-fx-background-color:#F66E63");
-    }
-
-    @FXML
-    private void anotherExit(MouseEvent event) {
-        another.setStyle("-fx-background-color:#C92A42");
-    }
-
-    @FXML
-    private void anotherEnter(MouseEvent event) {
-        another.setStyle("-fx-background-color:#F66E63");
-    }
-
-    @FXML
-    private void anotherPress(MouseEvent event) {
-        another.setStyle("-fx-background-color:#C92A42");
-    }
-
+    
     @FXML
     private void quitRelese(MouseEvent event) {
         quit.setStyle("-fx-background-color:#F66E63");
@@ -190,7 +160,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void quitExit(MouseEvent event) {
-        quit.setStyle("-fx-background-color:#C92A42");
+        quit.setStyle("-fx-background-color:transparent");
     }
 
     @FXML
@@ -200,7 +170,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void quitPress(MouseEvent event) {
-        quit.setStyle("-fx-background-color:#C92A42");
+        quit.setStyle("-fx-background-color:transparent");
     }
 
 }

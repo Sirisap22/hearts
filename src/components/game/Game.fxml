@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" styleClass="bg" stylesheets="@game.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.game.GameController">
    <children>
-      <Button layoutX="1347.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" prefHeight="28.0" prefWidth="39.0" styleClass="btnHome" stylesheets="@game.css" text="x" />
-      <Button fx:id="btnDeal" layoutX="890.0" layoutY="338.0" mnemonicParsing="false" onAction="#dealCard" prefHeight="39.0" prefWidth="72.0" text="deal" />
-      <Button fx:id="swap" layoutX="664.0" layoutY="319.0" mnemonicParsing="false" onAction="#leftSwap" prefHeight="39.0" prefWidth="72.0" text="swap" />
+      <Button fx:id="btnExit" layoutX="1342.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" onMouseEntered="#exitEnter" onMouseExited="#exitOut" onMousePressed="#exitPressed" onMouseReleased="#exitRelease" prefHeight="17.0" prefWidth="38.0" styleClass="btnHome" stylesheets="@game.css">
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../public/menu/home_64px.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnDeal" layoutX="890.0" layoutY="329.0" mnemonicParsing="false" onAction="#dealCard" onMouseEntered="#dealEnter" onMouseExited="#dealExit" onMousePressed="#dealPressed" onMouseReleased="#dealRelease" prefHeight="45.0" prefWidth="0.0" styleClass="deal" stylesheets="@game.css">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../public/menu/ace_of_diamonds_filled_50px.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="swap" layoutX="664.0" layoutY="316.0" mnemonicParsing="false" onAction="#leftSwap" onMouseEntered="#swapEnter" onMouseExited="#swapExit" prefHeight="70.0" prefWidth="70.0" styleClass="swap" stylesheets="@game.css">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../public/menu/Available%20Updates_50px.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </Pane>

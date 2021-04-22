@@ -23,33 +23,11 @@ import javafx.util.Duration;
  */
 public class CreditController implements Initializable {
 
-    @FXML
-    private ImageView heart;
-    @FXML
-    private ImageView apple;
-    @FXML
-    private ImageView people;
-    @FXML
-    private ImageView stop;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        PathTransition path = new PathTransition(Duration.millis(2000), new Line(100, 450, 100, -150), heart);
-        path.setAutoReverse(true);
-        path.setCycleCount(Timeline.INDEFINITE);
-        path.play();
-        PathTransition path1 = new PathTransition(Duration.millis(2000), new Line(110, -150, 110, 450), apple);
-        path1.setAutoReverse(true);
-        path1.setCycleCount(Timeline.INDEFINITE);
-        path1.play();
-        PathTransition path2 = new PathTransition(Duration.millis(2000), new Line(90, 450, 90, -150), people);
-        path2.setAutoReverse(true);
-        path2.setCycleCount(Timeline.INDEFINITE);
-        path2.play();
-        PathTransition path3 = new PathTransition(Duration.millis(2000), new Line(80, -150, 80, 450), stop);
-        path3.setAutoReverse(true);
-        path3.setCycleCount(Timeline.INDEFINITE);
-        path3.play();
+        
     }
 
 }

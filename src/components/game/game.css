@@ -1,8 +1,16 @@
 .bg{
   -fx-background-radius:30;
-  -fx-background-color:#CDCDCD;
+  -fx-background-color:linear-gradient(to bottom,#EE4540, #C72C41, #801336, #510A32 ,#2D142C);
 }
 .btnHome{
-   -fx-background-radius:15;
+   -fx-background-radius:50;
    -fx-background-color:#C92A42;
+}
+.deal{
+   -fx-background-radius:25%;
+   -fx-background-color:linear-gradient(to bottom,#2D9D3B, #68C974, #CDF4D2);
+}
+.swap{
+   -fx-background-radius:50;
+   -fx-background-color:#FEDBC5;
 }

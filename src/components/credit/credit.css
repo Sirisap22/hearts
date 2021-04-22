@@ -1,9 +1,10 @@
 .bg{
-    -fx-background-color:#CDCDCD;
+    /*    -fx-background-color:linear-gradient(to right,#313131,#C3BFBE);*/
+    -fx-background-color:linear-gradient(to bottom,#EE4540, #C72C41, #801336, #510A32 ,#2D142C);  
     -fx-background-radius:0 30 30 0;
 }
 .bg-creator{
-     -fx-background-color:#E2E2E2;
+    -fx-background-color:#E2E2E2;
     -fx-background-radius:30;
 }
 .vbox{

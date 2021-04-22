@@ -1,4 +1,3 @@
-
 package components.game;
 
 import java.io.IOException;
@@ -45,6 +44,7 @@ public class GameController implements Initializable {
     // private ArrayList<ImageView> deck = new ArrayList<>(52);
     private ComponentLoader<GameController> loader = new ComponentLoader<>();
     private HashMap<String, Pair<ImageView, CardController>> cards = new HashMap<>();
+    private ArrayList<ImageView> imgs = new ArrayList<ImageView>();
     private ArrayList<Pair<ImageView, CardController>> card = new ArrayList<Pair<ImageView, CardController>>();
     // private ArrayList<ImageView> player1 =new ArrayList<>(13);
     // private ArrayList<ImageView> player2 =new ArrayList<>(13);
@@ -54,7 +54,7 @@ public class GameController implements Initializable {
     private ArrayList<Pair<ImageView, CardController>> player2 = new ArrayList<Pair<ImageView, CardController>>();
     private ArrayList<Pair<ImageView, CardController>> player3 = new ArrayList<Pair<ImageView, CardController>>();
     private ArrayList<Pair<ImageView, CardController>> player4 = new ArrayList<Pair<ImageView, CardController>>();
-    
+
     //player choose cards
     private ArrayList<Pair<ImageView, CardController>> p1Choose = new ArrayList<Pair<ImageView, CardController>>();
     private ArrayList<Integer> p1ChooseIndex = new ArrayList<>();
@@ -89,6 +89,8 @@ public class GameController implements Initializable {
     private Button btnDeal;
     @FXML
     private Button swap;
+    @FXML
+    private Button btnExit;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -148,7 +150,6 @@ public class GameController implements Initializable {
 
         swap.setVisible(false);
 
-        ArrayList<ImageView> imgs = new ArrayList<ImageView>();
         for (var c : card) {
             imgs.add(c.getKey());
         }
@@ -159,13 +160,13 @@ public class GameController implements Initializable {
 
     @FXML
     private void exit(ActionEvent event) throws IOException {
-        Platform.exit();
-        System.exit(0);
-//        Parent root = FXMLLoader.load(getClass().getResource("/components/main/Main.fxml"));
-//        Scene gameScene = new Scene(root);
-//        gameScene.setFill(Color.TRANSPARENT);
-//        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        window.setScene(gameScene);
+//        Platform.exit();
+//        System.exit(0);
+        Parent root = FXMLLoader.load(getClass().getResource("/components/main/Main.fxml"));
+        Scene gameScene = new Scene(root);
+        gameScene.setFill(Color.TRANSPARENT);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(gameScene);
     }
 
     @FXML
@@ -257,7 +258,7 @@ public class GameController implements Initializable {
                         temp.setY(temp.getY() + 10);
                         slideDown.play();
                         for (int i = 0; i < p1Choose.size(); i++) {
-                            if(temp==p1Choose.get(i).getKey()){
+                            if (temp == p1Choose.get(i).getKey()) {
                                 System.out.println(p1Choose);
                                 p1Choose.remove(i);
                                 p1ChooseIndex.remove(i);
@@ -270,8 +271,8 @@ public class GameController implements Initializable {
                                 new Line(temp.getX(), temp.getY(), temp.getX(), temp.getY() - 10), temp);
                         temp.setY(temp.getY() - 10);
                         slideUp.play();
-                        for(int i=0;i<player1.size();i++){
-                            if(temp==player1.get(i).getKey()){
+                        for (int i = 0; i < player1.size(); i++) {
+                            if (temp == player1.get(i).getKey()) {
                                 p1Choose.add(player1.get(i));
                                 p1ChooseIndex.add(i);
                                 System.out.println(p1Choose);
@@ -466,11 +467,10 @@ public class GameController implements Initializable {
         path4card1.play();
         path4card2.play();
         path4card3.play();
-        
+
         //remove choose card 
-        
         swap.setVisible(false);
-//        refreshCard();
+        refreshCard();
         begin();
     }
 
@@ -480,6 +480,8 @@ public class GameController implements Initializable {
                 ImageView temp = (ImageView) e.getSource();
                 PathTransition dropCard = new PathTransition(Duration.millis(500),
                         new Line(temp.getX(), temp.getY(), posCenterX + 50, posCenterY + 160), temp);
+                temp.setX(posCenterX + 50);
+                temp.setY(posCenterY + 160);
                 dropCard.play();
             });
         }
@@ -487,7 +489,9 @@ public class GameController implements Initializable {
             player2.get(i).getKey().setOnMouseClicked(e -> {
                 ImageView temp = (ImageView) e.getSource();
                 PathTransition dropCard = new PathTransition(Duration.millis(500),
-                        new Line(temp.getX(), temp.getY(), posCenterX , posCenterY + 100), temp);
+                        new Line(temp.getX(), temp.getY(), posCenterX, posCenterY + 100), temp);
+                temp.setX(posCenterX );
+                temp.setY(posCenterY + 100);
                 temp.setRotate(0);
                 dropCard.play();
             });
@@ -496,7 +500,9 @@ public class GameController implements Initializable {
             player3.get(i).getKey().setOnMouseClicked(e -> {
                 ImageView temp = (ImageView) e.getSource();
                 PathTransition dropCard = new PathTransition(Duration.millis(500),
-                        new Line(temp.getX(), temp.getY(), posCenterX +50, posCenterY +40), temp);
+                        new Line(temp.getX(), temp.getY(), posCenterX + 50, posCenterY + 40), temp);
+                temp.setX(posCenterX + 50 );
+                temp.setY(posCenterY + 40);
                 dropCard.play();
             });
         }
@@ -504,28 +510,124 @@ public class GameController implements Initializable {
             player4.get(i).getKey().setOnMouseClicked(e -> {
                 ImageView temp = (ImageView) e.getSource();
                 PathTransition dropCard = new PathTransition(Duration.millis(500),
-                        new Line(temp.getX(), temp.getY(), posCenterX +100, posCenterY + 100), temp);
+                        new Line(temp.getX(), temp.getY(), posCenterX + 100, posCenterY + 100), temp);
+                temp.setX(posCenterX + 100);
+                temp.setY(posCenterY + 100);
                 temp.setRotate(0);
                 dropCard.play();
             });
         }
     }
-    
-    public void refreshCard(){
-//        System.out.println(posXPlayer1);
-//        System.out.println(posyPlayer1);
-        posXPlayer1=600;
-        posyPlayer1=600;
-        
-//        player1.get(0).getKey().setX(300);
-        for(int i=0;i<player1.size();i++){
-           player1.get(i).getKey().setX(posXPlayer1);
-           player1.get(i).getKey().setY(posyPlayer1);
-           posXPlayer1+=20;
+
+    public void refreshCard() {
+        root.getChildren().removeAll(imgs);
+        posXPlayer1 = 600;
+        posyPlayer1 = 600;
+        posXPlayer2 = 300;
+        posyPlayer2 = 300;
+        posXPlayer3 = 840;
+        posyPlayer3 = 70;
+        posXPlayer4 = 1100;
+        posyPlayer4 = 420;
+
+        for (int i = 0; i < player1.size(); i++) {
+            player1.get(i).getKey().setX(posXPlayer1);
+            player1.get(i).getKey().setY(posyPlayer1);
+            posXPlayer1 += 20;
+            root.getChildren().add(player1.get(i).getKey());
         }
-    } 
-    
-    public void placeCardToTable(int whoseTurn,int indexOfCard){
-        
+        for (int i = 0; i < player2.size(); i++) {
+            player2.get(i).getKey().setX(posXPlayer2);
+            player2.get(i).getKey().setY(posyPlayer2);
+            player2.get(i).getKey().setRotate(90);
+            posyPlayer2 += 10;
+            root.getChildren().add(player2.get(i).getKey());
+        }
+        for (int i = 0; i < player3.size(); i++) {
+            player3.get(i).getKey().setX(posXPlayer3);
+            player3.get(i).getKey().setY(posyPlayer3);
+            posXPlayer3 -= 20;
+            root.getChildren().add(player3.get(i).getKey());
+        }
+        for (int i = 0; i < player4.size(); i++) {
+            player4.get(i).getKey().setX(posXPlayer4);
+            player4.get(i).getKey().setY(posyPlayer4);
+            player4.get(i).getKey().setRotate(-90);
+            posyPlayer4 -= 10;
+            root.getChildren().add(player4.get(i).getKey());
+        }
     }
+
+    public void placeCardToTable(int whoseTurn, int indexOfCard) {
+
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @FXML
+    private void exitRelease(MouseEvent event) {
+        btnExit.setStyle("-fx-background-color:#F66E63");
+    }
+
+    @FXML
+    private void exitOut(MouseEvent event) {
+        btnExit.setStyle("-fx-background-color:#C92A42");
+    }
+
+    @FXML
+    private void exitEnter(MouseEvent event) {
+         btnExit.setStyle("-fx-background-color:#F66E63");
+    }
+
+    @FXML
+    private void exitPressed(MouseEvent event) {
+         btnExit.setStyle("-fx-background-color:#C92A42");
+    }
+
+    @FXML
+    private void dealRelease(MouseEvent event) {
+       btnDeal.setStyle("-fx-background-color:#01B075;"); 
+    }
+
+    @FXML
+    private void dealExit(MouseEvent event) {
+        btnDeal.setStyle("-fx-background-color:linear-gradient(to bottom,#2D9D3B, #68C974, #CDF4D2);");
+    }
+
+    @FXML
+    private void dealEnter(MouseEvent event) {
+         btnDeal.setStyle("-fx-background-color:#01B075;");
+    }
+
+    @FXML
+    private void dealPressed(MouseEvent event) {
+       
+        btnDeal.setStyle("-fx-background-color:linear-gradient(to bottom,#2D9D3B, #68C974, #CDF4D2);");
+    }
+
+
+    @FXML
+    private void swapExit(MouseEvent event) {
+        swap.setPrefWidth(70);
+        swap.setPrefHeight(70); 
+    }
+
+    @FXML
+    private void swapEnter(MouseEvent event) {
+        swap.setPrefWidth(75);
+        swap.setPrefHeight(75); 
+    }
+
 }
