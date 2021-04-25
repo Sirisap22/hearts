@@ -40,6 +40,8 @@ import utils.ComponentLoader;
 
 public class GameController implements Initializable {
 
+    private double setX = 0;
+    private double setY = 0;
     private Hearts hearts;
     // private ArrayList<ImageView> deck = new ArrayList<>(52);
     private ComponentLoader<GameController> loader = new ComponentLoader<>();
@@ -167,6 +169,14 @@ public class GameController implements Initializable {
         gameScene.setFill(Color.TRANSPARENT);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(gameScene);
+         root.setOnMousePressed(e -> {
+            setX = e.getSceneX();
+            setY = e.getSceneY();
+        });
+        root.setOnMouseDragged(e -> {
+            window.setX(e.getScreenX() - setX);
+            window.setY(e.getScreenY() - setY);
+        });
     }
 
     @FXML
@@ -490,7 +500,7 @@ public class GameController implements Initializable {
                 ImageView temp = (ImageView) e.getSource();
                 PathTransition dropCard = new PathTransition(Duration.millis(500),
                         new Line(temp.getX(), temp.getY(), posCenterX, posCenterY + 100), temp);
-                temp.setX(posCenterX );
+                temp.setX(posCenterX);
                 temp.setY(posCenterY + 100);
                 temp.setRotate(0);
                 dropCard.play();
@@ -501,7 +511,7 @@ public class GameController implements Initializable {
                 ImageView temp = (ImageView) e.getSource();
                 PathTransition dropCard = new PathTransition(Duration.millis(500),
                         new Line(temp.getX(), temp.getY(), posCenterX + 50, posCenterY + 40), temp);
-                temp.setX(posCenterX + 50 );
+                temp.setX(posCenterX + 50);
                 temp.setY(posCenterY + 40);
                 dropCard.play();
             });
@@ -562,20 +572,6 @@ public class GameController implements Initializable {
 
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @FXML
     private void exitRelease(MouseEvent event) {
         btnExit.setStyle("-fx-background-color:#F66E63");
@@ -588,17 +584,17 @@ public class GameController implements Initializable {
 
     @FXML
     private void exitEnter(MouseEvent event) {
-         btnExit.setStyle("-fx-background-color:#F66E63");
+        btnExit.setStyle("-fx-background-color:#F66E63");
     }
 
     @FXML
     private void exitPressed(MouseEvent event) {
-         btnExit.setStyle("-fx-background-color:#C92A42");
+        btnExit.setStyle("-fx-background-color:#C92A42");
     }
 
     @FXML
     private void dealRelease(MouseEvent event) {
-       btnDeal.setStyle("-fx-background-color:#01B075;"); 
+        btnDeal.setStyle("-fx-background-color:#01B075;");
     }
 
     @FXML
@@ -608,26 +604,25 @@ public class GameController implements Initializable {
 
     @FXML
     private void dealEnter(MouseEvent event) {
-         btnDeal.setStyle("-fx-background-color:#01B075;");
+        btnDeal.setStyle("-fx-background-color:#01B075;");
     }
 
     @FXML
     private void dealPressed(MouseEvent event) {
-       
+
         btnDeal.setStyle("-fx-background-color:linear-gradient(to bottom,#2D9D3B, #68C974, #CDF4D2);");
     }
-
 
     @FXML
     private void swapExit(MouseEvent event) {
         swap.setPrefWidth(70);
-        swap.setPrefHeight(70); 
+        swap.setPrefHeight(70);
     }
 
     @FXML
     private void swapEnter(MouseEvent event) {
         swap.setPrefWidth(75);
-        swap.setPrefHeight(75); 
+        swap.setPrefHeight(75);
     }
 
 }
