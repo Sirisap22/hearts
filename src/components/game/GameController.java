@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import components.card.CardController;
@@ -32,6 +34,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import models.Bot;
+import models.Card;
 import models.Deck;
 import models.Hand;
 import models.Hearts;
@@ -57,7 +60,7 @@ public class GameController implements Initializable {
     private ArrayList<Pair<ImageView, CardController>> player3 = new ArrayList<Pair<ImageView, CardController>>();
     private ArrayList<Pair<ImageView, CardController>> player4 = new ArrayList<Pair<ImageView, CardController>>();
 
-    //player choose cards
+    // player choose cards
     private ArrayList<Pair<ImageView, CardController>> p1Choose = new ArrayList<Pair<ImageView, CardController>>();
     private ArrayList<Integer> p1ChooseIndex = new ArrayList<>();
 
@@ -96,11 +99,11 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        String path ="C:\\Users\\LENOVO LEGION\\Downloads\\12313.mp3";
-//        Media media = new Media(new File(path).toURI().toString());
-//        MediaPlayer player = new MediaPlayer(media);
-//        player.play();
-        Hand[] handsInit = {new Player("test1"), new Bot("bot1"), new Bot("bot2"), new Bot("bot3")};
+        // String path ="C:\\Users\\LENOVO LEGION\\Downloads\\12313.mp3";
+        // Media media = new Media(new File(path).toURI().toString());
+        // MediaPlayer player = new MediaPlayer(media);
+        // player.play();
+        Hand[] handsInit = { new Player("test1"), new Bot("bot1"), new Bot("bot2"), new Bot("bot3") };
 
         hearts = new Hearts(handsInit);
 
@@ -155,6 +158,12 @@ public class GameController implements Initializable {
         for (var c : card) {
             imgs.add(c.getKey());
         }
+        // var it = cards.entrySet().iterator();
+        // while (it.hasNext()) {
+        // var pair = it.next();
+        // imgs.add(pair.getValue().getKey());
+        // System.out.println(pair.getKey() + " = " + pair.getValue());
+        // it.remove(); // avoids a ConcurrentModificationException
 
         root.getChildren().addAll(imgs);
 
@@ -162,14 +171,14 @@ public class GameController implements Initializable {
 
     @FXML
     private void exit(ActionEvent event) throws IOException {
-//        Platform.exit();
-//        System.exit(0);
+        // Platform.exit();
+        // System.exit(0);
         Parent root = FXMLLoader.load(getClass().getResource("/components/main/Main.fxml"));
         Scene gameScene = new Scene(root);
         gameScene.setFill(Color.TRANSPARENT);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(gameScene);
-         root.setOnMousePressed(e -> {
+        root.setOnMousePressed(e -> {
             setX = e.getSceneX();
             setY = e.getSceneY();
         });
@@ -184,7 +193,7 @@ public class GameController implements Initializable {
         // test
         int j = 0;
         for (int i = 0; i < 13; i++) {
-            //Player1
+            // Player1
             // if(j%2!=0){
             // rg[j].setRotate(90);
             // }
@@ -197,7 +206,7 @@ public class GameController implements Initializable {
             path1.play();
             posXPlayer1 += 20;
 
-            //player 2
+            // player 2
             if (j % 2 != 0) {
                 card.get(j).getKey().setRotate(90);
             }
@@ -210,7 +219,7 @@ public class GameController implements Initializable {
             posyPlayer2 += 10;
             path2.play();
 
-            //player3
+            // player3
             // if(j%2!=0){
             // rg[j].setRotate(90);
             // }
@@ -223,7 +232,7 @@ public class GameController implements Initializable {
             posXPlayer3 -= 20;
             path3.play();
 
-            //player4
+            // player4
             if (j % 2 != 0) {
                 card.get(j).getKey().setRotate(-90);
             }
@@ -251,6 +260,8 @@ public class GameController implements Initializable {
 
         // hearts.dealCard
         btnDeal.setVisible(false);
+        sortCardsInHands();
+        refreshCard();
         pickCard();
     }
 
@@ -261,7 +272,7 @@ public class GameController implements Initializable {
                 @Override
                 public void handle(MouseEvent e) {
                     ImageView temp = (ImageView) e.getSource();
-//                System.out.println(temp==player1.get(0).getKey());
+                    // System.out.println(temp==player1.get(0).getKey());
                     if (temp.getY() == 590) {
                         PathTransition slideDown = new PathTransition(Duration.millis(100),
                                 new Line(temp.getX(), temp.getY(), temp.getX(), temp.getY() + 10), temp);
@@ -289,54 +300,54 @@ public class GameController implements Initializable {
                                 System.out.println(p1ChooseIndex);
                             }
                         }
-//                        if (temp == player1.get(0).getKey()) {
-//                            p1Choose.add(player1.get(0));
-//                            p1ChooseIndex.add(0);
-//                        } else if (temp == player1.get(1).getKey()) {
-//                            p1Choose.add(player1.get(1));
-//                            p1ChooseIndex.add(1);
-//                        } else if (temp == player1.get(2).getKey()) {
-//                            p1Choose.add(player1.get(2));
-//                            p1ChooseIndex.add(2);
-//                        } else if (temp == player1.get(3).getKey()) {
-//                            p1Choose.add(player1.get(3));
-//                            p1ChooseIndex.add(3);
-//                        } else if (temp == player1.get(4).getKey()) {
-//                            p1Choose.add(player1.get(4));
-//                            p1ChooseIndex.add(4);
-//                        } else if (temp == player1.get(5).getKey()) {
-//                            p1Choose.add(player1.get(5));
-//                            p1ChooseIndex.add(5);
-//                        } else if (temp == player1.get(6).getKey()) {
-//                            p1Choose.add(player1.get(6));
-//                            p1ChooseIndex.add(6);
-//                        } else if (temp == player1.get(7).getKey()) {
-//                            p1Choose.add(player1.get(7));
-//                            p1ChooseIndex.add(7);
-//                        } else if (temp == player1.get(8).getKey()) {
-//                            p1Choose.add(player1.get(8));
-//                            p1ChooseIndex.add(8);
-//                        } else if (temp == player1.get(9).getKey()) {
-//                            p1Choose.add(player1.get(9));
-//                            p1ChooseIndex.add(9);
-//                        } else if (temp == player1.get(10).getKey()) {
-//                            p1Choose.add(player1.get(10));
-//                            p1ChooseIndex.add(10);
-//                        } else if (temp == player1.get(11).getKey()) {
-//                            p1Choose.add(player1.get(11));
-//                            p1ChooseIndex.add(11);
-//                        } else if (temp == player1.get(12).getKey()) {
-//                            p1Choose.add(player1.get(12));
-//                            p1ChooseIndex.add(12);
-//                        }
+                        // if (temp == player1.get(0).getKey()) {
+                        // p1Choose.add(player1.get(0));
+                        // p1ChooseIndex.add(0);
+                        // } else if (temp == player1.get(1).getKey()) {
+                        // p1Choose.add(player1.get(1));
+                        // p1ChooseIndex.add(1);
+                        // } else if (temp == player1.get(2).getKey()) {
+                        // p1Choose.add(player1.get(2));
+                        // p1ChooseIndex.add(2);
+                        // } else if (temp == player1.get(3).getKey()) {
+                        // p1Choose.add(player1.get(3));
+                        // p1ChooseIndex.add(3);
+                        // } else if (temp == player1.get(4).getKey()) {
+                        // p1Choose.add(player1.get(4));
+                        // p1ChooseIndex.add(4);
+                        // } else if (temp == player1.get(5).getKey()) {
+                        // p1Choose.add(player1.get(5));
+                        // p1ChooseIndex.add(5);
+                        // } else if (temp == player1.get(6).getKey()) {
+                        // p1Choose.add(player1.get(6));
+                        // p1ChooseIndex.add(6);
+                        // } else if (temp == player1.get(7).getKey()) {
+                        // p1Choose.add(player1.get(7));
+                        // p1ChooseIndex.add(7);
+                        // } else if (temp == player1.get(8).getKey()) {
+                        // p1Choose.add(player1.get(8));
+                        // p1ChooseIndex.add(8);
+                        // } else if (temp == player1.get(9).getKey()) {
+                        // p1Choose.add(player1.get(9));
+                        // p1ChooseIndex.add(9);
+                        // } else if (temp == player1.get(10).getKey()) {
+                        // p1Choose.add(player1.get(10));
+                        // p1ChooseIndex.add(10);
+                        // } else if (temp == player1.get(11).getKey()) {
+                        // p1Choose.add(player1.get(11));
+                        // p1ChooseIndex.add(11);
+                        // } else if (temp == player1.get(12).getKey()) {
+                        // p1Choose.add(player1.get(12));
+                        // p1ChooseIndex.add(12);
+                        // }
                     }
                 }
             });
         }
-        //set choosen cards
-//        p1Choose.add(player1.get(0));
-//        p1Choose.add(player1.get(1));
-//        p1Choose.add(player1.get(2));
+        // set choosen cards
+        // p1Choose.add(player1.get(0));
+        // p1Choose.add(player1.get(1));
+        // p1Choose.add(player1.get(2));
 
         p2Choose.add(player2.get(0));
         p2ChooseIndex.add(0);
@@ -368,7 +379,7 @@ public class GameController implements Initializable {
         p1Choose.get(1).getKey().setY(p1Choose.get(1).getKey().getY() + 10);
         p1Choose.get(2).getKey().setY(p1Choose.get(2).getKey().getY() + 10);
 
-        //place of cards
+        // place of cards
         double P1Card1X = p1Choose.get(0).getKey().getX();
         double P1Card1Y = p1Choose.get(0).getKey().getY();
         double P1Card2X = p1Choose.get(1).getKey().getX();
@@ -397,60 +408,72 @@ public class GameController implements Initializable {
         double P4Card3X = p4Choose.get(2).getKey().getX();
         double P4Card3Y = p4Choose.get(2).getKey().getY();
 
-        //Transition
-        PathTransition path1card1 = new PathTransition(Duration.millis(500), new Line(P1Card1X, P1Card1Y, P2Card1X, P2Card1Y), p1Choose.get(0).getKey());
+        // Transition
+        PathTransition path1card1 = new PathTransition(Duration.millis(500),
+                new Line(P1Card1X, P1Card1Y, P2Card1X, P2Card1Y), p1Choose.get(0).getKey());
         p1Choose.get(0).getKey().setX(P2Card1X);
         p1Choose.get(0).getKey().setY(P2Card1Y);
         p1Choose.get(0).getKey().setRotate(90);
-        PathTransition path1card2 = new PathTransition(Duration.millis(500), new Line(P1Card2X, P1Card2Y, P2Card2X, P2Card2Y), p1Choose.get(1).getKey());
+        PathTransition path1card2 = new PathTransition(Duration.millis(500),
+                new Line(P1Card2X, P1Card2Y, P2Card2X, P2Card2Y), p1Choose.get(1).getKey());
         p1Choose.get(1).getKey().setX(P2Card2X);
         p1Choose.get(1).getKey().setY(P2Card2Y);
         p1Choose.get(1).getKey().setRotate(90);
-        PathTransition path1card3 = new PathTransition(Duration.millis(500), new Line(P1Card3X, P1Card3Y, P2Card3X, P2Card3Y), p1Choose.get(2).getKey());
+        PathTransition path1card3 = new PathTransition(Duration.millis(500),
+                new Line(P1Card3X, P1Card3Y, P2Card3X, P2Card3Y), p1Choose.get(2).getKey());
         p1Choose.get(2).getKey().setX(P2Card3X);
         p1Choose.get(2).getKey().setY(P2Card3Y);
         p1Choose.get(2).getKey().setRotate(90);
 
-        PathTransition path2card1 = new PathTransition(Duration.millis(500), new Line(P2Card1X, P2Card1Y, P3Card1X, P3Card1Y), p2Choose.get(0).getKey());
+        PathTransition path2card1 = new PathTransition(Duration.millis(500),
+                new Line(P2Card1X, P2Card1Y, P3Card1X, P3Card1Y), p2Choose.get(0).getKey());
         p2Choose.get(0).getKey().setX(P3Card1X);
         p2Choose.get(0).getKey().setY(P3Card1Y);
         p2Choose.get(0).getKey().setRotate(0);
-        PathTransition path2card2 = new PathTransition(Duration.millis(500), new Line(P2Card2X, P2Card2Y, P3Card2X, P3Card2Y), p2Choose.get(1).getKey());
+        PathTransition path2card2 = new PathTransition(Duration.millis(500),
+                new Line(P2Card2X, P2Card2Y, P3Card2X, P3Card2Y), p2Choose.get(1).getKey());
         p2Choose.get(1).getKey().setX(P3Card2X);
         p2Choose.get(1).getKey().setY(P3Card2Y);
         p2Choose.get(1).getKey().setRotate(0);
-        PathTransition path2card3 = new PathTransition(Duration.millis(500), new Line(P2Card3X, P2Card3Y, P3Card3X, P3Card3Y), p2Choose.get(2).getKey());
+        PathTransition path2card3 = new PathTransition(Duration.millis(500),
+                new Line(P2Card3X, P2Card3Y, P3Card3X, P3Card3Y), p2Choose.get(2).getKey());
         p2Choose.get(2).getKey().setX(P3Card3X);
         p2Choose.get(2).getKey().setY(P3Card3Y);
         p2Choose.get(2).getKey().setRotate(0);
 
-        PathTransition path3card1 = new PathTransition(Duration.millis(500), new Line(P3Card1X, P3Card1Y, P4Card1X, P4Card1Y), p3Choose.get(0).getKey());
+        PathTransition path3card1 = new PathTransition(Duration.millis(500),
+                new Line(P3Card1X, P3Card1Y, P4Card1X, P4Card1Y), p3Choose.get(0).getKey());
         p3Choose.get(0).getKey().setX(P4Card1X);
         p3Choose.get(0).getKey().setY(P4Card1Y);
         p3Choose.get(0).getKey().setRotate(-90);
-        PathTransition path3card2 = new PathTransition(Duration.millis(500), new Line(P3Card2X, P3Card2Y, P4Card2X, P4Card2Y), p3Choose.get(1).getKey());
+        PathTransition path3card2 = new PathTransition(Duration.millis(500),
+                new Line(P3Card2X, P3Card2Y, P4Card2X, P4Card2Y), p3Choose.get(1).getKey());
         p3Choose.get(1).getKey().setX(P4Card2X);
         p3Choose.get(1).getKey().setY(P4Card2Y);
         p3Choose.get(1).getKey().setRotate(-90);
-        PathTransition path3card3 = new PathTransition(Duration.millis(500), new Line(P3Card3X, P3Card3Y, P4Card3X, P4Card3Y), p3Choose.get(2).getKey());
+        PathTransition path3card3 = new PathTransition(Duration.millis(500),
+                new Line(P3Card3X, P3Card3Y, P4Card3X, P4Card3Y), p3Choose.get(2).getKey());
         p3Choose.get(2).getKey().setX(P4Card3X);
         p3Choose.get(2).getKey().setY(P4Card3Y);
         p3Choose.get(2).getKey().setRotate(-90);
 
-        PathTransition path4card1 = new PathTransition(Duration.millis(500), new Line(P4Card1X, P4Card1Y, P1Card1X, P1Card1Y), p4Choose.get(0).getKey());
+        PathTransition path4card1 = new PathTransition(Duration.millis(500),
+                new Line(P4Card1X, P4Card1Y, P1Card1X, P1Card1Y), p4Choose.get(0).getKey());
         p4Choose.get(0).getKey().setX(P1Card1X);
         p4Choose.get(0).getKey().setY(P1Card1Y);
         p4Choose.get(0).getKey().setRotate(0);
-        PathTransition path4card2 = new PathTransition(Duration.millis(500), new Line(P4Card2X, P4Card2Y, P1Card2X, P1Card2Y), p4Choose.get(1).getKey());
+        PathTransition path4card2 = new PathTransition(Duration.millis(500),
+                new Line(P4Card2X, P4Card2Y, P1Card2X, P1Card2Y), p4Choose.get(1).getKey());
         p4Choose.get(1).getKey().setX(P1Card2X);
         p4Choose.get(1).getKey().setY(P1Card2Y);
         p4Choose.get(1).getKey().setRotate(0);
-        PathTransition path4card3 = new PathTransition(Duration.millis(500), new Line(P4Card3X, P4Card3Y, P1Card3X, P1Card3Y), p4Choose.get(2).getKey());
+        PathTransition path4card3 = new PathTransition(Duration.millis(500),
+                new Line(P4Card3X, P4Card3Y, P1Card3X, P1Card3Y), p4Choose.get(2).getKey());
         p4Choose.get(2).getKey().setX(P1Card3X);
         p4Choose.get(2).getKey().setY(P1Card3Y);
         p4Choose.get(2).getKey().setRotate(0);
 
-        //change card
+        // change card
         player1.set(p1ChooseIndex.get(0), p4Choose.get(0));
         player1.set(p1ChooseIndex.get(1), p4Choose.get(1));
         player1.set(p1ChooseIndex.get(2), p4Choose.get(2));
@@ -464,7 +487,7 @@ public class GameController implements Initializable {
         player4.set(p4ChooseIndex.get(1), p3Choose.get(1));
         player4.set(p4ChooseIndex.get(2), p3Choose.get(2));
 
-        //animation
+        // animation
         path1card1.play();
         path1card2.play();
         path1card3.play();
@@ -478,8 +501,10 @@ public class GameController implements Initializable {
         path4card2.play();
         path4card3.play();
 
-        //remove choose card 
+        // remove choose card
         swap.setVisible(false);
+        // refreshCard();
+        sortCardsInHands();
         refreshCard();
         begin();
     }
@@ -570,6 +595,26 @@ public class GameController implements Initializable {
 
     public void placeCardToTable(int whoseTurn, int indexOfCard) {
 
+    }
+
+    private void sortCardsInHands() {
+        hearts.sortCardsInHands();
+        var players = new ArrayList<ArrayList<Pair<ImageView, CardController>>>();
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+        players.add(player4);
+        int i = 0;
+        for (Hand hand : hearts.getHands()) {
+            for (Card card : hand.getCardsInHand()) {
+                players.get(i).sort((cardC1, cardC2) -> {
+                    var card1 = cardC1.getValue().getCard();
+                    var card2 = cardC2.getValue().getCard();
+                    return card1.compareTo(card2);
+                });
+            }
+            i++;
+        }
     }
 
     @FXML
