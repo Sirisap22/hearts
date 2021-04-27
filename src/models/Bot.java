@@ -217,22 +217,6 @@ public class Bot extends Hand {
     this.heartLeft = 0;
   }
 
-  protected ArrayList<Integer> playableCard(Table table) {
-    ArrayList<Integer> output = new ArrayList<>();
-    for (int cardIndex = 0; cardIndex < super.getCardsInHand().size(); cardIndex++) {
-      Card card = super.getCardsInHand().get(cardIndex);
-      if (table.playable(card)) {
-        output.add(cardIndex);
-      }
-    }
-    if (table.getPlayedNumber() == 0) {
-      for (int cardIndex = 0; cardIndex < super.getCardsInHand().size(); cardIndex++) {
-        output.add(cardIndex);
-      }
-    }
-    return output;
-  }
-
   @Override
   public void makeAction() {
 

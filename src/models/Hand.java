@@ -1,6 +1,9 @@
 package models;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public abstract class Hand {
   protected int chosenPlaceCard = -1;
@@ -116,12 +119,28 @@ public abstract class Hand {
   // hands[0].giveCard(hands[1])
 
   public void giveCard(Hand hand) {
-    for (int cardIndex : chosenGiveCards) {
+    Arrays.sort(chosenGiveCards);
+    System.out.println("GIVE = " + chosenGiveCards);
+    for (int i = 2; i >= 0; i--) {
+      int cardIndex = i;
       Card chosenCard = cardsInHand.get(cardIndex);
       hand.addCardInHand(chosenCard);
       removeCardInHand(chosenCard);
     }
-  }
+    // sort
+    // for (int cardIndex: chosenGiveCards) {
+      // Card chosenCard = cardsInHand.get(cardIndex);
+      // hand.addCardInHand(chosenCard);
+
+    // }
+    // for (int cardIndex: chosenGiveCards) {
+
+      // Card chosenCard = cardsInHand.get(cardIndex);
+      // removeCardInHand(chosenCard);
+    // }
+
+    }
+
 
   public void sortCardsInHand() {
     cardsInHand.sort((card1, card2) -> card1.compareTo(card2));
@@ -142,7 +161,7 @@ public abstract class Hand {
     }
   }
 
-  protected boolean has(Card cardin) {
+  public boolean has(Card cardin) {
     for (int cardIndex = 0; cardIndex < cardsInHand.size(); cardIndex++) {
       Card card = cardsInHand.get(cardIndex);
       if (cardin.equals(card)) {
@@ -150,6 +169,22 @@ public abstract class Hand {
       }
     }
     return false;
+  }
+
+  protected ArrayList<Integer> playableCard(Table table) {
+    ArrayList<Integer> output = new ArrayList<>();
+    for (int cardIndex = 0; cardIndex < getCardsInHand().size(); cardIndex++) {
+      Card card = getCardsInHand().get(cardIndex);
+      if (table.playable(card)) {
+        output.add(cardIndex);
+      }
+    }
+    if (table.getPlayedNumber() == 0) {
+      for (int cardIndex = 0; cardIndex < getCardsInHand().size(); cardIndex++) {
+        output.add(cardIndex);
+      }
+    }
+    return output;
   }
 
 }

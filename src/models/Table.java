@@ -12,19 +12,27 @@ public class Table {
     handStack.add(slot);
     cardSlots[slot] = card;
   }
+  public ArrayList<Integer> gethandStack(){
+    return this.handStack;
+  }
 
   public Card[] popAllCards() {
+    System.out.println(cardSlots[0]);
     Card[] cards = cardSlots.clone();
     handStack.clear();
     Arrays.fill(cardSlots, null);
+    System.out.println(cardSlots[0]);
     return cards;
   }
 
   public int findWinner() {
+    System.out.println(cardSlots);
+    System.out.println(cardSlots.length);
     Suit selectedSuit = cardSlots[handStack.get(0)].getSuit();
     int winner = handStack.get(0);
     for (int hand = 0; hand < cardSlots.length; hand++) {
       Card winnerCard = cardSlots[winner];
+      System.out.println("HAND = " + hand);
       Card currentCard = cardSlots[hand];
       if (currentCard.getSuit() == selectedSuit && winnerCard.compareTo(currentCard) == -1) {
         winner = hand;
@@ -122,6 +130,9 @@ public class Table {
   }
 
   public boolean playable(Card card) {
+    if(getPlayedNumber() == 0 && (!this.heartIsBroken) && card.getSuit() == Suit.HEARTS){
+      return false;
+    }
     if (getPlayedNumber() == 0) {
       return true;
     }

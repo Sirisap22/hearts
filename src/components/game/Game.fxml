@@ -10,7 +10,7 @@
 
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" styleClass="bg" stylesheets="@game.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.game.GameController">
    <children>
-      <Button fx:id="btnExit" layoutX="1342.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" onMouseEntered="#exitEnter" onMouseExited="#exitOut" onMousePressed="#exitPressed" onMouseReleased="#exitRelease" prefHeight="17.0" prefWidth="38.0" styleClass="btnHome" stylesheets="@game.css">
+      <Button fx:id="exit" layoutX="1342.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" onMouseEntered="#exitEnter" onMouseExited="#exitOut" onMousePressed="#exitPressed" onMouseReleased="#exitRelease" prefHeight="17.0" prefWidth="38.0" styleClass="btnHome" stylesheets="@game.css">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -18,7 +18,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btnDeal" layoutX="890.0" layoutY="329.0" mnemonicParsing="false" onAction="#dealCard" onMouseEntered="#dealEnter" onMouseExited="#dealExit" onMousePressed="#dealPressed" onMouseReleased="#dealRelease" prefHeight="45.0" prefWidth="0.0" styleClass="deal" stylesheets="@game.css">
+      <Button fx:id="deal" layoutX="890.0" layoutY="329.0" mnemonicParsing="false" onAction="#dealCards" onMouseEntered="#dealEnter" onMouseExited="#dealExit" onMousePressed="#dealPressed" onMouseReleased="#dealRelease" prefHeight="45.0" prefWidth="0.0" styleClass="deal" stylesheets="@game.css">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -26,7 +26,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="swap" layoutX="664.0" layoutY="316.0" mnemonicParsing="false" onAction="#leftSwap" onMouseEntered="#swapEnter" onMouseExited="#swapExit" prefHeight="70.0" prefWidth="70.0" styleClass="swap" stylesheets="@game.css">
+      <Button fx:id="swap" layoutX="664.0" layoutY="316.0" mnemonicParsing="false" onAction="#swapCards" onMouseEntered="#swapEnter" onMouseExited="#swapExit" prefHeight="70.0" prefWidth="70.0" styleClass="swap" stylesheets="@game.css">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
