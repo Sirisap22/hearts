@@ -19,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import models.Sounds;
 
 public class MainController implements Initializable {
 
@@ -27,6 +28,7 @@ public class MainController implements Initializable {
     private Pane game = new Pane();
     private double setX = 0;
     private double setY = 0;
+    private Sounds sound = new Sounds();
 
     @FXML
     private Button Home;
@@ -47,7 +49,9 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // sound.getMusicMenuPlay();
         rules.setOnAction(e -> {
+            // sound.getSoundMenuClickPlay();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/rules/Rules.fxml"));
             try {
                 rulesScene = loader.load();
@@ -57,6 +61,7 @@ public class MainController implements Initializable {
             borderPane.setRight(rulesScene);
         });
         credit.setOnAction(e -> {
+            // sound.getSoundMenuClickPlay();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/credit/Credit.fxml"));
 
             try {
@@ -67,6 +72,7 @@ public class MainController implements Initializable {
             borderPane.setRight(creditScene);
         });
         Home.setOnAction(e -> {
+            // sound.getSoundMenuClickPlay();
             borderPane.setRight(scenePane);
         });
         quit.setOnAction(e -> {
@@ -77,6 +83,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void playGame(ActionEvent event) throws IOException {
+        // sound.getMusicMenuStop();
         Parent root = FXMLLoader.load(getClass().getResource("/components/game/Game.fxml"));
         Scene gameScene = new Scene(root);
         gameScene.setFill(Color.TRANSPARENT);

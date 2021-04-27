@@ -145,54 +145,56 @@ public class Hearts {
     return -1;
   }
 
-  public void endTurn() {
+  // public void endTurn() {
 
-    if (turn == 4)
-      endSmallRound();
-    hands[whoseTurn].setChosenPlaceCard(-1);
-  }
+  //   if (turn == 4)
+  //     endSmallRound();
+  //   hands[whoseTurn].setChosenPlaceCard(-1);
+  // }
 
-  public void nextTurn() {
-    turn += 1;
-    // check turn
-    whoseTurn += 1;
-    if (whoseTurn >= hands.length)
-      whoseTurn = 0;
-  }
+  // public void nextTurn() {
+  //   turn += 1;
+  //   // check turn
+  //   whoseTurn += 1;
+  //   if (whoseTurn >= hands.length)
+  //     whoseTurn = 0;
+  // }
 
-  public void endSmallRound() {
-    setTurn(1);
-    if (smallRound == 13) {
-      endBigRound();
-    }
+  // public void endSmallRound() {
+  //   setTurn(1);
+  //   if (smallRound == 13) {
+  //     endBigRound();
+  //   }
+  //   nextSmallRound();
 
-  }
+  // }
 
-  public void nextSmallRound() {
-    // find who win on table
-    // and set that person to whose turn
-    smallRound += 1;
+  // public void nextSmallRound() {
+  //   // find who win on table
+  //   // and set that person to whose turn
+  //   smallRound += 1;
 
-    int tableWinner = findWhoWinOnTable();
-    whoseTurn = tableWinner;
-  }
+  //   System.out.println("SUSSSSSSSS");
+  //   int tableWinner = findWhoWinOnTable();
+  //   whoseTurn = tableWinner;
+  // }
 
   private int findWhoWinOnTable() {
     return table.findWinner();
   }
 
-  public Hand endBigRound() {
-    setSmallRound(1);
-    Hand winner = checkEndGameConditionAndFindWinner();
+  // public Hand endBigRound() {
+  //   setSmallRound(1);
+  //   Hand winner = checkEndGameConditionAndFindWinner();
 
-    // add points to keep track scores for each hand
-    addScores();
+  //   // add points to keep track scores for each hand
+  //   addScores();
 
-    deck.refresh();
-    refreshAllHands();
+  //   deck.refresh();
+  //   refreshAllHands();
 
-    return winner;
-  }
+  //   return winner;
+  // }
 
   private void addScores() {
     for (int i = 0; i < hands.length; i++) {
@@ -204,13 +206,13 @@ public class Hearts {
   // find who have 2 of clubs
   // set whoseTurn = that person
 
-  public void nextBigRound() {
-    bigRound += 1;
+  // public void nextBigRound() {
+  //   bigRound += 1;
 
-    deck.shuffle();
-    dealCards();
-    sortCardsInHands();
-  }
+  //   deck.shuffle();
+  //   dealCards();
+  //   sortCardsInHands();
+  // }
 
   private Hand checkEndGameConditionAndFindWinner() {
     Hand winner = null;
