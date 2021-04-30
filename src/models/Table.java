@@ -11,19 +11,31 @@ public class Table {
   public void placeCardAt(Card card, int slot) {
     handStack.add(slot);
     cardSlots[slot] = card;
+    System.out.println("Placed "+  card.toString() +" at " + slot);
+
+    int i = 0;
+    for (Card carded: cardSlots) {
+      if (carded == null) {
+        i++;
+        continue;
+      }
+
+      System.out.println(String.format("cardsSlots [%d] %s", i, carded.toString()));
+      i++;
+    }
   }
   public ArrayList<Integer> gethandStack(){
     return this.handStack;
   }
 
   public Card[] popAllCards() {
-    System.out.println(cardSlots[0]);
     Card[] cards = cardSlots.clone();
     handStack.clear();
     Arrays.fill(cardSlots, null);
-    System.out.println(cardSlots[0]);
     return cards;
   }
+
+  // re factor played numbers
 
   public int findWinner() {
     System.out.println(cardSlots);
@@ -116,17 +128,21 @@ public class Table {
   }
 
   public int getPlayedNumber() {
-    int number = 0;
-    for (int hand = 0; hand < cardSlots.length; hand++) {
-      try { // check if card is available
-        Card check = cardSlots[handStack.get(hand)];
-      } catch (IndexOutOfBoundsException e) { // if not, it's mean there is not other card to think of. So just end the
-                                              // loop.
-        continue;
-      }
-      number += 1;
-    }
-    return number;
+    // int number = 0;
+    // for (int hand = 0; hand < cardSlots.length; hand++) {
+    //   try { // check if card is available
+    //     Card check = cardSlots[handStack.get(hand)];
+
+    //     if (check != null) {
+    //       System.out.println("CHECK = " + check);
+    //       number+=1;
+    //     }
+    //   } catch (IndexOutOfBoundsException e) { // if not, it's mean there is not other card to think of. So just end the
+    //     continue;
+    //   }
+    // }
+    // System.out.println("PLAYED_NUMBER = " + number);
+    return handStack.size();
   }
 
   public boolean playable(Card card) {

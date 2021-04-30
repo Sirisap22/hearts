@@ -122,7 +122,6 @@ public class GameController implements Initializable {
 
                 this.cards.put(card.toString(), cardComponent);
             }
-        System.out.println("CARDS " + cards.size());
     }
 
     private void initHearts() {
@@ -325,8 +324,7 @@ public class GameController implements Initializable {
         int response = player.addPlayerChooseCardToGive(cardIndex);
 
         var cardView = (ImageView)event.getSource();
-        System.out.println(player.CardToGive);
-        System.out.println(player.getCardsInHand().get(cardIndex));
+
         if (response == 1) {
             offsetCardView(cardView, -10);
         } else if (response == -1) {
@@ -391,10 +389,15 @@ public class GameController implements Initializable {
         bot.chooseCardToPlace();
         int cardIndex = bot.getChosenPlaceCard();
         Card card = bot.getCardsInHand().get(cardIndex);
+
+        System.out.println("BOT HAND_INDEX = " + handIndex);
+
+
         hearts.getTable().placeCardAt(card, handIndex);
         bot.removeCardInHand(card);
         hearts.getTable().Update();
         botPlaceCardView(cards.get(card.toString()).getKey(), handIndex);
+        _tempDebug("BOT_PLACE_CARD_" + handIndex);
         pause(3);
 
     }
@@ -430,12 +433,14 @@ public class GameController implements Initializable {
 
     private boolean _checkEndRound() throws InterruptedException {
         boolean isEnd = false;
+        System.out.println("");
         if(hearts.getSmallRound() >= 13){
             isEnd = true;
             changeState(State.END);
             System.out.println("End round 1");
         }
         else if(hearts.getTable().getPlayedNumber() >= 4){
+            System.out.println("End small");
             pause(5);
             isEnd = true;
             hearts.setSmallRound(hearts.getSmallRound() + 1);
@@ -450,10 +455,18 @@ public class GameController implements Initializable {
 
     private void clearTableView() {
         Card[] cardsOnTable = hearts.getTable().getCardSlot();
+        System.out.println("FROM clear = " + cardsOnTable);
         for (Card card: cardsOnTable) {
             System.out.println(card);
             ImageView cardView = cards.get(card.toString()).getKey();
             removeCardViewFromParent(cardView);
+        }
+    }
+    private void _tempDebug(String name) {
+        Card[] cardsOnTable = hearts.getTable().getCardSlot();
+        System.out.println("FROM " + name +" clear = " + cardsOnTable);
+        for (Card card: cardsOnTable) {
+            System.out.println(card);
         }
     }
 
@@ -491,27 +504,39 @@ public class GameController implements Initializable {
     private void onMouseClickedToPlace(MouseEvent event, int cardIndex) {
         Hand player = hearts.getHands()[0];
         Card card = player.getCardsInHand().get(cardIndex);
-        System.out.println("has right suit : " + hasRightSuit(hearts.getHands()[0], hearts.getTable()));
-        System.out.println("playable : " + hearts.getTable().playable(card));
-        System.out.println("495 : "+ (hearts.getWhoseTurn() != 0 || (hearts.getTable().playable(card) == hasRightSuit(hearts.getHands()[0], hearts.getTable()))));
-        if(hearts.getWhoseTurn() != 0 || (hearts.getTable().playable(card) == hasRightSuit(hearts.getHands()[0], hearts.getTable())))
+        System.out.println("!isTurn() = " + !isTurn(0));
+        System.out.println("!canPlay = " + !canPlay(player, card));
+        System.out.println("hasTwoClubs = " + hasTwoClubs(player));
+        System.out.println("!isTwoClubs = " + !isTwoClubs(card));
+        if(!isTurn(0) || !canPlay(player, card))
             return;
-        System.out.println("hasTwoClubs : "+ hasTwoClubs(cardIndex));
-        if(hasTwoClubs(cardIndex)){
+        if(hasTwoClubs(player) && !isTwoClubs(card)){
             return;
         }
         var cardView = (ImageView)event.getSource();
         playerPlaceCard(cardView, cardIndex);
 
     }
-    private boolean hasTwoClubs(int cardIndex){
-        Hand player = hearts.getHands()[0];
-        Card card = player.getCardsInHand().get(cardIndex);
-        return hearts.getSmallRound() == 0 && player.has(new Card(2, Suit.SPADES)) && card.getSuit().equals(Suit.SPADES);
+
+    private boolean canPlay(Hand hand,Card card) {
+        return hearts.getTable().playable(card) || !hasRightSuit(hand);
     }
-    private boolean hasRightSuit(Hand hand, Table table){
+
+    private boolean isTurn(int whoseTurn) {
+        return hearts.getWhoseTurn() == whoseTurn;
+    }
+
+    private boolean hasTwoClubs(Hand hand){
+        return hand.has(new Card(2, Suit.CLUBS));
+    }
+
+    private boolean isTwoClubs(Card card) {
+        return card.compareTo(new Card(2, Suit.CLUBS)) == 0;
+    }
+
+    private boolean hasRightSuit(Hand hand) {
         for(Card card : hand.getCardsInHand()){
-            if(table.getFirstSuit().equals(card.getSuit())){
+            if(hearts.getTable().getFirstSuit().equals(card.getSuit())){
                 return true;
             }
         }
