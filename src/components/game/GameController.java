@@ -70,6 +70,11 @@ public class GameController implements Initializable {
     State currentState;
     ComponentLoader<GameController> loader = new ComponentLoader<>();
     HashMap<String, Pair<ImageView, CardController>> cards = new HashMap<>();
+    
+    // private Label player;
+    // private Label bot1;
+    // private Label bot2;
+    // private Label bot3;
 
     @FXML
     private Pane root = new Pane();
@@ -87,6 +92,7 @@ public class GameController implements Initializable {
         initCurrentState();
         initDeckView();
         initHearts();
+        // initHandLabel();
         initBots();
         renderAllCards();
         swap.setVisible(false);
@@ -129,6 +135,14 @@ public class GameController implements Initializable {
         hearts = new Hearts(allHand);
         hearts.resetGame();
     }
+
+    // private void initHandLabel() {
+    //     Hand[] allHand = hearts.getHands();
+    //     player.setText(allHand[0].getName());
+    //     bot1.setText(allHand[1].getName());
+    //     bot2.setText(allHand[2].getName());
+    //     bot3.setText(allHand[3].getName());
+    // }
 
     private void initBots() {
         Hand[] hands = hearts.getHands();
@@ -330,7 +344,7 @@ public class GameController implements Initializable {
         } else if (response == -1) {
             offsetCardView(cardView, 10);
         }
-
+// TODOS BUGG Q_spades compare maybe card:
     }
 
     private void playerChooseCardsToPlace() {
@@ -351,29 +365,67 @@ public class GameController implements Initializable {
         updateWhoseTurnNotification();
         botPlaceCard(1);
         var isEnd = checkEndRound();
-        if (!isEnd)
+        System.out.println("From FirstBot isEnd = " + isEnd);
+        if (!isEnd){
             hearts.setWhoseTurn(2);
+            System.out.println("Bot1 let bot2 play");
             secondBotChooseCardsToPlace();
+            return;
+        }
+        if (isEnd)System.out.println("Bot1 found game was ended");
+        System.out.println("After bot1 (Only end 13 round and player turn)");
     }
     private void secondBotChooseCardsToPlace(){
         System.out.println("bot2 turn");
         updateWhoseTurnNotification();
         botPlaceCard(2);
         var isEnd = checkEndRound();
-        if (!isEnd)
+        System.out.println("From SecondBot isEnd = " + isEnd);
+        if (!isEnd) {
             hearts.setWhoseTurn(3);
+            System.out.println("Bot2 let bot3 play");
             thirdBotChooseCardsToPlace();
-
+            return;
+        }
+        if (isEnd)System.out.println("Bot2 found game was ended");
+        System.out.println("After bot2 (Only end 13 round and player turn)");
     }
     private void thirdBotChooseCardsToPlace(){
         System.out.println("bot3 turn");
         updateWhoseTurnNotification();
         botPlaceCard(3);
         var isEnd = checkEndRound();
+        System.out.println("From thirdBot isEnd = " + isEnd);
         if (!isEnd) {
             hearts.setWhoseTurn(0);
             updateWhoseTurnNotification();
+            System.out.println("Bot3 let player play");
         }
+        if (isEnd)System.out.println("Bot3 found game was ended");
+        System.out.println("After bot3 (Only end 13 round and player turn)");
+        
+    }
+
+    private void playerPlaceCard(ImageView cardView, int cardIndex) {
+        updateWhoseTurnNotification();
+
+        Player player = (Player)hearts.getHands()[0];
+        Card card = player.getCardsInHand().get(cardIndex);
+        hearts.getTable().placeCardAt(card, 0);
+        player.removeCardInHand(card);
+        cardView.setX(X_CENTER + 50);
+        cardView.setY(Y_CENTER + 160);
+
+        hearts.getTable().Update();
+        var isEnd = checkEndRound();
+        System.out.println("From Player isEnd = " + isEnd);
+        if (!isEnd) {
+            hearts.setWhoseTurn(1);
+            System.out.println("Player let bot1 play");
+            firstBotChooseCardsToPlace();
+        }
+        if (isEnd)System.out.println("Player found game was ended");
+        System.out.println("After Player (Only end 13 round and player turn)");
     }
 
     private void botPlaceCard(int handIndex) {
@@ -397,7 +449,7 @@ public class GameController implements Initializable {
         bot.removeCardInHand(card);
         hearts.getTable().Update();
         botPlaceCardView(cards.get(card.toString()).getKey(), handIndex);
-        _tempDebug("BOT_PLACE_CARD_" + handIndex);
+        // _tempDebug("BOT_PLACE_CARD_" + handIndex);
         pause(3);
 
     }
@@ -442,7 +494,7 @@ public class GameController implements Initializable {
         else if(hearts.getTable().getPlayedNumber() >= 4){
             System.out.println("End small");
             pause(5);
-            isEnd = true;
+            // isEnd = true;
             hearts.setSmallRound(hearts.getSmallRound() + 1);
             clearTableView(); 
             _findWinner();
@@ -541,22 +593,6 @@ public class GameController implements Initializable {
             }
         }
         return false;
-    }
-    private void playerPlaceCard(ImageView cardView, int cardIndex) {
-        updateWhoseTurnNotification();
-
-        Player player = (Player)hearts.getHands()[0];
-        Card card = player.getCardsInHand().get(cardIndex);
-        hearts.getTable().placeCardAt(card, 0);
-        player.removeCardInHand(card);
-        cardView.setX(X_CENTER + 50);
-        cardView.setY(Y_CENTER + 160);
-
-        hearts.getTable().Update();
-        var isEnd = checkEndRound();
-        if (!isEnd)
-            hearts.setWhoseTurn(1);
-            firstBotChooseCardsToPlace();
     }
 
     private void offsetCardView(ImageView cardView, double offset) {
