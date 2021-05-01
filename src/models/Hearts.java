@@ -6,7 +6,7 @@ public class Hearts {
   private Table table;
   private Deck deck;
   private Hand[] hands;
-  private int[] scores;
+  private int[] scores = new int[] {0, 0, 0, 0};
   private int bigRound;
   private int smallRound;
   private int turn;

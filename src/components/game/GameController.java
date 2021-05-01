@@ -67,6 +67,8 @@ public class GameController implements Initializable {
     private Label bot2 = new Label();
     private Label bot3 = new Label();
 
+    private boolean isPlayerClicked = false;
+
     @FXML
     private Pane root = new Pane();
     @FXML
@@ -143,13 +145,15 @@ public class GameController implements Initializable {
             @Override
             public void onEndTurn() {
                 boolean endBig = checkBigEndRound();
+                System.out.println("END BIG TURN = " + endBig);
                 if (endBig) {
+                    hearts.setBigRound(hearts.getBigRound() + 1);
                     changeState(State.END);
                     return;
                 }
                 if (!endBig && checkSmallEndRound()) {
                     System.out.println("End small");
-                    // // hearts.setSmallRound(hearts.getSmallRound() + 1);
+                    hearts.setSmallRound(hearts.getSmallRound() + 1);
                     clearTableView(); 
                     _findWinner();
                     // refreshCardPosition();
@@ -159,6 +163,7 @@ public class GameController implements Initializable {
                 System.out.println("Whose turn from init : " + hearts.getWhoseTurn());
                 switch(hearts.getWhoseTurn()) {
                     case 3:
+                        isPlayerClicked = false;
                         player.fireEvent(new StartTurnEvent());
                         break;
                     case 0:
@@ -185,7 +190,7 @@ public class GameController implements Initializable {
             @Override
             public void onStartTurn() {
                  refreshCardPosition();
-                    updateChooseToPlaceEvent();
+                updateChooseToPlaceEvent();
                 hearts.setWhoseTurn(0);
                 updateWhoseTurnNotification();
             }
@@ -338,6 +343,7 @@ public class GameController implements Initializable {
         currentState = state;
         switch (currentState) {
             case INIT:
+                initState();
                 break;
             case GIVE:
                 giveState();
@@ -354,9 +360,20 @@ public class GameController implements Initializable {
         }
     }
 
+    private void initState() {
+        hearts.dealCards(); 
+        sortCardsInHand();
+        isPlayerClicked = false;
+
+        changeState(State.GIVE);
+    }
+
     private void endState(){
         for (int i = 0; i < 4; i++) {
             hearts.getScores()[i] += hearts.getHands()[i].getPoints();
+        }
+        for (int i = 0; i < 4; i++) {
+            System.out.println(hearts.getHands()[i] + " Score is " + hearts.getScores()[i]);
         }
 
         Hand winnerLocal = hearts.checkEndGameConditionAndFindWinner();
@@ -366,12 +383,15 @@ public class GameController implements Initializable {
         }
         hearts.resetGame();
         resetView();
-        changeState(State.GIVE);
+        changeState(State.INIT);
     }
     private void finalState(){
         System.out.println(String.format("Final winner = " + winner.getName()));
     }
     private void giveState() {
+        // give player give card
+        Player player = (Player)hearts.getHands()[0];
+        player.CardToGive.clear();
         swap.setVisible(true);
         botsChooseCardsToGive();
         playerChooseCardsToGive();
@@ -478,6 +498,7 @@ public class GameController implements Initializable {
             cardView.setX(X_CENTER + 50);
             cardView.setY(Y_CENTER + 160);
             hearts.getTable().Update();
+            isPlayerClicked = false;
             host.fireEvent(new EndTurnEvent());
         }
         );
@@ -541,6 +562,7 @@ public class GameController implements Initializable {
 
     private boolean checkBigEndRound() {
         boolean isEnd = false;
+        System.out.println("check end big turn GetSmallRound = " + hearts.getSmallRound());
         if(hearts.getSmallRound() > 13){
             isEnd = true;
             System.out.println("End round 1");
@@ -614,6 +636,9 @@ public class GameController implements Initializable {
     }
 
     private void onMouseClickedToPlace(MouseEvent event, int cardIndex) {
+        if (isPlayerClicked) {
+            return;
+        }
         Hand player = hearts.getHands()[0];
         Card card = player.getCardsInHand().get(cardIndex);
         System.out.println("WHOTURN = " + hearts.getWhoseTurn());
@@ -631,6 +656,7 @@ public class GameController implements Initializable {
         if(hasTwoClubs(player) && !isTwoClubs(card)){
             return;
         }
+        isPlayerClicked = true;
         var cardView = (ImageView)event.getSource();
         playerPlaceCard(cardView, cardIndex);
 
@@ -707,6 +733,7 @@ public class GameController implements Initializable {
         swap.setVisible(false);
 
         sortCardsInHand();
+        // refreshCardPosition();
         changeState(State.PLAY);
 
     }
