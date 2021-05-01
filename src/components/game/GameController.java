@@ -292,6 +292,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void openScoresBoard() {
+        sounds.getSoundGameClickPlay();
         this.showScores.setVisible(false);
         updateScoresBoard();
         this.scoresBoard.toFront();
@@ -301,6 +302,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void closeScoresBoard() {
+        sounds.getSoundGameClickPlay();
         this.showScores.setVisible(true);
         this.scoresBoard.setVisible(false);
     }
@@ -320,6 +322,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void exit(ActionEvent event) throws IOException {
+        sounds.getSoundGameClickPlay();
         sounds.getMusicGameBGStop();
         Parent root = FXMLLoader.load(getClass().getResource("/components/main/Main.fxml"));
         Scene gameScene = new Scene(root);
@@ -484,6 +487,11 @@ public class GameController implements Initializable {
         this.winnerBoard.setVisible(true);
         this.winnerBoard.toFront();
         this.winnerText.setText(winner.getName() + " is a winner !!!");
+        if (winner instanceof Player) {
+            sounds.getSoundWinPlay();
+        } else {
+            sounds.getSoundLosePlay();
+        }
 
         this.exit.setVisible(false);
         
@@ -770,6 +778,8 @@ public class GameController implements Initializable {
         if (player.CardToGive.size() < 3) {
             return;
         }
+        sounds.getSoundSwitchCardPlay();
+
         if(hearts.getBigRound() % 4 != 0){
             for(int i = 0; i < 4; i++){
                 Hand p = hearts.getHands()[i];

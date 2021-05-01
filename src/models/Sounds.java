@@ -17,7 +17,9 @@ public class Sounds {
     private MediaPlayer soundMenuClick;
     private MediaPlayer soundWrong;
     private MediaPlayer soundLoseTurn;
+    private MediaPlayer soundWinTurn;
     private MediaPlayer soundGameBG;
+    private MediaPlayer soundGameClick;
     public Sounds () {
     }
 	 public void getMusicMenuPlay() {
@@ -97,7 +99,7 @@ public class Sounds {
          this.soundSwitchCard.stop();
      }
      public void getSoundMenuClickPlay(){
-         URL resource = getClass().getResource("/public/sounds/menu_Click.mp3");
+         URL resource = getClass().getResource("/public/sounds/menu_click.wav");
          this.soundMenuClick =new MediaPlayer(new Media(resource.toString()));
          this.soundMenuClick.setVolume(0.05);
          this.soundMenuClick.play();
@@ -106,8 +108,18 @@ public class Sounds {
         
          this.soundMenuClick.stop();
      }
+     public void getSoundGameClickPlay(){
+         URL resource = getClass().getResource("/public/sounds/game_click.mp3");
+         this.soundGameClick =new MediaPlayer(new Media(resource.toString()));
+         this.soundGameClick.setVolume(0.05);
+         this.soundGameClick.play();
+     }
+     public void getSoundGameClickStop(){
+        
+         this.soundGameClick.stop();
+     }
      public void getSoundWrongPlay(){
-         URL resource = getClass().getResource("/public/sounds/wrong.mp3");
+         URL resource = getClass().getResource("/public/sounds/wrong.wav");
          this.soundWrong =new MediaPlayer(new Media(resource.toString()));
          this.soundWrong.setVolume(0.05);
          this.soundWrong.play();
@@ -125,6 +137,16 @@ public class Sounds {
      public void getSoundLoseStop(){
         
           this.soundLoseTurn.stop();
+     }
+     public void getSoundWinPlay(){
+         URL resource = getClass().getResource("/public/sounds/win.mp3");
+         this.soundWinTurn =new MediaPlayer(new Media(resource.toString()));
+         this.soundWinTurn.setVolume(0.05);
+         this.soundWinTurn.play();
+     }
+     public void getSoundWinStop(){
+        
+          this.soundWinTurn.stop();
      }
      public void getMusicGameBGPlay(){
       URL resource = getClass().getResource("/public/sounds/GameBG.mp3");
