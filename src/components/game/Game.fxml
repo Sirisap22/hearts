@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" styleClass="bg" stylesheets="@game.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.game.GameController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" styleClass="bg" stylesheets="@game.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.game.GameController">
    <children>
       <Button fx:id="exit" layoutX="1342.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" onMouseEntered="#exitEnter" onMouseExited="#exitOut" onMousePressed="#exitPressed" onMouseReleased="#exitRelease" prefHeight="17.0" prefWidth="38.0" styleClass="btnHome" stylesheets="@game.css">
          <graphic>
@@ -175,7 +175,8 @@
                </effect>
                <font>
                   <Font name="Bodoni MT Poster Compressed" size="29.0" />
-               </font></Button>
+               </font>
+            </Button>
          </children>
          <effect>
             <DropShadow>
@@ -185,5 +186,65 @@
             </DropShadow>
          </effect>
       </Pane>
+      <Label layoutX="185.0" layoutY="368.0" prefHeight="38.0" prefWidth="70.0" text="Billy" textFill="#e5dfe2">
+         <font>
+            <Font name="Bodoni MT Black" size="26.0" />
+         </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.4447368383407593" green="0.34837719798088074" blue="0.34837719798088074" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Label>
+      <Label layoutX="699.0" layoutY="13.0" prefHeight="38.0" prefWidth="70.0" text="Jane" textFill="#e5dfe2">
+         <font>
+            <Font name="Bodoni MT Black" size="26.0" />
+         </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.4447368383407593" green="0.34837719798088074" blue="0.34837719798088074" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Label>
+      <Label layoutX="1237.0" layoutY="367.0" prefHeight="38.0" prefWidth="70.0" text="Mike" textFill="#e5dfe2">
+         <font>
+            <Font name="Bodoni MT Black" size="26.0" />
+         </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.4447368383407593" green="0.34837719798088074" blue="0.34837719798088074" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Label>
+      <ImageView fitHeight="42.0" fitWidth="53.0" layoutX="126.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../public/menu/player_male_48px.png" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="53.0" layoutX="645.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../public/menu/player_female_48px.png" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="53.0" layoutX="1177.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../public/menu/player_male_48px.png" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
    </children>
 </Pane>

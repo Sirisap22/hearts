@@ -30,5 +30,16 @@
 .stackPane{
     -fx-background-color:linear-gradient(to bottom,#EE4540, #C72C41, #801336, #510A32 ,#2D142C);
     -fx-background-radius:0 30 30 0;
-    
+}
+.enterName{
+   -fx-background-color:linear-gradient(to bottom,#EE4540, #C72C41, #801336, #510A32 );
+    -fx-background-radius:10;
+}
+.startGame{
+    -fx-background-radius:10;
+    -fx-background-color:#C92A42;
+}
+.startGame:hover{
+    -fx-background-radius:10;
+    -fx-background-color:#F66E63;
 }

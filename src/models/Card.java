@@ -101,21 +101,5 @@ public class Card implements Comparable<Card> {
     return Suit.compare(thisCardSuit, thatCardSuit);
   }
 
-  public static void main(String[] args) {
-    Card card;
-
-    card = new Card(10, Suit.DIAMONDS);
-    System.out.println("And a ten of diamonds:");
-    System.out.println("Suit = " + card.getSuit().toString().toLowerCase());
-    System.out.println("Rank = " + card.getRank());
-    System.out.println("Hash = " + card.hashCode());
-    System.out.println();
-
-    card = new Card(7, Suit.CLUBS);
-    System.out.println("And a 7 of clubs:");
-    System.out.println("Suit = " + card.getSuit().toString().toLowerCase());
-    System.out.println("Rank = " + card.getRank());
-    System.out.println("Hash = " + card.hashCode());
-  }
 
 }

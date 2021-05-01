@@ -11,16 +11,12 @@ public class Table {
   public void placeCardAt(Card card, int slot) {
     handStack.add(slot);
     cardSlots[slot] = card;
-    System.out.println("Placed "+  card.toString() +" at " + slot);
-
     int i = 0;
     for (Card carded: cardSlots) {
       if (carded == null) {
         i++;
         continue;
       }
-
-      System.out.println(String.format("cardsSlots [%d] %s", i, carded.toString()));
       i++;
     }
   }
@@ -38,13 +34,10 @@ public class Table {
   // re factor played numbers
 
   public int findWinner() {
-    System.out.println(cardSlots);
-    System.out.println(cardSlots.length);
     Suit selectedSuit = cardSlots[handStack.get(0)].getSuit();
     int winner = handStack.get(0);
     for (int hand = 0; hand < cardSlots.length; hand++) {
       Card winnerCard = cardSlots[winner];
-      System.out.println("HAND = " + hand);
       Card currentCard = cardSlots[hand];
       if (currentCard.getSuit() == selectedSuit && winnerCard.compareTo(currentCard) == -1) {
         winner = hand;
@@ -128,20 +121,6 @@ public class Table {
   }
 
   public int getPlayedNumber() {
-    // int number = 0;
-    // for (int hand = 0; hand < cardSlots.length; hand++) {
-    //   try { // check if card is available
-    //     Card check = cardSlots[handStack.get(hand)];
-
-    //     if (check != null) {
-    //       System.out.println("CHECK = " + check);
-    //       number+=1;
-    //     }
-    //   } catch (IndexOutOfBoundsException e) { // if not, it's mean there is not other card to think of. So just end the
-    //     continue;
-    //   }
-    // }
-    // System.out.println("PLAYED_NUMBER = " + number);
     return handStack.size();
   }
 
@@ -181,10 +160,8 @@ public class Table {
     if (getPlayedNumber() != 0) {
       this.heartIsBroken = this.heartIsBroken
           || (!cardSlots[handStack.get(0)].getSuit().equals(Suit.HEARTS)) && hasHeart;
-      // System.out.println("Table : Is broken : " + this.isBroken());
     }
     this.SQIsOut = this.SQIsOut || SQ;
-    // System.out.println("Table : SQOut : " + this.SQIsOut());
   }
 
   public int getHeartNumber() {

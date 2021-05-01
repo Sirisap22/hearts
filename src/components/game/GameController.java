@@ -182,14 +182,12 @@ public class GameController implements Initializable {
             @Override
             public void onEndTurn() {
                 boolean endBig = checkBigEndRound();
-                System.out.println("END BIG TURN = " + endBig);
                 if (endBig) {
                     hearts.setBigRound(hearts.getBigRound() + 1);
                     changeState(State.END);
                     return;
                 }
                 if (!endBig && checkSmallEndRound()) {
-                    System.out.println("End small");
                     hearts.setSmallRound(hearts.getSmallRound() + 1);
                     clearTableView(); 
                     _findWinner();
@@ -197,7 +195,6 @@ public class GameController implements Initializable {
                     // updateChooseToPlaceEvent();
                     return;
                 }
-                System.out.println("Whose turn from init : " + hearts.getWhoseTurn());
                 switch(hearts.getWhoseTurn()) {
                     case 3:
                         isPlayerClicked = false;
@@ -308,10 +305,8 @@ public class GameController implements Initializable {
         var it = cards.entrySet().iterator();
         while (it.hasNext()) {
             var pair = it.next();
-            // System.out.println(pair.getKey() + " = " + pair.getValue());
             var cardView = pair.getValue().getKey();
             root.getChildren().add(cardView);
-            // it.remove(); // avoids a ConcurrentModificationException 
         }
     }
 
@@ -460,10 +455,6 @@ public class GameController implements Initializable {
         for (int i = 0; i < 4; i++) {
             hearts.getScores()[i] += hearts.getHands()[i].getPoints();
         }
-        for (int i = 0; i < 4; i++) {
-            System.out.println(hearts.getHands()[i] + " Score is " + hearts.getScores()[i]);
-        }
-
         Hand winnerLocal = hearts.checkEndGameConditionAndFindWinner();
         if(winnerLocal != null){
             winner = winnerLocal;
@@ -482,7 +473,6 @@ public class GameController implements Initializable {
             var pair = it.next();
             var cardView = pair.getValue().getKey();
             removeCardViewFromParent(cardView);
-            // System.out.println(pair.getKey() + " = " + pair.getValue());
             it.remove(); // avoids a ConcurrentModificationException
         }
         this.winnerBoard.setVisible(true);
@@ -491,7 +481,6 @@ public class GameController implements Initializable {
 
         this.exit.setVisible(false);
         
-        System.out.println(String.format("Final winner = " + winner.getName()));
     }
 
     private void giveState() {
@@ -516,19 +505,15 @@ public class GameController implements Initializable {
     private void playCards() {
           switch (hearts.getWhoseTurn()) {
               case 0:
-                System.out.println("FIRE");
                 player.fireEvent(new StartTurnEvent());
                 break;
               case 1:
-                System.out.println("FIRE");
                 bot1.fireEvent(new StartTurnEvent());
                 break;
               case 2:
-                System.out.println("FIRE");
                 bot2.fireEvent(new StartTurnEvent());
                 break;
               case 3:
-                System.out.println("FIRE");
                 bot3.fireEvent(new StartTurnEvent());
                 break;
           }
@@ -618,8 +603,6 @@ public class GameController implements Initializable {
         int cardIndex = bot.getChosenPlaceCard();
         Card card = bot.getCardsInHand().get(cardIndex);
 
-        System.out.println("BOT HAND_INDEX = " + handIndex);
-
         var cardCon = cards.get(card.toString()).getValue();
         ImageView cardView = cards.get(card.toString()).getKey();
 
@@ -668,10 +651,8 @@ public class GameController implements Initializable {
 
     private boolean checkBigEndRound() {
         boolean isEnd = false;
-        System.out.println("check end big turn GetSmallRound = " + hearts.getSmallRound());
         if(hearts.getSmallRound() > 13){
             isEnd = true;
-            System.out.println("End round 1");
         }
         return isEnd;
     }
@@ -682,21 +663,17 @@ public class GameController implements Initializable {
 
     private void clearTableView() {
         Card[] cardsOnTable = hearts.getTable().getCardSlot();
-        System.out.println("FROM clear = " + cardsOnTable);
         for (Card card: cardsOnTable) {
-            System.out.println(card);
             ImageView cardView = cards.get(card.toString()).getKey();
             removeCardViewFromParent(cardView);
         }
     }
 
     private void _findWinner(){
-        System.out.println("CURRENT = " + hearts.getTable().getPlayedNumber() );
         if(hearts.getTable().getPlayedNumber() < 4){
             return;
         }
         int winner = hearts.getTable().findWinner();
-        System.out.println("WINNER IN SMALL ROUND = " + winner);
         
         if (winner - 1 < 0) {
             hearts.setWhoseTurn(3);
@@ -719,11 +696,6 @@ public class GameController implements Initializable {
         }
         Hand player = hearts.getHands()[0];
         Card card = player.getCardsInHand().get(cardIndex);
-        System.out.println("WHOTURN = " + hearts.getWhoseTurn());
-        System.out.println("!isTurn() = " + !isTurn(0));
-        // System.out.println("!canPlay = " + !canPlay(player, card));
-        System.out.println("hasTwoClubs = " + hasTwoClubs(player));
-        System.out.println("!isTwoClubs = " + !isTwoClubs(card));
         if (isFirstOneInTurn() && 
             isHeart(card) && 
             !isHeartBroken()) {
@@ -788,9 +760,7 @@ public class GameController implements Initializable {
         if (player.CardToGive.size() < 3) {
             return;
         }
-        System.out.println("SWAPPED");
         if(hearts.getBigRound() % 4 != 0){
-            System.out.println("SWAPPED INNER");
             for(int i = 0; i < 4; i++){
                 Hand p = hearts.getHands()[i];
                 if(p instanceof Bot){

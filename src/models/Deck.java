@@ -52,18 +52,6 @@ public class Deck implements Iterable<Card> {
     return cards[top--];
   }
 
-  public void print() {
-    if (empty()) {
-      System.out.println("The deck is empty");
-      return;
-    }
-
-    System.out.println("The current deck: ");
-    for (Card card : this) {
-      System.out.println(" " + card);
-    }
-  }
-
   public Iterator<Card> iterator() {
     return new Iterator<Card>() {
       private int cursor = top;
@@ -82,23 +70,5 @@ public class Deck implements Iterable<Card> {
         throw new UnsupportedOperationException();
       }
     };
-  }
-
-  public static void main(String[] args) {
-    Deck deck = new Deck();
-
-    System.out.println("Before shuffling:");
-    deck.print();
-    System.out.println();
-
-    System.out.println("After shuffling:");
-    deck.shuffle();
-    deck.print();
-    System.out.println();
-
-    System.out.println("After dealing every card:");
-    for (int i = 0; i < 52; i++)
-      deck.popCard();
-    deck.print();
   }
 }

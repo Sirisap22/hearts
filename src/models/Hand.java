@@ -1,9 +1,7 @@
 package models;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public abstract class Hand {
   protected int chosenPlaceCard = -1;
@@ -89,11 +87,6 @@ public abstract class Hand {
     cardsInHand.removeIf(card -> card.equals(removeCard));
   }
 
-  // winner
-  // card[] = table.popAllCard()
-  // for card in card[]
-  // addCarInPile(card)
-
   public void addCardInPile(Card card) {
     checkAndAddPoints(card);
     cardsInPile.add(card);
@@ -115,29 +108,14 @@ public abstract class Hand {
     return card.getSuit() == Suit.SPADES && card.getRank() == 12;
   }
 
-  // chosenGiveCards {}
-  // hands[0].giveCard(hands[1])
-
   public void giveCard(Hand hand) {
     Arrays.sort(chosenGiveCards);
-    System.out.println("GIVE = " + chosenGiveCards);
     for (int i = 2; i >= 0; i--) {
       int cardIndex = i;
       Card chosenCard = cardsInHand.get(cardIndex);
       hand.addCardInHand(chosenCard);
       removeCardInHand(chosenCard);
     }
-    // sort
-    // for (int cardIndex: chosenGiveCards) {
-      // Card chosenCard = cardsInHand.get(cardIndex);
-      // hand.addCardInHand(chosenCard);
-
-    // }
-    // for (int cardIndex: chosenGiveCards) {
-
-      // Card chosenCard = cardsInHand.get(cardIndex);
-      // removeCardInHand(chosenCard);
-    // }
 
     }
 

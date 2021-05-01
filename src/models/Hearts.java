@@ -85,26 +85,17 @@ public class Hearts {
 
   // Game methods
   public void resetGame() {
-    // TODO create new deck/ shuffle deck/ deal cards/
     setBigRound(1);
     setSmallRound(1);
-    // setTurn(1);
 
     resetPoints();
 
-    // setTable(new Table());
     setDeck(new Deck());
     table.reset();
     for (Hand hand: hands) {
       hand.refreshHand();
     }
     deck.shuffle();
-    // dealCards();
-
-    // sortCardsInHands();
-
-    // startGiveCardsPhase();
-    // startBigRound();
 
   }
 
@@ -150,74 +141,6 @@ public class Hearts {
     return -1;
   }
 
-  // public void endTurn() {
-
-  //   if (turn == 4)
-  //     endSmallRound();
-  //   hands[whoseTurn].setChosenPlaceCard(-1);
-  // }
-
-  // public void nextTurn() {
-  //   turn += 1;
-  //   // check turn
-  //   whoseTurn += 1;
-  //   if (whoseTurn >= hands.length)
-  //     whoseTurn = 0;
-  // }
-
-  // public void endSmallRound() {
-  //   setTurn(1);
-  //   if (smallRound == 13) {
-  //     endBigRound();
-  //   }
-  //   nextSmallRound();
-
-  // }
-
-  // public void nextSmallRound() {
-  //   // find who win on table
-  //   // and set that person to whose turn
-  //   smallRound += 1;
-
-  //   System.out.println("SUSSSSSSSS");
-  //   int tableWinner = findWhoWinOnTable();
-  //   whoseTurn = tableWinner;
-  // }
-
-  private int findWhoWinOnTable() {
-    return table.findWinner();
-  }
-
-  // public Hand endBigRound() {
-  //   setSmallRound(1);
-  //   Hand winner = checkEndGameConditionAndFindWinner();
-
-  //   // add points to keep track scores for each hand
-  //   addScores();
-
-  //   deck.refresh();
-  //   refreshAllHands();
-
-  //   return winner;
-  // }
-
-  private void addScores() {
-    for (int i = 0; i < hands.length; i++) {
-      scores[i] += hands[i].getPoints();
-    }
-  }
-
-  // TODO find 2 of clubs function
-  // find who have 2 of clubs
-  // set whoseTurn = that person
-
-  // public void nextBigRound() {
-  //   bigRound += 1;
-
-  //   deck.shuffle();
-  //   dealCards();
-  //   sortCardsInHands();
-  // }
 
   public Hand checkEndGameConditionAndFindWinner() {
     Hand winner = null;
@@ -248,38 +171,12 @@ public class Hearts {
     return null;
   }
 
-  private void refreshAllHands() {
-    for (Hand hand : hands) {
-      hand.refreshHand();
-    }
-  }
-
   public void sortCardsInHands() {
     for (Hand hand : getHands()) {
       hand.sortCardsInHand();
     }
   }
 
-  // utils for debug.
 
-  public void printHands() {
-    for (Hand hand : getHands()) {
-      System.out.println("Hand name: " + hand.getName());
-      hand.printCardsInHand();
-    }
-  }
-
-  public static void main(String[] args) {
-    Hand[] hands = { new Player("test1"), new Player("test2"), new Player("test3"), new Player("test4") };
-    Hearts hearts = new Hearts(hands);
-
-    hearts.resetGame();
-
-    hearts.printHands();
-
-    hearts.sortCardsInHands();
-
-    hearts.printHands();
-
-  }
+  
 }

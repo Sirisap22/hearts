@@ -107,14 +107,17 @@ public class MainController implements Initializable {
         String name = playerName.getText();
         if (name.length() < 3) {
             notification.setText("Name should be longer than 3 characters.");
+            notification.setLayoutX(50);
             return;
         }
         if (name.length() > 8) {
             notification.setText("Name should be shorter than 8 characters.");
+            notification.setLayoutX(50);
             return;
         }
         if (!name.matches("[aA-zZ ]+$")) {
             notification.setText("Name should not have speacial characters or number.");
+            notification.setLayoutX(23);
             return;
         }
 

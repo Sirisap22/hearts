@@ -25,7 +25,6 @@ public class Bot extends Hand {
     int[] cardScore = new int[super.getCardsInHand().size()];
     // if there is no card can play
     if (playableCard(table).size() == 0) {
-      // System.out.println(this.name + " Cant play");
       for (int cardIndex = 0; cardIndex < super.getCardsInHand().size(); cardIndex++) {
         Card card = super.getCardsInHand().get(cardIndex);
         cardScore[cardIndex] = card.getRank();
@@ -143,10 +142,6 @@ public class Bot extends Hand {
       }
     }
     // report for debug
-    for (int cardIndex = 0; cardIndex < super.getCardsInHand().size(); cardIndex++) {
-      Card card = super.getCardsInHand().get(cardIndex);
-      // System.out.println(card.toString() + " " +cardScore[cardIndex]);
-    }
     this.heartLeft -= table.getHeartNumber();
     if (super.getCardsInHand().get(maxIndex[0]).getSuit() == Suit.HEARTS) {
       this.heartLeft--;
@@ -154,7 +149,6 @@ public class Bot extends Hand {
     }
     // Update if SQ had played
     table.Update();
-    // System.out.println(this.name + " : Score = " + maxIndex[1]);
     return maxIndex[0];
   }
 
@@ -175,7 +169,6 @@ public class Bot extends Hand {
         cardScore[cardIndex] -= 10;
       }
     }
-    System.out.println(this.name + " :");
     for (int i = 0; i < 3; i++) { // give 3 card
       int maxScore = 0;
       int pos = -1;
@@ -187,7 +180,6 @@ public class Bot extends Hand {
       }
       res[i] = pos;
       cardbuffer[i] = super.getCardsInHand().get(pos);
-      System.out.println(cardbuffer[i].toString());
       super.removeCardInHand(cardbuffer[i]);
     }
     for (int i = 0; i < 3; i++) {
