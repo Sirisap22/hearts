@@ -1,23 +1,16 @@
 package components.game;
 
-import java.util.concurrent.TimeUnit;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import components.card.CardController;
-import java.io.File;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.NodeOrientation;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,14 +19,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
-import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import models.Bot;
@@ -71,10 +61,11 @@ public class GameController implements Initializable {
     ComponentLoader<GameController> loader = new ComponentLoader<>();
     HashMap<String, Pair<ImageView, CardController>> cards = new HashMap<>();
     
-    // private Label player;
-    // private Label bot1;
-    // private Label bot2;
-    // private Label bot3;
+    private Label host = new Label();
+    private Label player = new Label();
+    private Label bot1 = new Label();
+    private Label bot2 = new Label();
+    private Label bot3 = new Label();
 
     @FXML
     private Pane root = new Pane();
@@ -92,7 +83,8 @@ public class GameController implements Initializable {
         initCurrentState();
         initDeckView();
         initHearts();
-        // initHandLabel();
+        initHandLabel();
+        initGameEventHandler();
         initBots();
         renderAllCards();
         swap.setVisible(false);
@@ -136,13 +128,81 @@ public class GameController implements Initializable {
         hearts.resetGame();
     }
 
-    // private void initHandLabel() {
-    //     Hand[] allHand = hearts.getHands();
-    //     player.setText(allHand[0].getName());
-    //     bot1.setText(allHand[1].getName());
-    //     bot2.setText(allHand[2].getName());
-    //     bot3.setText(allHand[3].getName());
-    // }
+    private void initHandLabel() {
+        Hand[] allHand = hearts.getHands();
+        player.setText(allHand[0].getName());
+        bot1.setText(allHand[1].getName());
+        bot2.setText(allHand[2].getName());
+        bot3.setText(allHand[3].getName());
+    }
+
+    private void initGameEventHandler() {
+        host.addEventHandler(GameEvent.GAME_EVENT, new GameEventHandler() {
+            @Override
+            public void onEndTurn(int whoseTurn) {
+                if (checkEndRound()) {
+                    return;
+                }
+
+                switch(hearts.getWhoseTurn()) {
+                    case 0:
+                        bot1.fireEvent(new StartTurnEvent());
+                        break;
+                    case 1:
+                        bot2.fireEvent(new StartTurnEvent());
+                        break;
+                    case 2:
+                        bot3.fireEvent(new StartTurnEvent());
+                        break;
+                    case 3:
+                        player.fireEvent(new StartTurnEvent());
+                        break;
+                }
+            }
+
+            @Override
+            public void onStartTurn() {}
+        });
+
+        player.addEventHandler(GameEvent.GAME_EVENT, new GameEventHandler(){
+            @Override
+            public void onEndTurn(int whoseTurn) {
+                
+            }
+            @Override
+            public void onStartTurn() {
+                hearts.setWhoseTurn(0);
+                updateWhoseTurnNotification();
+            }
+        });
+        addStartTurnEventHandler(bot1, 1);
+        addStartTurnEventHandler(bot2, 2);
+        addStartTurnEventHandler(bot3, 3);
+    }
+
+    private void addStartTurnEventHandler(Label node, int handIndex) {
+        node.addEventHandler(GameEvent.GAME_EVENT, new GameEventHandler() {
+            @Override
+            public void onEndTurn(int whoseTurn) {
+            }
+
+            @Override
+            public void onStartTurn() {
+                hearts.setWhoseTurn(handIndex);
+                updateWhoseTurnNotification();
+                botPlaceCard(handIndex);
+            }
+        });
+
+    }
+
+    private void placeAnimation(ImageView cardView, double xOffset, double yOffset) {
+        PathTransition dropCard = new PathTransition(Duration.millis(500),
+                        new Line(cardView.getX(), cardView.getY(), X_CENTER + xOffset, Y_CENTER + yOffset), cardView);
+                cardView.setX(X_CENTER + xOffset);
+                cardView.setY(Y_CENTER + yOffset);
+                dropCard.play();
+    }
 
     private void initBots() {
         Hand[] hands = hearts.getHands();
@@ -294,15 +354,20 @@ public class GameController implements Initializable {
     private void playCards() {
           switch (hearts.getWhoseTurn()) {
               case 0:
+                System.out.println("FIRE");
+                player.fireEvent(new StartTurnEvent());
                 break;
               case 1:
-                firstBotChooseCardsToPlace();
+                System.out.println("FIRE");
+                bot1.fireEvent(new StartTurnEvent());
                 break;
               case 2:
-                secondBotChooseCardsToPlace();
+                System.out.println("FIRE");
+                bot2.fireEvent(new StartTurnEvent());
                 break;
               case 3:
-                thirdBotChooseCardsToPlace();
+                System.out.println("FIRE");
+                bot3.fireEvent(new StartTurnEvent());
                 break;
           }
     }
@@ -360,72 +425,23 @@ public class GameController implements Initializable {
             addChooseToPlaceEvent(cardView, cardIndex);
         }
     }
-    private void firstBotChooseCardsToPlace(){
-        System.out.println("bot1 turn");
-        updateWhoseTurnNotification();
-        botPlaceCard(1);
-        var isEnd = checkEndRound();
-        System.out.println("From FirstBot isEnd = " + isEnd);
-        if (!isEnd){
-            hearts.setWhoseTurn(2);
-            System.out.println("Bot1 let bot2 play");
-            secondBotChooseCardsToPlace();
-            return;
-        }
-        if (isEnd)System.out.println("Bot1 found game was ended");
-        System.out.println("After bot1 (Only end 13 round and player turn)");
-    }
-    private void secondBotChooseCardsToPlace(){
-        System.out.println("bot2 turn");
-        updateWhoseTurnNotification();
-        botPlaceCard(2);
-        var isEnd = checkEndRound();
-        System.out.println("From SecondBot isEnd = " + isEnd);
-        if (!isEnd) {
-            hearts.setWhoseTurn(3);
-            System.out.println("Bot2 let bot3 play");
-            thirdBotChooseCardsToPlace();
-            return;
-        }
-        if (isEnd)System.out.println("Bot2 found game was ended");
-        System.out.println("After bot2 (Only end 13 round and player turn)");
-    }
-    private void thirdBotChooseCardsToPlace(){
-        System.out.println("bot3 turn");
-        updateWhoseTurnNotification();
-        botPlaceCard(3);
-        var isEnd = checkEndRound();
-        System.out.println("From thirdBot isEnd = " + isEnd);
-        if (!isEnd) {
-            hearts.setWhoseTurn(0);
-            updateWhoseTurnNotification();
-            System.out.println("Bot3 let player play");
-        }
-        if (isEnd)System.out.println("Bot3 found game was ended");
-        System.out.println("After bot3 (Only end 13 round and player turn)");
-        
-    }
 
     private void playerPlaceCard(ImageView cardView, int cardIndex) {
-        updateWhoseTurnNotification();
 
         Player player = (Player)hearts.getHands()[0];
         Card card = player.getCardsInHand().get(cardIndex);
-        hearts.getTable().placeCardAt(card, 0);
-        player.removeCardInHand(card);
-        cardView.setX(X_CENTER + 50);
-        cardView.setY(Y_CENTER + 160);
-
-        hearts.getTable().Update();
-        var isEnd = checkEndRound();
-        System.out.println("From Player isEnd = " + isEnd);
-        if (!isEnd) {
-            hearts.setWhoseTurn(1);
-            System.out.println("Player let bot1 play");
-            firstBotChooseCardsToPlace();
+        placeAnimation(cardView, 50, 160);
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(event -> {
+            hearts.getTable().placeCardAt(card, 0);
+            player.removeCardInHand(card);
+            cardView.setX(X_CENTER + 50);
+            cardView.setY(Y_CENTER + 160);
+            hearts.getTable().Update();
+            host.fireEvent(new EndTurnEvent(0));
         }
-        if (isEnd)System.out.println("Player found game was ended");
-        System.out.println("After Player (Only end 13 round and player turn)");
+        );
+        pause.play();
     }
 
     private void botPlaceCard(int handIndex) {
@@ -444,31 +460,41 @@ public class GameController implements Initializable {
 
         System.out.println("BOT HAND_INDEX = " + handIndex);
 
-
-        hearts.getTable().placeCardAt(card, handIndex);
-        bot.removeCardInHand(card);
-        hearts.getTable().Update();
-        botPlaceCardView(cards.get(card.toString()).getKey(), handIndex);
-        // _tempDebug("BOT_PLACE_CARD_" + handIndex);
-        pause(3);
+        ImageView cardView = cards.get(card.toString()).getKey();
+        double[] offsets = getBotOffset(handIndex);
+        placeAnimation( cardView, offsets[0], offsets[1] );
+        
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(event -> {
+            hearts.getTable().placeCardAt(card, handIndex);
+            bot.removeCardInHand(card);
+            hearts.getTable().Update();
+            botPlaceCardView( cardView, handIndex);
+            host.fireEvent(new EndTurnEvent(handIndex)); 
+        }
+        );
+        pause.play();
 
     }
 
-    private void botPlaceCardView(ImageView cardView, int handIndex) {
+    private double[] getBotOffset(int handIndex) {
         switch(handIndex) {
             case 1:
-                cardView.setX(X_CENTER);
-                cardView.setY(Y_CENTER + 100);
-                break;
+                return new double[] {0, 100};
             case 2:
-                cardView.setX(X_CENTER + 50);
-                cardView.setY(Y_CENTER + 40);
-                break;
+                return new double[] {50, 40};
             case 3:
-                cardView.setX(X_CENTER + 100);
-                cardView.setY(Y_CENTER + 100);
-                break;
+                return new double [] {100, 100};
         }
+
+        return new double[] {0, 0};
+    }
+
+
+    private void botPlaceCardView(ImageView cardView, int handIndex) {
+        double[] offsets = getBotOffset(handIndex);
+        cardView.setX(X_CENTER + offsets[0]);
+        cardView.setY(Y_CENTER + offsets[1]);
     }
 
 
@@ -486,22 +512,19 @@ public class GameController implements Initializable {
     private boolean _checkEndRound() throws InterruptedException {
         boolean isEnd = false;
         System.out.println("");
-        if(hearts.getSmallRound() >= 13){
-            isEnd = true;
-            changeState(State.END);
-            System.out.println("End round 1");
-        }
-        else if(hearts.getTable().getPlayedNumber() >= 4){
+        if(hearts.getTable().getPlayedNumber() >= 4){
             System.out.println("End small");
-            pause(5);
-            // isEnd = true;
             hearts.setSmallRound(hearts.getSmallRound() + 1);
             clearTableView(); 
             _findWinner();
             refreshCardPosition();
             updateChooseToPlaceEvent();
         }
-
+        if(hearts.getSmallRound() > 13){
+            isEnd = true;
+            changeState(State.END);
+            System.out.println("End round 1");
+        }
         return isEnd;
     }
 
@@ -534,15 +557,16 @@ public class GameController implements Initializable {
             }
         switch(winner){
             case 0:
+                bot3.fireEvent(new EndTurnEvent(3));
                 break;
             case 1:
-                firstBotChooseCardsToPlace();
+                player.fireEvent(new EndTurnEvent(0));
                 break;
             case 2:
-                secondBotChooseCardsToPlace();
+                bot1.fireEvent(new EndTurnEvent(1));
                 break;
             case 3:
-                thirdBotChooseCardsToPlace();
+                bot2.fireEvent(new EndTurnEvent(2));
                 break;
             default:
                 System.out.println("findWinner failed");
@@ -557,9 +581,14 @@ public class GameController implements Initializable {
         Hand player = hearts.getHands()[0];
         Card card = player.getCardsInHand().get(cardIndex);
         System.out.println("!isTurn() = " + !isTurn(0));
-        System.out.println("!canPlay = " + !canPlay(player, card));
+        // System.out.println("!canPlay = " + !canPlay(player, card));
         System.out.println("hasTwoClubs = " + hasTwoClubs(player));
         System.out.println("!isTwoClubs = " + !isTwoClubs(card));
+        if (isFirstOneInTurn() && 
+            isHeart(card) && 
+            !isHeartBroken()) {
+            return;
+        }
         if(!isTurn(0) || !canPlay(player, card))
             return;
         if(hasTwoClubs(player) && !isTwoClubs(card)){
@@ -568,6 +597,18 @@ public class GameController implements Initializable {
         var cardView = (ImageView)event.getSource();
         playerPlaceCard(cardView, cardIndex);
 
+    }
+
+    private boolean isHeartBroken() {
+        return hearts.getTable().isBroken();
+    }
+
+    private boolean isHeart(Card card) {
+        return card.getSuit() == Suit.HEARTS;
+    }
+
+    private boolean isFirstOneInTurn() {
+        return hearts.getTable().gethandStack().size() == 0;
     }
 
     private boolean canPlay(Hand hand,Card card) {

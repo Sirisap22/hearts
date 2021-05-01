@@ -171,6 +171,16 @@ public abstract class Hand {
     return false;
   }
 
+  public boolean hasSuit(Card cardin) {
+    for (int cardIndex = 0; cardIndex < cardsInHand.size(); cardIndex++) {
+      Card card = cardsInHand.get(cardIndex);
+      if (cardin.equals(card)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   protected ArrayList<Integer> playableCard(Table table) {
     ArrayList<Integer> output = new ArrayList<>();
     for (int cardIndex = 0; cardIndex < getCardsInHand().size(); cardIndex++) {
