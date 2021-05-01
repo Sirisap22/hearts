@@ -126,11 +126,9 @@ public class Bot extends Hand {
         if (table.getPlayedNumber() != 0 && !card.equals(this.C2) && (!card.getSuit().equals(table.getFirstSuit()))) {
           cardScore[cardIndex] = -100;
         } else if ((card.getSuit().equals(Suit.HEARTS) && !table.isBroken() && table.getPlayedNumber() == 0)) {
-          // System.out.println("+++++");
           cardScore[cardIndex] = -100;
         }
-        // System.out.println("cutting : " + card.toString() + ", " + table.isBroken() +
-        // ", " + table.getPlayedNumber() + ", " + cardScore[cardIndex]);
+        
       } catch (IndexOutOfBoundsException e) {
         break;
       }
@@ -197,9 +195,7 @@ public class Bot extends Hand {
     }
     this.sortCardsInHand();
     super.setChosenGiveCards(res);
-    // for(int i = 0; i < 3; i++){
-    // System.out.println(super.getCardsInHand().get(super.getChosenGiveCards()[i]));
-    // }
+   
   }
 
   public void chooseCardToPlace() {

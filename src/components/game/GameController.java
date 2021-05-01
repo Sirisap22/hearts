@@ -678,12 +678,6 @@ public class GameController implements Initializable {
 
     private boolean checkSmallEndRound() {
         return hearts.getTable().getPlayedNumber() >= 4;
-            // System.out.println("End small");
-            // // hearts.setSmallRound(hearts.getSmallRound() + 1);
-            // clearTableView(); 
-            // _findWinner();
-            // refreshCardPosition();
-            // updateChooseToPlaceEvent();
     }
 
     private void clearTableView() {
@@ -695,13 +689,6 @@ public class GameController implements Initializable {
             removeCardViewFromParent(cardView);
         }
     }
-    private void _tempDebug(String name) {
-        Card[] cardsOnTable = hearts.getTable().getCardSlot();
-        System.out.println("FROM " + name +" clear = " + cardsOnTable);
-        for (Card card: cardsOnTable) {
-            System.out.println(card);
-        }
-    }
 
     private void _findWinner(){
         System.out.println("CURRENT = " + hearts.getTable().getPlayedNumber() );
@@ -709,7 +696,6 @@ public class GameController implements Initializable {
             return;
         }
         int winner = hearts.getTable().findWinner();
-        // updateNotificationWinnerThisSmallRound(winner);
         System.out.println("WINNER IN SMALL ROUND = " + winner);
         
         if (winner - 1 < 0) {
@@ -721,10 +707,6 @@ public class GameController implements Initializable {
             hearts.getHands()[winner].addCardInPile(card);
         }
         host.fireEvent(new EndTurnEvent());
-    }
-
-    private void updateNotificationWinnerThisSmallRound(int winner) {
-        this.notification.setText(hearts.getHands()[winner] + " win this round.");
     }
 
     private void addChooseToPlaceEvent(ImageView cardView, int cardIndex) {
