@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 
 public abstract class GameEventHandler implements EventHandler<GameEvent> {
 
-  public abstract void onEndTurn(int whoseTurn);
+  public abstract void onEndTurn();
   public abstract void onStartTurn();
 
   @Override

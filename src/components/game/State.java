@@ -6,7 +6,7 @@ public enum State {
     // give cards
     // play
     // end
-    INIT, GIVE, PLAY, END;
+    INIT, GIVE, PLAY, END, FINAL;
     public String to_string(){
         switch(this){
             case INIT:
@@ -17,6 +17,8 @@ public enum State {
                 return "PlayState";
             case END:
                 return "endState";
+            case FINAL:
+                return "finalState";
             default:
                 return "NEVER_REACH";
         }

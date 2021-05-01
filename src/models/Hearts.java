@@ -14,6 +14,7 @@ public class Hearts {
 
   public Hearts(Hand[] hands) {
     setHands(hands);
+    setTable(new Table());
   }
 
   // getters and setters.
@@ -87,12 +88,16 @@ public class Hearts {
     // TODO create new deck/ shuffle deck/ deal cards/
     setBigRound(1);
     setSmallRound(1);
-    setTurn(1);
+    // setTurn(1);
 
     resetPoints();
 
-    setTable(new Table());
+    // setTable(new Table());
     setDeck(new Deck());
+    table.reset();
+    for (Hand hand: hands) {
+      hand.refreshHand();
+    }
     deck.shuffle();
     // dealCards();
 
@@ -214,7 +219,7 @@ public class Hearts {
   //   sortCardsInHands();
   // }
 
-  private Hand checkEndGameConditionAndFindWinner() {
+  public Hand checkEndGameConditionAndFindWinner() {
     Hand winner = null;
     int winnerScore = Integer.MAX_VALUE;
     boolean isMoreOrEqualTo100 = false;
