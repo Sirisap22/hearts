@@ -106,6 +106,7 @@ public class GameController implements Initializable {
     public void initialize(URL url, ResourceBundle rb)  {
         initCurrentState();
         initDeckView();
+        initNotification();
         initHearts();
         initHandLabel();
         initGameEventHandler();
@@ -145,6 +146,10 @@ public class GameController implements Initializable {
 
                 this.cards.put(card.toString(), cardComponent);
             }
+    }
+
+    private void initNotification() {
+        this.notification.setText("");
     }
 
     private void initHearts() {

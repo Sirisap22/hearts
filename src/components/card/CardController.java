@@ -47,6 +47,16 @@ public class CardController implements Initializable {
     cardImage.setImage(new Image(path));
   }
 
+  public void faceCardDown() {
+    this.facingDown = true;
+    updateCardImage();
+  }
+
+  public  void faceCardUp() {
+    this.facingDown = false;
+    updateCardImage();
+  }
+
   public void filpCard() {
     setFacingDown(!facingDown);
     setCard(card);
