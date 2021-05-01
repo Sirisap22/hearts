@@ -151,15 +151,39 @@
                </color>
             </DropShadow>
          </effect></Button>
-      <Pane fx:id="winnerBoard" layoutX="503.0" layoutY="104.0" prefHeight="282.0" prefWidth="394.0">
+      <Pane fx:id="winnerBoard" layoutX="502.0" layoutY="163.0" prefHeight="282.0" prefWidth="394.0" styleClass="endPane" stylesheets="@game.css">
          <children>
-            <Text fx:id="winnerText" fill="WHITE" layoutX="172.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+            <Text fx:id="winnerText" fill="#3f2da5" layoutX="172.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                <font>
-                  <Font size="27.0" />
+                  <Font name="Bodoni MT Poster Compressed" size="29.0" />
                </font>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.5027924180030823" green="0.592999279499054" blue="0.7605262994766235" />
+                     </color>
+                  </DropShadow>
+               </effect>
             </Text>
-            <Button fx:id="backToMenu" layoutX="151.0" layoutY="152.0" mnemonicParsing="false" onAction="#exit" text="Back To Menu" />
+            <Button fx:id="backToMenu" layoutX="127.0" layoutY="152.0" mnemonicParsing="false" onAction="#exit" prefHeight="56.0" prefWidth="141.0" styleClass="backToMenu" stylesheets="@game.css" text="Back To Menu" textFill="#3f2da5">
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.5027924180030823" green="0.592999279499054" blue="0.7605262994766235" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <font>
+                  <Font name="Bodoni MT Poster Compressed" size="29.0" />
+               </font></Button>
          </children>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.7062621712684631" green="0.7763344645500183" blue="0.8973684310913086" />
+               </color>
+            </DropShadow>
+         </effect>
       </Pane>
    </children>
 </Pane>

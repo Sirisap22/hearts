@@ -16,10 +16,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import models.Sounds;
@@ -52,8 +54,17 @@ public class MainController implements Initializable {
     @FXML
     private Button playBtn;
 
+    @FXML
+    private Pane inputBoard;
+    @FXML
+    private TextField playerName;
+    @FXML
+    private Text notification;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        inputBoard.setVisible(false);
         // sound.getMusicMenuPlay();
         rules.setOnAction(e -> {
             // sound.getSoundMenuClickPlay();
@@ -88,7 +99,28 @@ public class MainController implements Initializable {
 
     @FXML
     private void playGame(ActionEvent event) throws IOException {
+        inputBoard.setVisible(true);
+    }
+
+    @FXML
+    private void startGame(ActionEvent event) throws IOException {
+        String name = playerName.getText();
+        if (name.length() < 3) {
+            notification.setText("Name should be longer than 3 characters.");
+            return;
+        }
+        if (name.length() > 8) {
+            notification.setText("Name should be shorter than 8 characters.");
+            return;
+        }
+        if (!name.matches("[aA-zZ ]+$")) {
+            notification.setText("Name should not have speacial characters or number.");
+            return;
+        }
+
         Pair<Parent, GameController> gameComponent = loader.loadComponent(this ,"/components/game/Game.fxml");
+        GameController gameCon = gameComponent.getValue();
+        gameCon.initGame(name);
         Parent root = gameComponent.getKey();
 
         Scene gameScene = new Scene(root);
@@ -103,12 +135,11 @@ public class MainController implements Initializable {
             window.setX(e.getScreenX() - setX);
             window.setY(e.getScreenY() - setY);
         });
-        // etMusicMenuStop();
     }
 
     @FXML
-    private void startGame(ActionEvent event) throws IOException {
-        
+    private void closeInputBoard() {
+        this.inputBoard.setVisible(false);
     }
 
     @FXML

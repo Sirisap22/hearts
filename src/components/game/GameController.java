@@ -112,10 +112,13 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb)  {
+    }
+
+    public void initGame(String playerName) {
         initCurrentState();
         initDeckView();
         initNotification();
-        initHearts("TEST1");
+        initHearts(playerName);
         initHandLabel();
         initGameEventHandler();
         initBots();
@@ -123,10 +126,6 @@ public class GameController implements Initializable {
         initScoresBoard();
         renderAllCards();
         swap.setVisible(false);
-    }
-
-    private void initGame(String playerName) {
-        
     }
 
     private void initCurrentState() {

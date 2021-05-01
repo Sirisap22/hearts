@@ -26,3 +26,15 @@
      -fx-background-radius:15;
 
 }
+
+.endPane{
+     -fx-background-radius:30;
+    -fx-background-color:linear-gradient(to bottom,#C3EBEF, #70C2DF, #7354F4, #3F2DA5 );
+}
+.backToMenu{
+    -fx-background-radius:15;
+    -fx-background-color:#70C2DF;
+}
+.backToMenu:hover{
+    -fx-background-color:#70C2DF;
+}
