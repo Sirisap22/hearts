@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import components.game.GameController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,9 +21,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import models.Sounds;
+import utils.ComponentLoader;
 
 public class MainController implements Initializable {
+    private ComponentLoader<MainController> loader = new ComponentLoader<>();
 
     private Pane rulesScene = new Pane();
     private Pane creditScene = new Pane();
@@ -83,8 +88,9 @@ public class MainController implements Initializable {
 
     @FXML
     private void playGame(ActionEvent event) throws IOException {
-        // sound.getMusicMenuStop();
-        Parent root = FXMLLoader.load(getClass().getResource("/components/game/Game.fxml"));
+        Pair<Parent, GameController> gameComponent = loader.loadComponent(this ,"/components/game/Game.fxml");
+        Parent root = gameComponent.getKey();
+
         Scene gameScene = new Scene(root);
         gameScene.setFill(Color.TRANSPARENT);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -97,6 +103,12 @@ public class MainController implements Initializable {
             window.setX(e.getScreenX() - setX);
             window.setY(e.getScreenY() - setY);
         });
+        // etMusicMenuStop();
+    }
+
+    @FXML
+    private void startGame(ActionEvent event) throws IOException {
+        
     }
 
     @FXML

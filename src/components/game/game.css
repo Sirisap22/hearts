@@ -14,3 +14,15 @@
    -fx-background-radius:50;
    -fx-background-color:#FEDBC5;
 }
+.scorePane{
+    -fx-background-radius:30;
+    -fx-background-color:linear-gradient(to bottom,#8497B5, #9D98AE, #CB8D9A, #EA9087 ,#ECAF95);
+}
+.closeBtn{
+    -fx-background-color:transparent;
+}
+.scoreBtn{
+    -fx-background-color:#8497B5;
+     -fx-background-radius:15;
+
+}
