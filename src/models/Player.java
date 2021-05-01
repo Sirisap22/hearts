@@ -4,6 +4,7 @@ import java.util.Collections;
 
 public class Player extends Hand {
   public ArrayList<Integer> CardToGive = new ArrayList<>();
+  public Sounds sound = new Sounds();
   public Player(String name) {
     super(name);
   }
@@ -24,13 +25,16 @@ public class Player extends Hand {
   public int addPlayerChooseCardToGive(int cardIndex){
     if(CardToGive.contains(cardIndex)){
       CardToGive.remove(Integer.valueOf(cardIndex));
+      sound.getSoundSwitchCardPlay();
       return -1;
     }
     else if(CardToGive.size() < 3){
         CardToGive.add(cardIndex);
+        sound.getSoundSwitchCardPlay();
         return 1;
     }
     else{
+      sound.getSoundWrongPlay();
       return 0;
     }
   }

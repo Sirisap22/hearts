@@ -778,7 +778,7 @@ public class GameController implements Initializable {
         if (player.CardToGive.size() < 3) {
             return;
         }
-        sounds.getSoundSwitchCardPlay();
+        sounds.getSoundGiveCardPlay();;
 
         if(hearts.getBigRound() % 4 != 0){
             for(int i = 0; i < 4; i++){
