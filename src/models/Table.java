@@ -6,6 +6,7 @@ import java.util.Arrays;
 public class Table {
   private ArrayList<Integer> handStack = new ArrayList<Integer>();
   private Card[] cardSlots = new Card[4];
+  private Sounds sounds = new Sounds();
 
   // index of Hands mean player
   public void placeCardAt(Card card, int slot) {
@@ -152,8 +153,12 @@ public class Table {
         break;
       }
       if (cardSlots[handStack.get(hand)].getSuit().equals(Suit.HEARTS)) {
+        if (!isBroken()) {
+          sounds.getSoundSmashHeartPlay();
+        }
         hasHeart = true;
       } else if (cardSlots[handStack.get(hand)].equals(new Card(12, Suit.SPADES))) {
+        sounds.getSoundSmashMamSpadesPlay();
         SQ = true;
       }
     }

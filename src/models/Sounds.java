@@ -29,6 +29,7 @@ public class Sounds {
          soundMenu.seek(Duration.ZERO);
          }
          });
+         this.soundMenu.setVolume(0.05);
          this.soundMenu.play();
             
      }
@@ -38,6 +39,7 @@ public class Sounds {
      public void getSoundShuffleCardPlay(){
          URL resource = getClass().getResource("/public/sounds/Shuffle_card.mp3");
          this.soundShuffleCard =new MediaPlayer(new Media(resource.toString()));
+         this.soundShuffleCard.setVolume(0.05);
          this.soundShuffleCard.play();
      }
      public void getSoundShuffleCardStop(){
@@ -47,6 +49,7 @@ public class Sounds {
      public void getSoundGiveCardPlay(){
          URL resource = getClass().getResource("/public/sounds/Give_cards.mp3");
          this.soundGiveCard =new MediaPlayer(new Media(resource.toString()));
+         this.soundGiveCard.setVolume(0.05);
          this.soundGiveCard.play();
      }
      public void getSoundGiveCardStop(){
@@ -56,6 +59,7 @@ public class Sounds {
      public void getSoundGameOverPlay(){
          URL resource = getClass().getResource("/public/sounds/game_Over.mp3");
          this.soundGameOver =new MediaPlayer(new Media(resource.toString()));
+         this.soundGameOver.setVolume(0.05);
          this.soundGameOver.play();
      }
      public void getSoundGameOverStop(){
@@ -65,6 +69,7 @@ public class Sounds {
      public void getSoundSmashHeartPlay(){
          URL resource = getClass().getResource("/public/sounds/hearts.mp3");
          this.soundSmashHeart =new MediaPlayer(new Media(resource.toString()));
+         this.soundSmashHeart.setVolume(0.05);
          this.soundSmashHeart.play();
     }
      public void getSoundSmashHeartStop(){
@@ -74,6 +79,7 @@ public class Sounds {
      public void getSoundSmashMamSpadesPlay(){
          URL resource = getClass().getResource("/public/sounds/mam_Spades.mp3");
          this.soundSmashMamSpades =new MediaPlayer(new Media(resource.toString()));
+         this.soundSmashMamSpades.setVolume(0.05);
          this.soundSmashMamSpades.play();
      }
      public void getSoundSmashMamSpadesStop(){
@@ -83,6 +89,7 @@ public class Sounds {
      public void getSoundSwitchCardPlay(){
          URL resource = getClass().getResource("/public/sounds/Switch-card.mp3");
          this.soundSwitchCard =new MediaPlayer(new Media(resource.toString()));
+         this.soundSwitchCard.setVolume(0.05);
          this.soundSwitchCard.play();
      }
      public void getSoundSwitchCardStop(){
@@ -92,6 +99,7 @@ public class Sounds {
      public void getSoundMenuClickPlay(){
          URL resource = getClass().getResource("/public/sounds/menu_Click.mp3");
          this.soundMenuClick =new MediaPlayer(new Media(resource.toString()));
+         this.soundMenuClick.setVolume(0.05);
          this.soundMenuClick.play();
      }
      public void getSoundMenuClickStop(){
@@ -101,6 +109,7 @@ public class Sounds {
      public void getSoundWrongPlay(){
          URL resource = getClass().getResource("/public/sounds/wrong.mp3");
          this.soundWrong =new MediaPlayer(new Media(resource.toString()));
+         this.soundWrong.setVolume(0.05);
          this.soundWrong.play();
      }
      public void getSoundWrongStop(){
@@ -110,6 +119,7 @@ public class Sounds {
      public void getSoundLosePlay(){
          URL resource = getClass().getResource("/public/sounds/lose.mp3");
          this.soundLoseTurn =new MediaPlayer(new Media(resource.toString()));
+         this.soundLoseTurn.setVolume(0.05);
          this.soundLoseTurn.play();
      }
      public void getSoundLoseStop(){
@@ -125,6 +135,7 @@ public class Sounds {
       soundGameBG.seek(Duration.ZERO);
       }
       });
+      this.soundGameBG.setVolume(0.05);
       this.soundGameBG.play();
 
   }

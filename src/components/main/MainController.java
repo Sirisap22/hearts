@@ -65,9 +65,9 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         inputBoard.setVisible(false);
-        // sound.getMusicMenuPlay();
+        sound.getMusicMenuPlay();
         rules.setOnAction(e -> {
-            // sound.getSoundMenuClickPlay();
+            sound.getSoundMenuClickPlay();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/rules/Rules.fxml"));
             try {
                 rulesScene = loader.load();
@@ -77,7 +77,7 @@ public class MainController implements Initializable {
             borderPane.setRight(rulesScene);
         });
         credit.setOnAction(e -> {
-            // sound.getSoundMenuClickPlay();
+            sound.getSoundMenuClickPlay();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/credit/Credit.fxml"));
 
             try {
@@ -88,7 +88,7 @@ public class MainController implements Initializable {
             borderPane.setRight(creditScene);
         });
         Home.setOnAction(e -> {
-            // sound.getSoundMenuClickPlay();
+            sound.getSoundMenuClickPlay();
             borderPane.setRight(scenePane);
         });
         quit.setOnAction(e -> {
@@ -100,6 +100,7 @@ public class MainController implements Initializable {
     @FXML
     private void playGame(ActionEvent event) throws IOException {
         inputBoard.setVisible(true);
+        sound.getSoundMenuClickPlay();
     }
 
     @FXML
@@ -120,6 +121,8 @@ public class MainController implements Initializable {
             notification.setLayoutX(23);
             return;
         }
+
+        sound.getMusicMenuStop();
 
         Pair<Parent, GameController> gameComponent = loader.loadComponent(this ,"/components/game/Game.fxml");
         GameController gameCon = gameComponent.getValue();

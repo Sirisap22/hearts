@@ -33,6 +33,7 @@ import models.Deck;
 import models.Hand;
 import models.Hearts;
 import models.Player;
+import models.Sounds;
 import models.Suit;
 import models.Table;
 import utils.ComponentLoader;
@@ -110,6 +111,8 @@ public class GameController implements Initializable {
 
     private Hand winner;
 
+    private Sounds sounds = new Sounds();
+
     @Override
     public void initialize(URL url, ResourceBundle rb)  {
     }
@@ -125,6 +128,7 @@ public class GameController implements Initializable {
         initWinnerBoard();
         initScoresBoard();
         renderAllCards();
+        sounds.getMusicGameBGPlay();
         swap.setVisible(false);
     }
 
@@ -316,6 +320,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void exit(ActionEvent event) throws IOException {
+        sounds.getMusicGameBGStop();
         Parent root = FXMLLoader.load(getClass().getResource("/components/main/Main.fxml"));
         Scene gameScene = new Scene(root);
         gameScene.setFill(Color.TRANSPARENT);
@@ -333,6 +338,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dealCards(ActionEvent event) {
+        sounds.getSoundShuffleCardPlay();
         hearts.dealCards(); 
         sortCardsInHand();
 
@@ -699,11 +705,15 @@ public class GameController implements Initializable {
         if (isFirstOneInTurn() && 
             isHeart(card) && 
             !isHeartBroken()) {
+            sounds.getSoundWrongPlay();
             return;
         }
-        if(!isTurn(0) || !canPlay(player, card))
+        if(!isTurn(0) || !canPlay(player, card)) {
+            sounds.getSoundWrongPlay();
             return;
+        }
         if(hasTwoClubs(player) && !isTwoClubs(card)){
+            sounds.getSoundWrongPlay();
             return;
         }
         isPlayerClicked = true;
