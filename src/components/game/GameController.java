@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
@@ -80,6 +81,25 @@ public class GameController implements Initializable {
     @FXML
     private Label notification;
 
+    // install 
+
+    @FXML
+    private Button showScores;
+
+    @FXML
+    private Button closeScores;
+
+    @FXML
+    private Pane scoresBoard;
+    @FXML
+    private Text playerScore;
+    @FXML
+    private Text bot1Score;
+    @FXML
+    private Text bot2Score;
+    @FXML
+    private Text bot3Score;
+
     private Hand winner;
 
     @Override
@@ -90,6 +110,7 @@ public class GameController implements Initializable {
         initHandLabel();
         initGameEventHandler();
         initBots();
+        initScoresBoard();
         renderAllCards();
         swap.setVisible(false);
 
@@ -231,6 +252,35 @@ public class GameController implements Initializable {
                 ((Bot) hands[i]).joinTable(hearts.getTable());
             }
         }
+    }
+
+    private void initScoresBoard() {
+        this.scoresBoard.setVisible(false);
+        updateScoresBoard();
+    }
+
+    private void updateScoresBoard() {
+        Hand[] hands = hearts.getHands();
+        int[] scores = hearts.getScores();
+        this.playerScore.setText(hands[0].getName() + "'s score is " + scores[0]);
+        this.bot1Score.setText(hands[1].getName()+ "'s score is " + scores[1]);
+        this.bot2Score.setText(hands[2].getName() + "'s score is " + scores[2]);
+        this.bot3Score.setText(hands[3].getName() + "'s score is " + scores[3]);
+    }
+
+    @FXML
+    private void openScoresBoard() {
+        this.showScores.setVisible(false);
+        updateScoresBoard();
+        this.scoresBoard.toFront();
+        this.closeScores.toFront();
+        this.scoresBoard.setVisible(true);
+    }
+
+    @FXML
+    private void closeScoresBoard() {
+        this.showScores.setVisible(true);
+        this.scoresBoard.setVisible(false);
     }
 
     private void renderAllCards() {
@@ -613,22 +663,6 @@ public class GameController implements Initializable {
             hearts.getHands()[winner].addCardInPile(card);
         }
         host.fireEvent(new EndTurnEvent());
-        // switch(winner){
-        //     case 0:
-        //         bot3.fireEvent(new EndTurnEvent(3));
-        //         break;
-        //     case 1:
-        //         player.fireEvent(new EndTurnEvent(0));
-        //         break;
-        //     case 2:
-        //         bot1.fireEvent(new EndTurnEvent(1));
-        //         break;
-        //     case 3:
-        //         bot2.fireEvent(new EndTurnEvent(2));
-        //         break;
-        //     default:
-        //         System.out.println("findWinner failed");
-        // }
     }
 
     private void addChooseToPlaceEvent(ImageView cardView, int cardIndex) {
