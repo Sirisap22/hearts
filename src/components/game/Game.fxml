@@ -36,7 +36,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <HBox alignment="CENTER" layoutX="489.0" layoutY="145.0" prefHeight="70.0" prefWidth="420.0">
+      <HBox alignment="CENTER" layoutX="434.0" layoutY="139.0" prefHeight="70.0" prefWidth="531.0">
          <children>
             <Label fx:id="notification" text="Label" textFill="#fffbfb">
                <font>
@@ -45,10 +45,10 @@
             </Label>
          </children>
       </HBox>
-      <Pane fx:id="scoresBoard" layoutX="413.0" layoutY="194.0" prefHeight="318.0" prefWidth="502.0">
+      <Pane fx:id="scoresBoard" layoutX="449.0" layoutY="174.0" prefHeight="318.0" prefWidth="502.0">
          <children>
             <Button fx:id="closeScores" layoutX="424.0" layoutY="22.0" mnemonicParsing="false" onAction="#closeScoresBoard" text="Close" />
-            <VBox alignment="CENTER" layoutY="76.0" prefHeight="220.0" prefWidth="502.0">
+            <VBox alignment="CENTER" layoutX="-1.0" layoutY="76.0" prefHeight="220.0" prefWidth="502.0">
                <children>
                   <Text fx:id="playerScore" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                      <font>
@@ -80,5 +80,15 @@
          </children>
       </Pane>
       <Button fx:id="showScores" layoutX="74.0" layoutY="37.0" mnemonicParsing="false" onAction="#openScoresBoard" text="Scores" />
+      <Pane fx:id="winnerBoard" layoutX="503.0" layoutY="104.0" prefHeight="282.0" prefWidth="394.0">
+         <children>
+            <Text fx:id="winnerText" fill="WHITE" layoutX="172.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Text>
+            <Button fx:id="backToMenu" layoutX="151.0" layoutY="152.0" mnemonicParsing="false" onAction="#exit" text="Back To Menu" />
+         </children>
+      </Pane>
    </children>
 </Pane>

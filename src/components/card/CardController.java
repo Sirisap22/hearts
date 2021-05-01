@@ -12,12 +12,15 @@ import models.Card;
 public class CardController implements Initializable {
   private boolean facingDown = false;
   private Card card;
+  private Image frontCard;
+  private Image backCard;
 
   @FXML
   private ImageView cardImage;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    
   }
 
   public boolean isFacingDown() {
@@ -34,17 +37,19 @@ public class CardController implements Initializable {
 
   public void setCard(Card card) {
     this.card = card;
+    this.backCard = new Image("public/cards/back_card.png");
+    String path = String.format("public/cards/%s_%s.png", Card.rankToString(card.getRank()), card.getSuit().toString());
+    this.frontCard = new Image(path);
   }
 
   public void updateCardImage() {
 
     if (isFacingDown()) {
-      cardImage.setImage(new Image("public/cards/back_card.png"));
+      cardImage.setImage(backCard);
       return;
     }
 
-    String path = String.format("public/cards/%s_%s.png", Card.rankToString(card.getRank()), card.getSuit().toString());
-    cardImage.setImage(new Image(path));
+    cardImage.setImage(frontCard);
   }
 
   public void faceCardDown() {

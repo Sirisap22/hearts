@@ -100,6 +100,14 @@ public class GameController implements Initializable {
     @FXML
     private Text bot3Score;
 
+    
+    @FXML
+    private Pane winnerBoard;
+    @FXML
+    private Text winnerText;
+    @FXML
+    private Button backToMenu;
+
     private Hand winner;
 
     @Override
@@ -111,6 +119,7 @@ public class GameController implements Initializable {
         initHandLabel();
         initGameEventHandler();
         initBots();
+        initWinnerBoard();
         initScoresBoard();
         renderAllCards();
         swap.setVisible(false);
@@ -136,7 +145,7 @@ public class GameController implements Initializable {
                         "/components/card/Card.fxml");
                 CardController tempCon = cardComponent.getValue();
                 tempCon.setCard(card);
-                tempCon.setFacingDown(false);
+                tempCon.setFacingDown(true);
                 tempCon.updateCardImage();
                 ImageView tempView = cardComponent.getKey();
                 tempView.setX(X_CENTER);
@@ -234,6 +243,7 @@ public class GameController implements Initializable {
 
             @Override
             public void onStartTurn() {
+                refreshCardPosition();
                 hearts.setWhoseTurn(handIndex);
                 updateWhoseTurnNotification();
                 botPlaceCard(handIndex);
@@ -257,6 +267,10 @@ public class GameController implements Initializable {
                 ((Bot) hands[i]).joinTable(hearts.getTable());
             }
         }
+    }
+
+    private void initWinnerBoard() {
+        this.winnerBoard.setVisible(false);
     }
 
     private void initScoresBoard() {
@@ -335,8 +349,25 @@ public class GameController implements Initializable {
             var cardsInHand = hands[handIndex].getCardsInHand();
             double offset = 0;
             double offSetChangeRate = getOffSetChangeRate(handIndex);
+            if (hands[handIndex] instanceof Player) {
+                for (var card: cardsInHand) {
+                    var cardCon = cards.get(card.toString()).getValue();
+                    var cardView = cards.get(card.toString()).getKey();
+                    cardCon.faceCardUp();
+                    removeCardViewFromParent(cardView);
+                    setCardViewPositionByHandIndex(handIndex, cardView, offset);
+                    addCardViewToParent(cardView);
+                    offset += offSetChangeRate;
+                }
+
+                continue;
+            } 
+
+
             for (var card: cardsInHand) {
+                var cardCon = cards.get(card.toString()).getValue();
                var cardView = cards.get(card.toString()).getKey();
+               cardCon.faceCardDown();
                removeCardViewFromParent(cardView);
                setCardViewPositionByHandIndex(handIndex, cardView, offset);
                addCardViewToParent(cardView);
@@ -440,9 +471,27 @@ public class GameController implements Initializable {
         resetView();
         changeState(State.INIT);
     }
+
     private void finalState(){
+        this.notification.setVisible(false);
+      
+        var it = cards.entrySet().iterator();
+        while (it.hasNext()) {
+            var pair = it.next();
+            var cardView = pair.getValue().getKey();
+            removeCardViewFromParent(cardView);
+            // System.out.println(pair.getKey() + " = " + pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        this.winnerBoard.setVisible(true);
+        this.winnerBoard.toFront();
+        this.winnerText.setText(winner.getName() + " is a winner !!!");
+
+        this.exit.setVisible(false);
+        
         System.out.println(String.format("Final winner = " + winner.getName()));
     }
+
     private void giveState() {
         // give player give card
         Player player = (Player)hearts.getHands()[0];
@@ -560,15 +609,8 @@ public class GameController implements Initializable {
         pause.play();
     }
 
-    private void botPlaceCard(int handIndex) {
-        try {
-            _botPlaceCard(handIndex);
-        } catch(InterruptedException e) {
-            System.out.println(e);
-        }
-    }
     
-    private void _botPlaceCard(int handIndex) throws InterruptedException {
+    private void botPlaceCard(int handIndex)  {
         Bot bot = (Bot)hearts.getHands()[handIndex];
         bot.chooseCardToPlace();
         int cardIndex = bot.getChosenPlaceCard();
@@ -576,7 +618,9 @@ public class GameController implements Initializable {
 
         System.out.println("BOT HAND_INDEX = " + handIndex);
 
+        var cardCon = cards.get(card.toString()).getValue();
         ImageView cardView = cards.get(card.toString()).getKey();
+
         double[] offsets = getBotOffset(handIndex);
         placeAnimation( cardView, offsets[0], offsets[1] );
         
@@ -586,7 +630,12 @@ public class GameController implements Initializable {
             bot.removeCardInHand(card);
             hearts.getTable().Update();
             botPlaceCardView( cardView, handIndex);
-            host.fireEvent(new EndTurnEvent()); 
+            cardCon.faceCardUp();
+            PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
+            pause2.setOnFinished(event2 -> {
+                host.fireEvent(new EndTurnEvent()); 
+            });
+            pause2.play();
         }
         );
         pause.play();
@@ -658,7 +707,9 @@ public class GameController implements Initializable {
             return;
         }
         int winner = hearts.getTable().findWinner();
+        // updateNotificationWinnerThisSmallRound(winner);
         System.out.println("WINNER IN SMALL ROUND = " + winner);
+        
         if (winner - 1 < 0) {
             hearts.setWhoseTurn(3);
         } else {
@@ -668,6 +719,10 @@ public class GameController implements Initializable {
             hearts.getHands()[winner].addCardInPile(card);
         }
         host.fireEvent(new EndTurnEvent());
+    }
+
+    private void updateNotificationWinnerThisSmallRound(int winner) {
+        this.notification.setText(hearts.getHands()[winner] + " win this round.");
     }
 
     private void addChooseToPlaceEvent(ImageView cardView, int cardIndex) {
