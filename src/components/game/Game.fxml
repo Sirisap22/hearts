@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" styleClass="bg" stylesheets="@game.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.game.GameController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" styleClass="bg" stylesheets="@game.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.game.GameController">
    <children>
       <Button fx:id="exit" layoutX="1342.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" onMouseEntered="#exitEnter" onMouseExited="#exitOut" onMousePressed="#exitPressed" onMouseReleased="#exitRelease" prefHeight="17.0" prefWidth="38.0" styleClass="btnHome" stylesheets="@game.css">
          <graphic>
@@ -153,7 +153,7 @@
          </effect></Button>
       <Pane fx:id="winnerBoard" layoutX="502.0" layoutY="163.0" prefHeight="282.0" prefWidth="394.0" styleClass="endPane" stylesheets="@game.css">
          <children>
-            <Text fx:id="winnerText" fill="#3f2da5" layoutX="172.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+            <Text fx:id="winnerText" fill="#3f2da5" layoutX="172.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER">
                <font>
                   <Font name="Bodoni MT Poster Compressed" size="29.0" />
                </font>

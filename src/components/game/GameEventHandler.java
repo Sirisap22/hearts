@@ -1,7 +1,6 @@
 package components.game;
 
 import javafx.event.EventHandler;
-import javafx.scene.control.Label;
 
 public abstract class GameEventHandler implements EventHandler<GameEvent> {
 
